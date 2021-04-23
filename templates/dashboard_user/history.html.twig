@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<div class="container">
+    <table class="table table-condensed"  id="myTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Temps de connexion</th>
+            <th>#</th>
+        </tr>
+    </thead>
+    <tbody class="panel">
+        {% set lastDate = null %}
+        {% set first = true %}
+        {% set indexDate = 0 %}
+        {% set nbMinute = 0 %}
+        {% set indexOfDay = 0 %}
+        {# loop for all day of co #}
+       {% for  dayOfCo, totalTime in totalOfConnexionForDay %}
+
+            {# loop on all session of co #}
+            {% for day, sessionArray in history %}
+
+                    {# get details for session of co #}
+                    {% for session in sessionArray %}
+
+                                    
+                                    {# if the day of current session of co is match with cureent day #}
+                                    {% if dayOfCo|date('Y-m-d') == session.time_deco|date('Y-m-d')   %}
+
+                                       {% if first == true %}
+                                            <tr data-toggle="collapse" data-target="#demo{{indexDate }}" data-parent="#myTable">
+                                                <td>{{ session.time_co|date('Y-m-d') }}</td>                
+                                                <td class="text-error"> {{ totalTime }} </td>
+                                                <td> Voir les détails </td>
+
+                                                <tr id="demo{{indexDate }}" class="collapse">
+                                                <th>Heure de connexion</th>
+                                                <th>Heure de déconnexion</th>
+                                                <th>Temps de connexion</th>
+                                            </tr>
+                                            
+                                            {% set first = false %}
+
+                                        {% endif %}
+                                            <tr id="demo{{indexDate }}" class="collapse table table-dark table-striped">
+                                                <td>{{ session.time_co|date("H:i") }}</td>
+                                                <td>{{ session.time_deco|date("H:i") }}</td>
+                                                <td> {{ session.timeOfCo }} </td>
+                                            </tr>
+                                        
+                                {% endif %}
+
+                    {% endfor %}
+                        {% set indexOfDay = indexOfDay + 1 %}
+                   
+                
+               {# if dayco #}
+            {% endfor %}
+            {% set indexDate = indexDate + 1 %}
+            {% set first = true %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <script>
+        let user_id = {{ app.user.id }};
+        let session_id = {{ app.user.sessionId }}
+        </script>
+{% endblock %}

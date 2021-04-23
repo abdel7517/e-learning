@@ -18,6 +18,8 @@
 
 		<!-- STYLESHEET -->
 		<link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+				<link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+
 		<script src="https://kit.fontawesome.com/c1a3a3bd8a.js" crossorigin="anonymous"></script>
 		<link rel='shortcut icon' type='image/x-icon' href='{{ asset('assets/img/favicon.ico') }}'/>
 	</head>
@@ -45,6 +47,10 @@
 				<!-- LINKS   -->
 
 				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+
+				<li class="nav-item formnav">
+						<div class="deco">Vous êtes déconnecter</div>
+					</li
 					<li class="nav-item active hubnav">
 						<a class="nav-link" data-toggle="tooltip" data-placement="right" title="{{ 'Portal' | trans }}" href="{{ path('portal') }}"><img height="25px" src="{{ asset('assets/img/lightlogo-09.png') }}" alt="{{ 'Portal' | trans }}"><span class="sr-only">(current)</span>
 						</a>
@@ -83,7 +89,6 @@
 {% endfor %}{% endfor %}<ol class="breadcrumb text-muted"> {% block breadcrumbs %}{% endblock %}
 </ol>
 {% block body %}{% endblock %}
-{% block javascripts %}{% endblock %}
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -92,7 +97,14 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+{# custom #}
+<script src=" {{ asset('assets/js/jquery/jquery-2.2.4.min.js') }} "></script>
 <script src="{{ asset('assets/js/script.js') }}"></script>
+<script src="{{ asset('assets/js/connexion_log/session.js') }}"></script>
+<script src="{{ asset('assets/js/connexion_log/main.js') }}"></script>
+{% block javascripts %}{% endblock %}
+
 
 <script>
 	$('[data-toggle="tooltip"]').tooltip();

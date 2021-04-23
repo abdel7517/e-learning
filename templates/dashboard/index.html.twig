@@ -28,6 +28,13 @@
                 </button>
                 <p class="mt-2">{{ 'Go to forum page' | trans }}</p>
             </a>
+            <a href="{{ path('dashboard_user') }}">
+                <button type="button" class="btn  btn-circle btn-xl"
+                        data-toggle="tooltip" data-placement="right" title="Voir le liste des utilisateurs">
+                    <img class="addicon" src="{{ asset('assets/img/user.png') }}" alt="add icon">
+                </button>
+                <p class="mt-2">{{ 'Utilisateurs' | trans }}</p>
+            </a>
         </section>
 
         <table class="mt-4 table table-hover text-center">

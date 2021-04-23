@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+     <!-- add user button -->
+        <section class="row justify-content-between rowaddbutton main-page-button">
+            <a href="{{ path('create_module') }}">
+                <button type="button" class="btn  btn-circle btn-xl"
+                        data-toggle="tooltip" data-placement="right" title="Add new module">
+                    <img class="addicon" src="{{ asset('assets/img/user.png') }}" alt="add icon">
+                </button>
+                <p class="mt-2">{{ 'Add a user' | trans }}</p>
+            </a>
+        </section>
+
+
+    <table class="mt-4 table table-hover text-center">
+            <thead>
+            <tr>
+                <th scope="col">{{ 'Mail' | trans }}</th>
+                <th scope="col">{{ 'Historique de connexion' | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+          
+            {% for user in users %}
+                    <tr>
+                        <td>{{ user.email }}</td>
+                        <td> <a href=" {{ path('dashboard_user_history', { 'id': user.id }) }} ">Voir</a> </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <script>
+        let user_id = {{ app.user.id }};
+        let session_id = {{ app.user.sessionId }}
+        </script>
+{% endblock %}

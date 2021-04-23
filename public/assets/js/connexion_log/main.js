@@ -1,0 +1,1 @@
+const newSession = new Session();

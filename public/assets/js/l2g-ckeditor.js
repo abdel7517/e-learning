@@ -1,6 +1,9 @@
 ClassicEditor.create(document.querySelector('.js-richtexteditor'), {
 
     mediaEmbed: { previewsInData: true },
+    alignement: {
+            options: [ 'left', 'middle', 'right' ]
+    },
     toolbar: {
         items: [
             'heading',
@@ -23,7 +26,7 @@ ClassicEditor.create(document.querySelector('.js-richtexteditor'), {
             'redo'
         ]
     },
-    language: 'en',
+    language: 'fr',
     link: {
         addTargetToExternalLinks: true
     },
@@ -58,7 +61,7 @@ ClassicEditor.create(document.querySelector('.js-richtexteditor-minimal'), {
             'redo'
         ]
     },
-    language: '<?= $lang ?>',
+    language: 'fr',
     link: {
         addTargetToExternalLinks: true
     },

@@ -1,0 +1,157 @@
+<?php
+
+namespace App\Controller;
+
+use DateTime;
+use App\Entity\User;
+use App\Entity\TimeOfConnexion;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
+
+Class ApiTimeOfConnexion extends AbstractController{
+
+    
+    /**
+     * @Route("co/{user_id}/{time}/{session_id}", name="start_session")
+     */
+    public function startSession($user_id,  $time,  $session_id){
+
+        $newSession = new TimeOfConnexion();
+        $time_good_format = str_replace("_"," ",$time);
+        $actualTime = DateTime::createFromFormat('Y-m-d H:i', $time_good_format);
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy(['id'=>$user_id]);
+
+        // check if the last session finish more than 2 min 
+        $sessionManager = $this->getDoctrine()->getManager()->getRepository(TimeOfConnexion::class);
+        $lastSession = $sessionManager->findOneBy([ 'user_id'=> $user_id, 'session_id'=> $session_id]);
+        $manager = $this->getDoctrine()->getManager();
+        $mess = $session_id;
+
+
+
+        if($lastSession !== null){
+
+            $dateStart = $lastSession->getTimeDeco();
+            $dateFinish = $actualTime;
+            $diff = $dateFinish->diff($dateStart);
+            $diff = date_diff($dateStart,$dateFinish);
+            // $diff->format('%i') < 1 
+            if(false){
+
+                $lastSession->setTimeDeco($actualTime);
+                $manager->persist($lastSession);
+    
+            }else{
+                
+                $newSession->setUserId($user_id);
+                $newSession->setTimeCo($actualTime);
+                $newSession->setSessionId($session_id+1);
+                $newSession->setToDay($actualTime);
+                $newSessionId = $lastSession->getSessionId() + 1;
+                $user->setSessionId($newSessionId);
+    
+                $manager->persist($newSession);
+
+
+                $mess = $newSessionId;
+            }
+        }
+        else{
+                
+            $newSession->setUserId($user_id);
+            $newSession->setTimeCo($actualTime);
+            $newSession->setSessionId($session_id);
+            $newSession->setToDay($actualTime);
+
+            $manager->persist($newSession);
+        }
+        
+        $manager->flush();
+
+        return new Response($mess , 200);
+    }
+
+    /**
+     * @Route("deco/{user_id}/{time}/{session_id}", name="close_session")
+     */
+    public function closeSession($user_id,  $time,  $session_id){
+        // $date = strtotime($time);
+        // $now =  date('d/M/Y h:i:s', $date);
+        $sessionRepo = $this->getDoctrine()->getManager()->getRepository(TimeOfConnexion::class)->findOneBy([ 'user_id'=> $user_id, 'session_id'=> $session_id ]);
+        $userRepo =  $this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy([ 'id'=>$user_id]);
+
+
+
+        $time_good_format = str_replace("_"," ",$time);
+        $date = DateTime::createFromFormat('Y-m-d H:i', $time_good_format);
+        
+        
+        $sessionRepo->setTimeDeco($date);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($userRepo);
+        $manager->persist($sessionRepo);
+
+        $manager->flush();
+
+        $textResponse = new Response("deco" , 200);
+
+        // $this->tokenStorage->setToken();
+
+        return $textResponse;
+    }
+
+     /**
+     * @Route("presence/{user_id}/{time}/{session_id}", name="presence_session")
+     */
+    public function presence($user_id,  $time,  $session_id){
+        $sessionManager = $this->getDoctrine()->getManager()->getRepository(TimeOfConnexion::class);
+        $actualSession = $sessionManager->findOneBy([ 'user_id'=> $user_id, 'session_id'=> $session_id ]);
+        $lastSession = $sessionManager->findOneBy([ 'user_id'=> $user_id, 'session_id'=> ($session_id -1 )]);
+        $time_good_format = str_replace("_"," ",$time);
+        $actualTime = DateTime::createFromFormat('Y-m-d H:i', $time_good_format);
+        $mess = "true";
+        $manager = $this->getDoctrine()->getManager();
+
+        // caclul between date 
+        if($lastSession !== null){
+            
+            $dateStart = $lastSession->getTimeDeco();
+            $dateFinish = $actualTime;
+            $diff = $dateFinish->diff($dateStart);
+            $diff = date_diff($dateStart,$dateFinish);
+    
+    
+             if($diff->format('%i') < 1 ){
+    
+                $lastSession->setTimeDeco($actualTime);
+                $manager->persist($lastSession);
+                $mess = "last";
+    
+    
+             }else{
+                 
+                 $actualSession->setTimeDeco($actualTime);
+                 $manager->persist($actualSession);
+                 $mess = "actual";
+
+             }
+        }else{
+                 
+            $actualSession->setTimeDeco($actualTime);
+            $manager->persist($actualSession);
+            $mess = "actual";
+
+        }
+
+        $manager->flush();
+
+        return new Response($mess , 200);
+    }
+}
+
+
+

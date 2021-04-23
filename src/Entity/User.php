@@ -101,6 +101,11 @@ class User implements UserInterface
      */
     private $badgesSorted = null;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $session_id;
+
     public function __construct()
     {
         $this->topics = new ArrayCollection();
@@ -458,5 +463,17 @@ class User implements UserInterface
             }
         }
         return $list;
+    }
+
+    public function getSessionId(): ?int
+    {
+        return $this->session_id;
+    }
+
+    public function setSessionId(int $session_id): self
+    {
+        $this->session_id = $session_id;
+
+        return $this;
     }
 }

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191125085636 extends AbstractMigration
+final class Version20210419075547 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -23,6 +23,7 @@ final class Version20191125085636 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
        
+        $this->addSql('ALTER TABLE time_of_connexion ADD to_day VARCHAR(255) NOT NULL, CHANGE time_deco time_deco VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -31,5 +32,6 @@ final class Version20191125085636 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         
+        $this->addSql('ALTER TABLE time_of_connexion DROP to_day, CHANGE time_deco time_deco VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`');
     }
 }

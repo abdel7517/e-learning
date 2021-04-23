@@ -30,6 +30,8 @@ class PortalController extends AbstractController
             $mode = 'ALL';
         }
 
+        // get the user formation and publish him sld
+
         $modules = !isset($_GET['mode'])?
             $this->getDoctrine()->getRepository(LearningModule::class)->findBy(['isPublished' => true])
             : $this->getDoctrine()->getRepository(LearningModule::class)->findBy([
