@@ -142,6 +142,7 @@ class LearningModule
 
     public function getTitle(Language $language)
     {
+        
         foreach ($this->getTranslations() as $translation) {
             if ($translation->getLanguage()->getName() === $language->getName()) {
                 return $translation->getTitle(); //change this line if needed when copied

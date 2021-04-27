@@ -69,10 +69,9 @@
 						</div>
 					</li>
 
-					<li class="nav-item dropdown">
+					{# <li class="nav-item dropdown">
 						{{ include('language_switcher/_switcher.html.twig') }}
-						{# have switcherForm in the header of every page#}
-					</li>
+					</li> #}
 				</ul>
 
 			</div>
@@ -99,6 +98,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 {# custom #}
+<script>
+        let user_id = {{ app.user.id }};
+        let session_id = {{ app.user.sessionId }}
+        </script>
 <script src=" {{ asset('assets/js/jquery/jquery-2.2.4.min.js') }} "></script>
 <script src="{{ asset('assets/js/script.js') }}"></script>
 <script src="{{ asset('assets/js/connexion_log/session.js') }}"></script>

@@ -32,6 +32,8 @@ class DashboardUserController extends AbstractController
         $users = $this->getDoctrine()->getRepository(User::class);
         $fm = new FlaggingManager($languageCount);
         
+       
+        
         return $this->render('dashboard_user/index.html.twig', [
             'fm' => $fm,
             'language' => $language,
@@ -40,6 +42,9 @@ class DashboardUserController extends AbstractController
             'languagecount' => $languageCount,
         ]);
     }
+
+    
+ 
 
      /**
      * @Route("partner/dashboard/user/history/{id}", name="dashboard_user_history")
@@ -164,4 +169,6 @@ class DashboardUserController extends AbstractController
             Response::HTTP_OK
         );
     }
+
+
 }

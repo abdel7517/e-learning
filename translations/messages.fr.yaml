@@ -19,7 +19,7 @@ No account yet?: Pas encore de compte?
 Already have an account?: Vous avez déjà un compte ?
 Search: Rechercher
 Search results: Résultats de la recherche
-Learning Hub: Le learning Hub
+Learning Hub: Tous mes cours
 Learning Module: Le module d’apprentissage
 Learning Modules: Les modules d’apprentissage
 Language: Langue
@@ -104,18 +104,18 @@ Check: Vérifier
 Status: Statut
 overview: Modifier
 Published: Publié
-Follow this chapter:
-all:
+Follow this chapter: Suivre ce chapitre
+all: Tout
 soft:
 hard:
 SOFT:
 HARD:
-Locked:
+Locked: Bloquer
 Edit Learning Module:
-and:
+and: et
 description:
 type:
-Select type:
+Select type: choisir un type
 Change module image:
 Allowed filetypes:
 Image preview:
@@ -126,11 +126,14 @@ Edit Chapter:
 Add a Chapter:
 New Chapter Creation:
 Edit the chapter's English title and description:
-Restart this course:
+Restart this course: Recommencer le cour
 Unpublished:
 Portal:
 Meetingplace:
-Your completed courses:
+Your completed courses: Vous avez fini le cour
 Active courses unlocked percentage:
 Your badges:
 Select skillset:
+Fill in all questions to submit: Répondez à toutes les questions pour finir
+Submit test: Envoyer 
+your completed courses: Cours terminés

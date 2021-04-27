@@ -21,6 +21,7 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/register", name="en_register")
+     * IsGranted("ROLE_PARTNER")
      */
     public function registerInEnglish()
     {
@@ -31,9 +32,9 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthAuthenticator $authenticator): Response
     {
-        if ($this->getUser()) {
-            return $this->redirectToRoute($this->getUser()->isPartner() ? 'partner' : 'portal');
-        }
+        // if ($this->getUser()) {
+        //     return $this->redirectToRoute($this->getUser()->isPartner() ? 'partner' : 'portal');
+        // }
 
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -64,6 +65,7 @@ class RegistrationController extends AbstractController
             // TODO pass null to database to get automatic timestamp
             $dateTime = new DateTimeImmutable();
             $user->setCreated($dateTime);
+            $user->setSessionId(0);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

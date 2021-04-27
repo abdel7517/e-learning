@@ -8,6 +8,7 @@ use App\Domain\PageManager;
 use App\Entity\ChapterPage;
 use App\Entity\LearningModule;
 use App\Entity\User;
+use App\Entity\Language;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,9 +26,12 @@ class ModuleController extends AbstractController
         //user = logged in user
         /** @var User $user */
         $user = $this->getUser();
+        // print $module->getTitle();
+        // exit;
+        $english = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
 
         return $this->render('module/index.html.twig', [
-            'language' => $this->getLanguage($request),
+            'language' => $english,
             'module' => $module
         ]);
     }

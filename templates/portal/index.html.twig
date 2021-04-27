@@ -6,12 +6,12 @@
 
     <div class="example-wrapper">
 
-        <h1 class="title-css">{{ 'Learning hub' | trans | title }}</h1>
+        <h1 class="title-css">{{ 'Learning Hub' | trans | title }}</h1>
         <p class="text-center intro-lh">{{ 'Navigate through the Learning Modules and find the right training for you to advance your skills' | trans }}</p>
 
-        <h2 class="subtitle-css">{{ 'Your courses' | trans | title }}</h2>
+        {# <h2 class="subtitle-css">{{ 'Your courses' | trans | title }}</h2> #}
 
-        <div class="row forum-cat-row">
+        {# <div class="row forum-cat-row">
             <div class="col-3 col-md-auto skillset">select skillset:</div>
 
             <div class="col-3 col-md-auto">
@@ -24,7 +24,7 @@
             <div class="col-3 col-md-auto">
                 <a class="btn button_1 btn-default btn-skills {% if mode == 'HARD' %} active-mode {% endif %}" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
             </div>
-        </div>
+        </div> #}
 
         <div class="card-columns">
             {% for module in activeModules %}

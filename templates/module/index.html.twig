@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{ module.getTitle(language) }}
+	{{ module.getTitle(app.user.language) }}
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -17,7 +17,7 @@
 
 	<div class="example-wrapper">
 
-		<h1 class="title-css">{{ module.getTitle(language) }}</h1>
+		<h1 class="title-css">{{ module.getTitle(app.user.language) }}</h1>
 
 		<a href="{{ path('forum') }}">
 			<button class="btn btn-default button_4chap btnchap">{{ 'Forum' | trans }}</button>
@@ -30,12 +30,12 @@
 					{% if userChapter.isUnlocked() %}
 						<div class="container chapcontainer">
 							<div class="row">
-								<h3>{{ userChapter.chapter.getTitle(language) }}</h3>
+								<h3>{{ userChapter.chapter.getTitle(app.user.language) }}</h3>
 							</div>
 							<div class="row chapcard">
 								<div class="chapinfo">
 
-									<h5>{{ userChapter.chapter.getDescription(language)| raw }}</h5>
+									<h5>{{ userChapter.chapter.getDescription(app.user.language)| raw }}</h5>
 
 								</div>
 							</div>

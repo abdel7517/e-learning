@@ -4,7 +4,6 @@
 <div class="container">
     <table class="table table-condensed"  id="myTable">
     <thead>
-        <tr>
             <th>Date</th>
             <th>Temps de connexion</th>
             <th>#</th>
@@ -16,9 +15,11 @@
         {% set indexDate = 0 %}
         {% set nbMinute = 0 %}
         {% set indexOfDay = 0 %}
+        {% set totalOfCo = 0 %}
+
         {# loop for all day of co #}
        {% for  dayOfCo, totalTime in totalOfConnexionForDay %}
-
+        {% set totalOfCo = totalOfCo + totalTime %}
             {# loop on all session of co #}
             {% for day, sessionArray in history %}
 
@@ -32,7 +33,11 @@
                                        {% if first == true %}
                                             <tr data-toggle="collapse" data-target="#demo{{indexDate }}" data-parent="#myTable">
                                                 <td>{{ session.time_co|date('Y-m-d') }}</td>                
-                                                <td class="text-error"> {{ totalTime }} </td>
+                                                 {% if totalTime > 60 %}
+                                                <td class="text-error"> {{ (totalTime/60)|round(2, 'floor') }} heure(s) </td>
+                                                {% else %}
+                                                <td class="text-error"> {{ totalTime }} min(s) </td>
+                                                {% endif %}
                                                 <td> Voir les détails </td>
 
                                                 <tr id="demo{{indexDate }}" class="collapse">
@@ -44,11 +49,17 @@
                                             {% set first = false %}
 
                                         {% endif %}
-                                            <tr id="demo{{indexDate }}" class="collapse table table-dark table-striped">
-                                                <td>{{ session.time_co|date("H:i") }}</td>
-                                                <td>{{ session.time_deco|date("H:i") }}</td>
-                                                <td> {{ session.timeOfCo }} </td>
-                                            </tr>
+                                            {% if session.timeOfCo > 0 %}
+                                                <tr id="demo{{indexDate }}" class="collapse table table-dark table-striped">
+                                                    <td>{{ session.time_co|date("H:i") }}</td>
+                                                    <td>{{ session.time_deco|date("H:i") }}</td>
+                                                    {% if session.timeOfCo > 60 %}
+                                                    <td> {{ (session.timeOfCo / 60)|round(2, 'floor') }} heure(s)</td>
+                                                    {% else %}
+                                                    <td> {{ session.timeOfCo  }} min(s) </td>
+                                                    {% endif %}
+                                                </tr>
+                                            {% endif %}
                                         
                                 {% endif %}
 
@@ -62,6 +73,16 @@
             {% set first = true %}
             {% endfor %}
             </tbody>
+            <tfoot>
+                <tr scope="row">
+                    <th class="text-error"> Total des heures de connexion </th>
+                     {% if totalOfCo > 60 %}
+                    <th class="text-error"> {{ (totalOfCo/60)|round(2, 'floor') }} heure(s) </th>
+                    {% else %}
+                    <th class="text-error"> {{ totalOfCo }} min(s) </th>
+                    {% endif %}
+                </tr>
+            </tfoot>
         </table>
 
         <script>

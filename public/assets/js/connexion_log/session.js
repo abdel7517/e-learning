@@ -137,7 +137,7 @@ class Session {
         if (day.length < 2) 
             day = '0' + day;
 
-        let hours = [hour, minute].join(':');
+        let hours = [String(hour).padStart(2, '0'), String(minute).padStart(2, '0')].join(':');
         let days = [year, month, day].join('-');
 
         return days + "_"+ hours;

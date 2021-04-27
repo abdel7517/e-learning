@@ -93,6 +93,37 @@ Class ApiTimeOfConnexion extends AbstractController {
 
         return $textResponse;
     }
+
+
+     /**
+     * @Route("/logerChecker", name="logerChecker")
+     */
+    public function logerChecker(){
+        $numberMore = 0;
+        $number = 0;
+        $now = new DateTime();
+        $manager = $this->getDoctrine()->getRepository(TimeOfConnexion::class);
+        $sessionRepo = $manager->findByDate($now);
+        $entityManager = $this->getDoctrine()->getManager();
+        foreach ($sessionRepo as $session) {
+            $diff = date_diff($session->getTimeCo(), $session->getTimeDeco());
+            $min = $diff->format('%i');
+            $number++;
+
+            if($min > 20 ){
+                $date = DateTime::createFromFormat('Y-m-d H:i', date());
+                $session->setTimeDeco($date);
+                $numberMore++;
+                $entityManager->persist($session);       
+
+            }
+        }
+        $entityManager->flush();
+
+        $textResponse = new Response("Less : ".$number." ------ more : " . $numberMore, 200);
+
+       return $textResponse;
+    }
 }
 
 

@@ -36,15 +36,20 @@ class TimeOfConnexionRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?TimeOfConnexion
+    
+    public function findByDate($date)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+        $from = new \DateTime($date->format("Y-m-d")." 00:00:00");
+        $to   = new \DateTime($date->format("Y-m-d")." 23:59:59");
+
+        $qb = $this->createQueryBuilder("e");
+        $qb
+            ->andWhere('e.toDay BETWEEN :from AND :to')
+            ->setParameter('from', $from )
+            ->setParameter('to', $to)
         ;
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
     }
-    */
 }

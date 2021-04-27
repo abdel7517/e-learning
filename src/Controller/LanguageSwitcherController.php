@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LanguageSwitcherController extends AbstractController
 {
-    const DEFAULT_LANGUAGE = 'en';
+    const DEFAULT_LANGUAGE = 'fr';
 
     /**
      * @Route("/languageswitcher", name="language_switcher")

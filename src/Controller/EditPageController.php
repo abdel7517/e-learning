@@ -34,7 +34,7 @@ class EditPageController extends AbstractController
     public function index(Request $request, LearningModule $module, Chapter $chapter, ChapterPage $page): Response
     {
         $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy([
-            'code' => $_GET['lang']
+            'code' => 'en'
         ]);
 
         $returnCode = $_GET['return'] ?? null;

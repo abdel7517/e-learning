@@ -5,7 +5,7 @@
 		{% endif %}
 
 		<h5 class="card-title pt-5">{{ module.title(language) }}</h5>
-		<div class="card-text text-left">
+		<div class="card-text text-center">
 			{{ module.description(language)  | raw }}
 		</div>
 		<a href="{{ path('module', { module : module.id}) }}" class="btn btn-default button_3">{{ label | trans }}</a>
