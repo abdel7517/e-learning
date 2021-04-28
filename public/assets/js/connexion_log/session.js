@@ -8,9 +8,7 @@ class Session {
         this.startTimer(20*60);
         this.sendPresence();
         window.addEventListener('mousemove', function() {newSession.restartTimer()} );
-        // window.addEventListener("beforeunload", function(){
-        //     newSession.closeSession();
-        // });
+      
         setInterval(function(){ newSession.sendPresence() }, 3000);
 
     }
@@ -91,7 +89,7 @@ class Session {
     startTimer(duration) {
         this.time = duration;
         this.updateTimer();
-        this.reset = setInterval(() => this.countdown(), 3000);
+        this.reset = setInterval(() => this.countdown(), 1000);
     }
 
     countdown() {
