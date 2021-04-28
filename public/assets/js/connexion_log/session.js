@@ -4,12 +4,13 @@ class Session {
         this.endOfSession = false;
         this.time = 0;
         this.sessionId = session_id;
+        this.containerTimer = document.getElementById("timer");
         this.startTimer(20*60);
-        this.launchSession();
+        this.sendPresence();
         window.addEventListener('mousemove', function() {newSession.restartTimer()} );
-        window.addEventListener("beforeunload", function(){
-            newSession.closeSession();
-        });
+        // window.addEventListener("beforeunload", function(){
+        //     newSession.closeSession();
+        // });
         setInterval(function(){ newSession.sendPresence() }, 3000);
 
     }
@@ -47,6 +48,8 @@ class Session {
                 complete: function(resultat){
                     $('.deco').css('display', 'block');
                     console.log('deco');
+                    window.alert('Vous êtes déconnecté, rechargez la page ');
+
 
 
                 }
@@ -68,6 +71,10 @@ class Session {
                     url: url,
                     complete: function(resultat){
                         console.log(resultat);
+                        if(resultat.responseText == "deco"){
+                            newSession.endOfSession = true;
+                            window.alert('Vous êtes déconnecté, rechargez la page ');
+                        }
                     }
                 });
         }
@@ -104,6 +111,7 @@ class Session {
         if (minutes < 10) minutes = '0' + minutes;
         if (seconds < 10) seconds = '0' + seconds;
 
+        // $("#timer").html(minutes + ':' + seconds);
         console.log(minutes + ':' + seconds);
     }
 
@@ -112,7 +120,6 @@ class Session {
     stopTimer() {
         clearInterval(this.reset);
         sessionStorage.removeItem('timer' + 'time');
-     
     }
 
     formatDate(date) {

@@ -18,6 +18,7 @@ Class ApiTimeOfConnexion extends AbstractController {
      * @Route("co/{user_id}/{time}/{session_id}", name="start_session")
      */
     public function startSession($user_id,  $time,  $session_id){
+
         $newSession = new TimeOfConnexion();
         $time_good_format = str_replace("_"," ",$time);
         $date = DateTime::createFromFormat('Y-m-d H:i', $time_good_format);
@@ -76,22 +77,42 @@ Class ApiTimeOfConnexion extends AbstractController {
      */
     public function presence($user_id,  $time,  $session_id){
         $sessionRepo = $this->getDoctrine()->getManager()->getRepository(TimeOfConnexion::class)->findOneBy([ 'user_id'=> $user_id, 'session_id'=> $session_id ]);
-
-        $time_good_format = str_replace("_"," ",$time);
-        $date = DateTime::createFromFormat('Y-m-d H:i', $time_good_format);
-
-        
-        
-        $sessionRepo->setTimeDeco($date);
-
         $manager = $this->getDoctrine()->getManager();
-        $manager->persist($sessionRepo);
-        $manager->flush();
+        $message = "présent";
 
-        $textResponse = new Response('present' , 200);
+        if($sessionRepo == null){
+            $this->startSession($user_id, $time, $session_id);
+            $message = "session start";
+        }
+        else{
+            $time_good_format = str_replace("_"," ",$time);
+            $date = DateTime::createFromFormat('Y-m-d H:i', $time_good_format);
+            $diff = date_diff($sessionRepo->getTimeDeco(), $date);
+            $min = $diff->format('%i');
+            
+
+
+            if( $min < 20 ){
+                $sessionRepo->setTimeDeco($date);
+            }else{
+                $userRepo =  $this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy([ 'id'=>$user_id]);
+                $actualSessionId = $userRepo->getSessionId();
+                $newSessionId = $actualSessionId+1;
+                $userRepo->setSessionId($newSessionId);
+                $message = "deco";
+        
+            }
+
+            $manager->persist($sessionRepo);
+            $manager->flush();
+
+        }
+        
+        $textResponse = new Response($message , 200);
 
 
         return $textResponse;
+        
     }
 
 
