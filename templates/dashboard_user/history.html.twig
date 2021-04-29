@@ -32,7 +32,7 @@
 
                                        {% if first == true %}
                                             <tr data-toggle="collapse" data-target="#demo{{indexDate }}" data-parent="#myTable">
-                                                <td>{{ session.time_co|date('Y-m-d') }}</td>                
+                                                <td>{{ session.time_co|date('d-m-Y') }}</td>                
                                                  {% if totalTime > 60 %}
                                                 <td class="text-error"> {{ (totalTime/60)|round(2, 'floor') }} heure(s) </td>
                                                 {% else %}

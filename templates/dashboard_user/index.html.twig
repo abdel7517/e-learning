@@ -1,35 +1,63 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-     <!-- add user button -->
-        <section class="row justify-content-between rowaddbutton main-page-button">
-            <a href="{{ path('app_register') }}">
+   
+
+        <div class="d-flex justify-content-around">
+
+          <a href="{{ path('app_register') }}">
                 <button type="button" class="btn  btn-circle btn-xl"
                         data-toggle="tooltip" data-placement="right" title="Add a user">
                     <img class="addicon" src="{{ asset('assets/img/user.png') }}" alt="add icon">
                 </button>
-                <p class="mt-2">{{ 'Add a user' | trans }}</p>
+                <p class="mt-2">{{ 'Ajoutez un utilisateur' | trans }}</p>
             </a>
-        </section>
+
+            <form action=" {{ path('dashboard_user') }}" method="POST">
+                <div class="form-group">
+                    <input type="email" name="mail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted">Recherchez un utilisateur via son mail</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Cherchez</button>
+            </form>
+
+            <button type="button" class="btn btn-primary">
+                 <a href=" {{ path('dashboard_user', { 'all': true }) }} ">Voire tous les utilisateurs</a>
+            </button>
+
+        </div>
 
 
-    <table class="mt-4 table table-hover text-center">
-            <thead>
-            <tr>
-                <th scope="col">{{ 'Mail' | trans }}</th>
-                <th scope="col">{{ 'Historique de connexion' | trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
+    {% if user is defined or users is defined %}
+    
+        <table class="mt-4 table table-hover text-center">
+                <thead>
+                <tr>
+                    <th scope="col">{{ 'Mail' | trans }}</th>
+                    <th scope="col">{{ 'Date d\'entrée en formation' | trans }}</th>
+                    <th scope="col">{{ 'Historique de connexion' | trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
           
-            {% for user in users %}
-                    <tr>
-                        <td>{{ user.email }}</td>
-                        <td> <a href=" {{ path('dashboard_user_history', { 'id': user.id }) }} ">Voir</a> </td>
-                    </tr>
-            {% endfor %}
+                {% if users is defined %}
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.created|date("d-m-Y") }}</td>
+                            <td> <a href=" {{ path('dashboard_user_history', { 'id': user.id }) }} ">Voir</a> </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                {% if user is defined %}
+                        <tr>
+                            <td>{{ user.email }}</td>
+                            <td> <a href=" {{ path('dashboard_user_history', { 'id': user.id }) }} ">Voir</a> </td>
+                        </tr>
+                {% endif %}
             </tbody>
         </table>
+    {% endif %}
 
         <script>
         let user_id = {{ app.user.id }};

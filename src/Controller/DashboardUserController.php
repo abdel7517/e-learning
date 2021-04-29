@@ -20,10 +20,10 @@ class DashboardUserController extends AbstractController
     use LanguageTrait;
 
     /**
-     * @Route("partner/dashboard/user", name="dashboard_user")
+     * @Route("partner/dashboard/user/{all}", name="dashboard_user")
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index($all = false, Request $request): Response
     {
         $language = $this->getLanguage($request);
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
@@ -31,16 +31,40 @@ class DashboardUserController extends AbstractController
         $pr = $this->getDoctrine()->getRepository(ChapterPage::class);
         $users = $this->getDoctrine()->getRepository(User::class);
         $fm = new FlaggingManager($languageCount);
+
+        if($request->isMethod('POST')){
+           $mail =   $request->get('mail');
+           $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([ "email"=>$mail ]);
+
+           return $this->render('dashboard_user/index.html.twig', [
+               'fm' => $fm,
+               'language' => $language,
+               'pr' => $pr,
+               'user' => $user,
+               'languagecount' => $languageCount,
+           ]);
+        }
         
-       
-        
+        if($all == true){
+
+            return $this->render('dashboard_user/index.html.twig', [
+                'fm' => $fm,
+                'language' => $language,
+                'pr' => $pr,
+                "users" => $users->findAll(),
+                'languagecount' => $languageCount,
+            ]);
+        }
+
         return $this->render('dashboard_user/index.html.twig', [
             'fm' => $fm,
             'language' => $language,
             'pr' => $pr,
-            'users' => $users->findAll(),
+            "users" => $users->findBy([],null,  5),
             'languagecount' => $languageCount,
         ]);
+       
+        
     }
 
     
