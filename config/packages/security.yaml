@@ -37,3 +37,4 @@ security:
          - { path: ^/forum, roles: ROLE_USER }
          - { path: ^/profile, roles: ROLE_USER }
          - { path: ^/partner, roles: ROLE_PARTNER }
+         - { path: ^/register, roles: ROLE_PARTNER }

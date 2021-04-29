@@ -48,13 +48,13 @@ class ProfileController extends AbstractController
             $badgeKeys[] = $badgeKey;
         }
         $badgrHandler = new Badgr;
-        try {
-            $userBadges = $badgrHandler->getAllBadges($badgeKeys, $user);
-        }
-        catch(ClientException $e) {
-            //nothing happens, badge was not configured correctly.
-            $this->addFlash('error', 'You completed a module with a broken badge. Please contact Learning2Gether to fix this.');
-        }
+        // try {
+        //     $userBadges = $badgrHandler->getAllBadges($badgeKeys, $user);
+        // }
+        // catch(ClientException $e) {
+        //     //nothing happens, badge was not configured correctly.
+        //     $this->addFlash('error', 'You completed a module with a broken badge. Please contact Learning2Gether to fix this.');
+        // }
 
         // Edit-profile
         $form = $this->createForm(EditProfileType::class, $user);
@@ -85,8 +85,8 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/index.html.twig', [
             'language' => $this->getLanguage($request),
-            'badgeKeys' => $badgeKeys,
-            'userBadges' => $userBadges,
+            'badgeKeys' => $badges,
+            // 'userBadges' => $userBadges,
             'user' => $user,
             'profileForm' => $form->createView(),
             'deleteBtn' => $deleteBtn->createView(),

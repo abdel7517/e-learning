@@ -28,7 +28,8 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_register');
     }
     /**
-     * @Route("/{_locale}/register", name="app_register")
+     * @Route("/newUser", name="app_register")
+     * IsGranted("ROLE_PARTNER")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthAuthenticator $authenticator): Response
     {
@@ -73,13 +74,9 @@ class RegistrationController extends AbstractController
 
 
             // do anything else you need here, like send an email
+            $this->addFlash('error', 'Le nouvelle utilisateur à été créé avec succés ');
 
-            return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main' // firewall name in security.yaml
-            );
+           
         }
 
         return $this->render('registration/register.html.twig', [

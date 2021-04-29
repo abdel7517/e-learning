@@ -1,0 +1,15 @@
+
+.navbar{
+    z-index: 1 !important;
+    width: 100% !important;
+    max-width: inherit !important;
+}
+
+@media only screen and (max-width: 600px){
+
+    .loginwrap {
+        position: relative;
+        margin-top: 14em !important;
+    }
+
+}
