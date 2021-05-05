@@ -15,11 +15,11 @@ class EditPageTranslationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
+            ->add('title', TextareaType::class)
             ->add('content', TextareaType::class, [
                 'required' => false,
                 'empty_data' => '',
-            ])
+                'label' => false            ])
         ;
     }
 

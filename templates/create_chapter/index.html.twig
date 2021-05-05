@@ -54,7 +54,7 @@
 							<!--	<span class="ui-meta-label">{{ 'Page' |trans }}
 															#{{ page.position+1 }}</span><br>
 														<span class="ui-meta-label">ID: #{{ page.id }}</span><br>-->
-							<h4>{{ page.title(english) }}</h4><br>
+							<h4>{{ (page.title(english))|raw }}</h4><br>
 							<a class="p-1 btn btn-skills button_8 buttonNavBox" href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en', return: 'flow'}) }}">
 								{{ 'Edit Page' | trans }}</a>
 							<a class="btn-deletequestion button_2 deleteHover float-right" onclick="return confirm('Are you sure you want to delete this page?')" href="{{ path('delete_page', {module: module.id, chapter: chapter.id, page: page.id, return: 'flow'}) }}">
@@ -75,6 +75,8 @@
 			<div class="overlay"></div>
 			<p>Saving, please wait...</p>
 		</div>
-		<script src="/assets/js/ckeditor5/build/ckeditor.js"></script>
-		<script src="/assets/js/l2g-ckeditor.js"></script>
+		<script src=" {{ asset('/assets/js/ckeditor5/build/ckeditor.js') }} "></script>
+		<script src=" {{ asset('/assets/js/l2g-ckeditor.js') }} "></script>
+
+		
 	{% endblock %}

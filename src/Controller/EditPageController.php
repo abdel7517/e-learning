@@ -50,6 +50,11 @@ class EditPageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $pageTl = $form->getData();
+            // $content =  $form->get('plainPassword')->getData();
+            // $title =  $form->get('title')->getData();
+            // $pageTl->setTitle($title);
+            // $pageTl->setContent($content);
+            
             $page->addTranslation($pageTl);
             $this->flushUpdatedPage($page);
             $this->addFlash('success', 'Changes saved.');

@@ -23,7 +23,11 @@ ClassicEditor.create(document.querySelector('.js-richtexteditor'), {
             'mediaEmbed',
             '|',
             'undo',
-            'redo'
+            'redo',
+             '|',
+             "alignment:left",
+             "alignment:center",
+            "alignment:right"
         ]
     },
     language: 'fr',
@@ -58,7 +62,14 @@ ClassicEditor.create(document.querySelector('.js-richtexteditor-minimal'), {
             'outdent',
             '|',
             'undo',
-            'redo'
+            'redo',
+            '|',
+            "alignment:left",
+            "alignment:center",
+            "alignment:right",
+
+
+               
         ]
     },
     language: 'fr',
@@ -68,12 +79,18 @@ ClassicEditor.create(document.querySelector('.js-richtexteditor-minimal'), {
     image: {
         toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side']
     },
-    licenseKey: ''
+    licenseKey: '',
+    alignement: {
+            options: [ 'left', 'middle', 'right' ]
+    },
 
 }).then(editor => {
     window.editor = editor;
 
 
+
 }).catch(error => {
     console.error(error);
 });
+
+

@@ -9,7 +9,7 @@ class Session {
         this.sendPresence();
         window.addEventListener('mousemove', function() {newSession.restartTimer()} );
       
-        setInterval(function(){ newSession.sendPresence() }, 3000);
+        setInterval(function(){ newSession.sendPresence() }, 30000);
 
     }
    

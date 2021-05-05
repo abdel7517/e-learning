@@ -23,14 +23,17 @@
 {% block body %}
 	<div class="example-wrapper">
 		<h1 class="title-css">{{ 'Edit Page' | trans }}</h1>
+		<div id="test"></div>
 
 
 		<div class="example-wrapper">
-			{{ form_start(form) }}
-			{{ form_row(form.title) }}
-			{{ form_row(form.content, {'attr': {'class': 'js-richtexteditor'}}) }}
+			{{ form_start(form, {'attr': {'id': 'form-page'}}) }}
+			{{ form_row(form.title, {'attr': {'class': 'js-richtexteditor-minimal'}}) }}
+			</div> 
+						{{ form_row(form.content, {'attr': {'class': 'js-richtexteditor'}}) }}
+
 			<div class="text-center">
-				<button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Save' | trans }}</button>
+				<button id="save" class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Save' | trans }}</button>
 				{{ form_end(form) }}
 				<hr>
 				<a class="p-1 btn btn-skills button_8 buttonNavBox" href="{{ path('create_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">{{ 'Back to chapter' | trans }}</a>
@@ -49,5 +52,5 @@
 	<script src="/assets/js/ckeditor5/build/ckeditor.js"></script>
 	<script src="/assets/js/l2g-ckeditor.js"></script>
 
-
+	
 {% endblock %}
