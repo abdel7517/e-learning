@@ -2,22 +2,27 @@
 
 namespace App\Controller;
 
-use App\Domain\ImageManager;
-use App\Entity\Language;
 use App\Entity\User;
+use DateTimeImmutable;
+use App\Entity\Language;
+use App\Domain\ImageManager;
+use App\Service\Contact\Mail;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthAuthenticator;
-use DateTimeImmutable;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationController extends AbstractController
 {
+    private $mailer;
 
+    public function __construct( Mail $mailer){
+        $this->mailer = $mailer;
+    }
 
     /**
      * @Route("/register", name="en_register")
@@ -74,6 +79,10 @@ class RegistrationController extends AbstractController
 
 
             // do anything else you need here, like send an email
+            $name = $form->get('name')->getData();
+            $mail = $form->get('email')->getData();
+            $passWord = $form->get('plainPassword')->getData();
+            $this->mailer->notifUser($name, $mail, $passWord);
             $this->addFlash('error', 'Le nouvelle utilisateur à été créé avec succés ');
 
            
