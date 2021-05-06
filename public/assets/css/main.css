@@ -16,4 +16,8 @@
     .example-wrapper{
         padding: inherit !important;
     }
+    .row{
+        margin-left: inherit !important;
+        margin-right: inherit !important;
+    }
 }
