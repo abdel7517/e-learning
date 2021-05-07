@@ -158,7 +158,7 @@ class PasswordResetController extends AbstractController
     private function sendPwdResetEmail(User $user, String $url, Swift_Mailer $mailer)
     {
         $message = (new Swift_Message('Reset Password'))
-            ->setFrom('learning2gether@becode.org')
+            ->setFrom('contact@ifpro-france.fr')
             ->setTo($user->getEmail())
             ->setBody(
                 $this->renderView(

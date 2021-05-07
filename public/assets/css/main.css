@@ -1,7 +1,12 @@
 .deco{
     display: none;
 }
-
+.NL{
+    letter-spacing: inherit !important;
+}
+.MB1{
+    margin-bottom: 1em;
+}
 @media screen and (max-width: 750px) {
     .ck-content{
         margin: 1em !important;
