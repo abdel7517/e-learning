@@ -40,4 +40,6 @@ class DashboardModuleController extends AbstractController
             'languagecount' => $languageCount,
         ]);
     }
+    
+
 }

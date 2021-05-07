@@ -7,6 +7,10 @@
 .MB1{
     margin-bottom: 1em;
 }
+.DFC{
+    display: flex;
+    flex-direction: column;
+}
 @media screen and (max-width: 750px) {
     .ck-content{
         margin: 1em !important;

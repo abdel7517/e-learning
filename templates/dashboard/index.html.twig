@@ -83,12 +83,22 @@
                             </div>
                         </td>
                         {% if module.isPublished %}
-                            <td>
-                                <div class="badge text-success">{{ 'Published' | trans }}</div>
+                            <td class='DFC' >
+                                <div class="badge  flagbtn badge badge-primary">{{ 'Published' | trans }}</div>
+                                <div class="badge text-success">
+                                    <a href=" {{ path('dashboard', {"id_module": module.id , "state": 0}) }} ">
+                                        {{ 'Désactivez le module' | trans }}
+                                    </a>
+                                </div>
                             </td>
                         {% else %}
-                            <td id="publish-{{ module.id }}">
-                                <div class="badge text-danger">{{ 'Unpublished' | trans }}</div>
+                            <td id="publish-{{ module.id }}" class='DFC'>
+                                <div class="badge  flagbtn badge badge-primary">{{ 'Unpublished' | trans }}</div>
+                                <div class="badge text-success"> 
+                                    <a href=" {{ path('dashboard', {"id_module": module.id , "state": 1 }) }} ">
+                                         {{ 'Publié le module' | trans }}
+                                    </a> 
+                                </div>
                             </td>
                         {% endif %}
                         <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('Are you sure about that?')">{{ 'Delete' | trans }}</a></td>
