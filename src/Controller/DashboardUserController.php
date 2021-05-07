@@ -20,7 +20,7 @@ class DashboardUserController extends AbstractController
     use LanguageTrait;
 
     /**
-     * @Route("partner/dashboard/user/{all}", name="dashboard_user")
+     * @Route("partner/dashboard_user/{all}", name="dashboard_user")
      * @return Response
      */
     public function index($all = false, Request $request): Response
