@@ -117,26 +117,37 @@ Class ApiTimeOfConnexion extends AbstractController {
                     $actualSessionId = $userRepo->getSessionId();
                     $newSessionId = $actualSessionId+1;
                     $userRepo->setSessionId($newSessionId);
+                    
+                    $message = "deco";
 
                     //add 20 min for the last presence 
-                    // $newTimeDeco = DateTime::createFromFormat('Y-m-d H:i', $date );
-                    // $newTimeDeco->add(new DateInterval('PT20M'));
-                    $message = "deco";
+                    $lastCo = $sessionRepo->getTimeDeco();
+                    $lastCoToString = $lastCo->format('Y-m-d H:i');
+
+                    $newTimeDeco = DateTime::createFromFormat('Y-m-d H:i', $lastCoToString );
+                    $newTimeDeco->add(new DateInterval('PT20M'));
+                    $sessionRepo->setTimeDeco($newTimeDeco);
                 }
 
             }
             // if connexion have more than 1 day
             else{
 
-                $userRepo =  $this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy([ 'id'=>$user_id]);
-                $actualSessionId = $userRepo->getSessionId();
-                $newSessionId = $actualSessionId+1;
-                $userRepo->setSessionId($newSessionId);
+                     $userRepo =  $this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy([ 'id'=>$user_id]);
+                    $actualSessionId = $userRepo->getSessionId();
+                    $newSessionId = $actualSessionId+1;
+                    $userRepo->setSessionId($newSessionId);
+                    
+                    $message = "deco";
 
-                //add 20 min for the last presence 
-                // $newTimeDeco = DateTime::createFromFormat('Y-m-d H:i', $date );
-                // $newTimeDeco->add(new DateInterval('PT20M'));
-                $message = "deco";
+                    //add 20 min for the last presence 
+                    $lastCo = $sessionRepo->getTimeDeco();
+                    $lastCoToString = $lastCo->format('Y-m-d H:i');
+
+                    $newTimeDeco = DateTime::createFromFormat('Y-m-d H:i', $lastCoToString );
+                    $newTimeDeco->add(new DateInterval('PT20M'));
+                    $sessionRepo->setTimeDeco($newTimeDeco);
+                    $message = "deco";
         
             }
           
