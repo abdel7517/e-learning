@@ -28,7 +28,7 @@
 
                                     
                                     {# if the day of current session of co is match with cureent day #}
-                                    {% if dayOfCo|date('Y-m-d') == session.time_deco|date('Y-m-d')   %}
+                                    {% if dayOfCo|date('Y-m-d') == session.time_co|date('Y-m-d')   %}
 
                                        {% if first == true %}
                                             <tr data-toggle="collapse" data-target="#demo{{indexDate }}" data-parent="#myTable">

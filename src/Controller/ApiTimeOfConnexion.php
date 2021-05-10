@@ -94,23 +94,40 @@ Class ApiTimeOfConnexion extends AbstractController {
 
             $lastCoString = date_format($sessionRepo->getTimeDeco(), "Y-m-d");
             $lastCo = DateTime::createFromFormat('Y-m-d', $lastCoString );
-            dump($now);
-            echo "<br>";
-            dump($lastCo);
+
+            // dump($now);
+            // echo "<br>";
+            // dump($lastCo);
+
             $diffForDay = date_diff($lastCo, $now);
-
             $diff_BetweenNowAndLastCo_InDay = $diffForDay->format('%d');
-             echo $diff_BetweenNowAndLastCo_InDay;      
-             exit;
 
+            // echo $diff_BetweenNowAndLastCo_InDay;      
+            //  exit;
 
-          
-            
+            // if the last connexion have less than 1 day
+            if( $diff_BetweenNowAndLastCo_InDay <= 1 ){
+                 
+                // check if the last connexion have less than 20min
+                if( $diff_BetweenNowAndLastCo_InMin <= 20 ){
+                    $sessionRepo->setTimeDeco($now);
+                }
+                else{
+                    $userRepo =  $this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy([ 'id'=>$user_id]);
+                    $actualSessionId = $userRepo->getSessionId();
+                    $newSessionId = $actualSessionId+1;
+                    $userRepo->setSessionId($newSessionId);
 
-           // check if it the same day because diff for minute give just diff for the same day 
-            if( $diff_BetweenNowAndLastCo_InMin <= 20 ){
-                $sessionRepo->setTimeDeco($now);
-            }else{
+                    //add 20 min for the last presence 
+                    // $newTimeDeco = DateTime::createFromFormat('Y-m-d H:i', $date );
+                    // $newTimeDeco->add(new DateInterval('PT20M'));
+                    $message = "deco";
+                }
+
+            }
+            // if connexion have more than 1 day
+            else{
+
                 $userRepo =  $this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy([ 'id'=>$user_id]);
                 $actualSessionId = $userRepo->getSessionId();
                 $newSessionId = $actualSessionId+1;
@@ -122,7 +139,10 @@ Class ApiTimeOfConnexion extends AbstractController {
                 $message = "deco";
         
             }
+          
+            
 
+          
             $manager->persist($sessionRepo);
             $manager->flush();
 
