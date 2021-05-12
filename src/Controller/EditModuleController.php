@@ -42,7 +42,7 @@ class EditModuleController extends AbstractController
         $moduleTypeForm = $this->createForm(EditModuleType::class, $module);
         $moduleTypeForm->handleRequest($request);
 
-        $moduleTLForm = $this->createForm(EditModuleTranslationsType::class, $englishTranslation[0]);
+        $moduleTLForm = $this->createForm(EditModuleTranslationsType::class, $englishTranslation[1]);
         $moduleTLForm->handleRequest($request);
 
         $addNewChapterBtn = $this->createFormBuilder()->getForm();
