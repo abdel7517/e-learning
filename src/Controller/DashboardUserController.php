@@ -34,7 +34,7 @@ class DashboardUserController extends AbstractController
 
         if($request->isMethod('POST')){
            $mail =   $request->get('mail');
-           $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([ "email"=>$mail ]);
+           $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([ "email"=> $mail ]);
 
            return $this->render('dashboard_user/index.html.twig', [
                'fm' => $fm,
@@ -126,9 +126,8 @@ class DashboardUserController extends AbstractController
                     $diff = date_diff($dateStart,$dateFinish);
                     $min = $diff->format('%i');
                     $hour = $diff->format('%H');
-                    if($hour > 1){
-                        $min = $min + ($hour * 60);
-                    }
+                    $min = $min + ($hour * 60);
+                    
                     
 
                     $detailsForOneSession['timeOfCo'] = $min;
