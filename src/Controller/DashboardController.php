@@ -17,7 +17,7 @@ class DashboardController extends AbstractController
     use LanguageTrait;
 
     /**
-     * @Route("partner/dashboard/{id_module}/{state}", name="dashboard")
+     * @Route("partner/{id_module}/{state}", name="dashboard")
      * @param Request $request
      * @return Response
      */
