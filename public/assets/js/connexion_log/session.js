@@ -46,7 +46,8 @@ class Session {
                 complete: function(resultat){
                     $('.deco').css('display', 'block');
                     console.log('deco');
-                    window.alert('Vous êtes déconnecté, rechargez la page ');
+                    window.alert('Vous êtes déconnecté (inactivé trop longue depuis votre dernière session ), vous allez commencez une nouvelle session');
+                    window.location.reload();
 
 
 

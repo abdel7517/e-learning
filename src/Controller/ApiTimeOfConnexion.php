@@ -118,7 +118,7 @@ Class ApiTimeOfConnexion extends AbstractController {
                     $newSessionId = $actualSessionId+1;
                     $userRepo->setSessionId($newSessionId);
                     
-                    $message = "deco";
+                    $message = $newSessionId;
 
                     //add 20 min for the last presence 
                     $lastCo = $sessionRepo->getTimeDeco();
@@ -138,7 +138,7 @@ Class ApiTimeOfConnexion extends AbstractController {
                     $newSessionId = $actualSessionId+1;
                     $userRepo->setSessionId($newSessionId);
                     
-                    $message = "deco";
+                    $message = $newSessionId;
 
                     //add 20 min for the last presence 
                     $lastCo = $sessionRepo->getTimeDeco();
