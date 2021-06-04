@@ -41,7 +41,7 @@ class QuizController extends AbstractController
     }*/
 
     /**
-     * @Route("/partner/quiz/{id}", name="quiz_show", methods={"GET"})
+     * @Route("/partner/quiz/show/{id}", name="quiz_show", methods={"GET"})
      */
     public function show(Request $request, Quiz $quiz, ChapterRepository $chapterRepository): Response
     {
