@@ -42,7 +42,7 @@
             {% for quiz_question in quiz.quizQuestions %}
                 <tr>
                     <td>
-                        <h5>{{ quiz_question.title(language) }}</h5>
+                        <h5>{{ quiz_question.title(language) | raw }}</h5>
                         <table>
                             <tr>
                                 <th>#</th>

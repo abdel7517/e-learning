@@ -29,7 +29,7 @@
                     <div class="row"><h3>{{ 'Question' | trans}} {{ question.questionNumber }}</h3></div>
                     <div class="row chapcardquiz">
                         <div class="col-md-6 chapimgquiz">
-                            <p class="question"> {{ question.getTitle(language) }}</p>
+                            <p class="question"> {{ question.getTitle(language) | raw }}</p>
                         </div>
                         <div class="col-md-6 chapinfoquiz">
                             {% for answer in question.answers %}
