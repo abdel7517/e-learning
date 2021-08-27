@@ -11,7 +11,7 @@ trait LanguageTrait
     private function getLanguage(Request $request) : Language
     {
         return $this->getDoctrine()->getRepository(Language::class)->findOneBy([
-            'code' => $request->getLocale()
+            'code' => "EN"
         ]);
     }
 }
