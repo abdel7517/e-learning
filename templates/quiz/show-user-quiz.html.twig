@@ -16,7 +16,7 @@
 
             {% if test == false %}
                 <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}" class="btn btn-default button button_4chap btnchapquiz">
-                    {{ 'Back to chapter'|trans }}
+                    {{ 'Revenir au chapitre'|trans }}
                 </a>
                 {% else %}
                     <a class="btn btn-default button button_4chap btnchapquiz" href="{{ path('dashboard_chapter', {'chapter': quiz.chapter.id}) }}">{{ 'Back to Dashboard' | trans }}</a>
@@ -62,17 +62,17 @@
                             -->
 
                             <div class="text-center modal-message">
-                                <p class="message-one">{{ 'You are almost there.' | trans }}</p>
-                                <p><span id="process-percentage"></span> % {{ 'correct' | trans }}</p>
-                                <p class="message-two">{{ 'Give it another shot!' | trans }}</p>
+                                <p class="message-one">{{ 'Raté ...' | trans }}</p>
+                                <p><span id="process-percentage"></span> % {{ ' de bonne réponse' | trans }}</p>
+                                <p class="message-two">{{ 'Vous devez valider plus de 85% pour valider ce chapitre' | trans }}</p>
                             </div>
 
                             <div class="row ">
                                 <div class="col-6">
-                                    <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">Chapter info</button></a>
+                                    <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">Retourner au chpitre</button></a>
                                 </div>
                                 <div class="col-6">
-                                    <a href="./{{ quiz.id }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">Try again</button></a>
+                                    <a href="./{{ quiz.id }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">Recommencer</button></a>
                                 </div>
                             </div>
                         </div>
@@ -87,17 +87,17 @@
                             </div>
 
                             <div class="text-center modal-message">
-                                <p class="message-one">{{ 'You completed the module.' | trans }}</p>
-                                <p class="message-two">{{ 'Well done!' | trans }}</p>
+                             <p class="message-one">{{ 'Bravo.' | trans }}</p>
+                                <p class="message-two">{{ 'Vous avez reussi ce quiz !' | trans }}</p>
                             </div>
 
                             <div class="row ">
                                 <div class="col-6">
-                                    <a href="{{ path('profile') }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">{{ 'Profile' | trans }}</button></a>
+                                    <a href="{{ path('profile') }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">{{ 'Profil' | trans }}</button></a>
                                 </div>
 
                                 <div class="col-6">
-                                    <a href="{{ path('portal') }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">{{ 'Learning Hub' | trans }}</button></a>
+                                    <a href="{{ path('portal') }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">{{ 'Tous les modules' | trans }}</button></a>
                                 </div>
                             </div>
                         </div>
@@ -114,17 +114,17 @@
                             -->
 
                             <div class="text-center modal-message">
-                                <p class="message-one">{{ 'You completed this chapter.' | trans }}</p>
-                                <p class="message-two">{{ 'Well done!' | trans }}</p>
+                             <p class="message-one">{{ 'Bravo.' | trans }}</p>
+                                <p class="message-two">{{ 'Vous avez reussi ce quiz !' | trans }}</p>
                             </div>
 
                             <div class="row ">
                                 <div class="col-6">
-                                    <a href="{{ path('profile') }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">{{ 'Profile' | trans }}</button></a>
+                                    <a href="{{ path('profile') }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">{{ 'Profil' | trans }}</button></a>
                                 </div>
 
                                 <div class="col-6">
-                                    <a href="{{ path('module', { module : module.id}) }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">{{ 'Next chapter' | trans }}</button></a>
+                                    <a href="{{ path('module', { module : module.id}) }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">{{ 'Chapitre suivant' | trans }}</button></a>
                                 </div>
                             </div>
                         </div>
@@ -134,8 +134,8 @@
 
             {% if test == false %}
                 <div class="row chapbutton_2quiz">
-                    <p id="completeText">{{ 'Fill in all questions to submit' | trans }}</p>
-                    <button class="btn btn-default button_5quiz noClick" id="send-quiz">{{ 'Submit test' | trans }}</button>
+                    <p id="completeText">{{ 'Répondez à toutes les questions pour valider' | trans }}</p>
+                    <button class="btn btn-default button_5quiz noClick" id="send-quiz">{{ 'Envoyer' | trans }}</button>
                 </div>
             {% endif %}
         </form>

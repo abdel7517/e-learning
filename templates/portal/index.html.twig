@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}L2G - {{ 'Portal' | trans }}{% endblock %}
+{% block title %}E-learnia - {{ 'Portal' | trans }}{% endblock %}
 
 {% block body %}
 
     <div class="example-wrapper">
 
-        <h1 class="title-css">{{ 'Learning Hub' | trans | title }}</h1>
-        <p class="text-center intro-lh">{{ 'Navigate through the Learning Modules and find the right training for you to advance your skills' | trans }}</p>
+        <h1 class="title-css">{{ 'Vos Modules' | trans | title }}</h1>
+        <p class="text-center intro-lh">{{ 'Naviguer parmi nos modules et monter en compétences ! ' | trans }}</p>
 
         {# <h2 class="subtitle-css">{{ 'Your courses' | trans | title }}</h2> #}
 
@@ -28,17 +28,17 @@
 
         <div class="card-columns">
             {% for module in activeModules %}
-                {% include 'portal/partials/module.html.twig' with {'module': module, 'label': 'Complete your course' } %}
+                {% include 'portal/partials/module.html.twig' with {'module': module, 'label': 'Finir le module' } %}
             {% endfor %}
         </div>
 
 
         {% for module in finishedModules %}
             {% if loop.first %}
-                <h2 class="subtitle-css mt-5 mb-3">{{ 'your completed courses' | trans | title }}</h2>
+                <h2 class="subtitle-css mt-5 mb-3">{{ 'Module terminer' | trans | title }}</h2>
                 <div class="card-columns">
             {% endif %}
-            {% include 'portal/partials/module.html.twig' with {'module': module, 'label': 'Restart this course'} %}
+            {% include 'portal/partials/module.html.twig' with {'module': module, 'label': 'Recommencer le module'} %}
             {% if loop.last %}
                 </div>
             {% endif %}

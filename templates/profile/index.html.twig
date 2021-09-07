@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}L2G - {{ 'My profile' | trans | title }}{% endblock %}
+{% block title %}E-learnia - {{ 'My profile' | trans | title }}{% endblock %}
 
 {% block body %}
 <div class="example-wrapper">
@@ -84,7 +84,7 @@
             {% endfor %}
         </div>
 
-        {% if badgeKeys %}
+       {#  {% if badgeKeys %}
         <div class="badges col-md-4 row">
             <h5 class="title-css center">{{ 'Your badges' | trans | title }}</h5>
             {% for badge in badgeKeys %}
@@ -94,7 +94,7 @@
                 </div>
             {% endfor %}
         </div>
-        {% endif %}
+        {% endif %} #}
     </div>
 </div>
     <script src="{{ asset('assets/js/profile.js') }}"></script>

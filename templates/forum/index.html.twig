@@ -16,9 +16,9 @@
 	<section class="example-wrapper">
 
 		<p class="title-css">{{ 'Forum' | trans | title  }}</p>
-		<p class="subtitle-css">{{ 'Categories' | trans | title  }}</p>
+		<p class="subtitle-css">{{ 'Modules' | trans | title  }}</p>
 
-		<div class="row forum-cat-row">
+	{# 	<div class="row forum-cat-row">
 			<div class="col-3 col-md-auto skillset">{{ 'Select skillset' | trans }}:</div>
 
 			<div class="col-3 col-md-auto">
@@ -31,7 +31,7 @@
 				<a class="btn button_1 btn-default btn-skills {% if mode == 'HARD' %} active-mode {% endif %}" href="{{ path('forum', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
 			</div>
 		</div>
-
+ #}
 
 		<div class="card-columns">
 			{% for category in allCategories %}
