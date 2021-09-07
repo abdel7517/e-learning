@@ -1,12 +1,14 @@
 {% extends 'home.html.twig' %}
 
-{% block title %}Learning2Gether{% endblock %}
+{% block title %}E-learnia{% endblock %}
 
 {% block body %}
     <div class="sidebar">
-        <img class="logo" src="{{ asset('assets/img/logo_transparent.png') }}" alt="logo">
+        {# add Logo #}
+            <img class="logo" src="{{ asset('assets/img/E-learnia.png') }}" alt="logo">
+
         <div class="loginwrap">
-            <a href="{{ path('app_login') }}"><button class="button button_1">{{ 'Login' | trans }}</button></a><br><br>
+            <a href="{{ path('app_login') }}"><button class="button button_1">{{ 'Connexion' | trans }}</button></a><br><br>
         </div>
     </div>
 {% endblock %}

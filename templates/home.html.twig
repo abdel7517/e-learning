@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-        <title>{% block title %}Learning2gether{% endblock %}</title>
+        <title>{% block title %}E-learnia{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         {% block stylesheets %}{% endblock %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -14,17 +14,14 @@
         <!-- STYLESHEET -->
         <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
 
-        <link rel='shortcut icon' type='image/x-icon' href='{{ asset('assets/img/favicon.ico') }}' />
     </head>
     <body class="loginbody">	
         <div class="titlewrap">
     {% block back %}
-        <h2>{{ 'Welcome to the homepage' | trans}}</h2>
-        <h1>Learning2gether</h1>
-        <p>{{ "Where digital and soft skills meet." | trans }}</p>
+        <h1>Bienvenue sur notre plateforme d'e-learning</h1>
+        <p>{{ "Apprenez à votre rythme." | trans }}</p>
     </div>
     {% endblock %}
-    <a class="learnmore button_2 button buttonshadow center" target="_blank" href="https://www.learning2gether.org/">{{ "Learn more" | trans }}</a>
 
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
@@ -36,7 +33,6 @@
     {% endfor %}
 
         {% block body %}{% endblock %}
-    <footer><a href="https://becode.org" target="_blank">© BeCode.org</a></footer>
         {% block javascripts %}{% endblock %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
