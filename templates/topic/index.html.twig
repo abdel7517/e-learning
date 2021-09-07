@@ -53,7 +53,7 @@
             </div>
         {% endfor %}
 
-        <p class="subtitle-css mt-5">{{ 'Add new question' | trans | title  }}</p>
+        <p class="subtitle-css mt-5">{{ 'Posez une question' | trans | title  }}</p>
 
         <section class="container topic-questions">
 
@@ -62,7 +62,7 @@
             <section class="row question-row">
                 <div class="col-3">
                     {# Form text #}
-                    {{ form_label(addQuestion.question, 'Title:', { 'label_attr': {'class': 'question-text'} }) }}
+                    {{ form_label(addQuestion.question, 'Titre:', { 'label_attr': {'class': 'question-text'} }) }}
                 </div>
                 <div class="col-9">
                     {# Form inputfield #}
@@ -82,7 +82,7 @@
                 </div>
             </section>
 
-           <button type="submit" class="btn-forum button_8">{{ 'Send Question' | trans }}</button>
+           <button type="submit" class="btn-forum button_8">{{ 'Envoyer' | trans }}</button>
 
             {{ form_end(addQuestion) }}
 
