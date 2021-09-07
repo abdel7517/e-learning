@@ -5,7 +5,7 @@
 
 {% block breadcrumbs %}
 	<li class="breadcrumb-item">
-		<a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a>
+		<a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Modules'|trans }}</a>
 	</li>
 	{% for crumb in page.chapter.learnerBreadcrumbs(app.user.language) %}
 		{{ include('partials/breadcrumbs.html.twig') }}

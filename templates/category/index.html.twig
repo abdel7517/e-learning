@@ -3,7 +3,7 @@
 {% block title %}{{ 'Forum' | trans }} - {{ 'Topics' | trans }}{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Modules'|trans }}</a></li>
     <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('forum') }}">{{ 'Forum'|trans }}</a></li>
         {% for crumb in category.learningModule.getForumBreadcrumbs(app.user.language, category) %}
             {{ include('partials/breadcrumbs.html.twig') }}
