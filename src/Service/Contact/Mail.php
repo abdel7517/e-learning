@@ -15,16 +15,16 @@ class Mail extends AbstractController
         $this->mailer = $mailer;
     }
    
-    public function notifUser(string $name ,string $mail ,string $mdp, string $formation)
+    public function notifUser(string $name ,string $mail ,string $mdp,string $start , string $formation)
     {
         // $form = $this->createForm(ContactType::class);
         // $form->handleRequest($request);
 
         // if ($form->isSubmitted() && $form->isValid()) {
             // $contact = $form->getData();
-            $contact = [ 'name' => $name, 'mail'=> $mail, 'mdp'=> $mdp, 'formation' => $formation ];
+            $contact = [ 'name' => $name, 'mail'=> $mail, 'mdp'=> $mdp, 'formation' => $formation, 'start' => $start ];
             // On crée le message
-            $message = (new \Swift_Message(' Votre formation commence '))
+            $message = (new \Swift_Message(' Votre Formation '))
                 // On attribue l'expéditeur
                 ->setFrom("contact@ifpro-france.fr")
                 // On attribue le destinataire

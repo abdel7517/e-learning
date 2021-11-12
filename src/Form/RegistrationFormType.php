@@ -60,48 +60,6 @@ class RegistrationFormType extends AbstractType
                         'class'=>'registerInput'),
                 'label'=> false
             ])
-            ->add('username', null, [
-                'attr'=>
-                    array(
-                        'placeholder'=>'Username',
-                        'class'=>'registerInput'),
-                'label'=> false
-            ])
-            //->add('language', LanguageType::class, [])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr'=>
-                    array(
-                        'placeholder'=>'Password',
-                        'class'=>'registerInput'),
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-                'label'=> false
-            ])
-            ->add('passwordRepeat', PasswordType::class, [
-                'mapped' => false,
-                'attr'=>
-                    array(
-                        'placeholder'=>'Re-enter password',
-                        'class'=>'registerInput'),
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please repeat your password',
-                    ]),
-                ],
-                'label'=> false
-            ])
             ->add('formation', EntityType::class, [
             
                 'class' => LearningModule::class,
@@ -114,18 +72,22 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('start', DateType::class, [
                 'data_class' => null,
-                'label' => 'Début de formation'
+                'label' => 'Début de formation',
+                'data' => new \DateTime("now"),
+                'format' => 'ddMMyyyy'
             ])
             ->add('end', DateType::class, [
                 'data_class' => null,
-                'label' => 'Fin de formation'
+                'label' => 'Fin de formation',
+                'data' => new \DateTime("now"),
+                'format' => 'ddMMyyyy'
 
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez acceptez nos conditions générales',
                     ]),
                 ],
             ]);

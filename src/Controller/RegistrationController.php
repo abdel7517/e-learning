@@ -51,23 +51,16 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // compare pwd and pwd-repeat
-            $pwd = $_POST['registration_form']['plainPassword'];
-            $pwdRepeat = $_POST['registration_form']['passwordRepeat'];
-
-            if (!$pwd || !$pwdRepeat || ($pwd != $pwdRepeat)) {
-                $this->addFlash('error', 'Enter your password correctly again!');
-                return $this->redirect($_SERVER['HTTP_REFERER']);
-            }
-
+            $passWord = uniqid();
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $passWord
                 )
             );
-  
+            $userName = uniqid("user");
+            $user->setUsername($userName);
             $defaultLang = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
             $user->setLanguage($defaultLang);
             // add formation of user 
@@ -90,8 +83,9 @@ class RegistrationController extends AbstractController
             // do anything else you need here, like send an email
             $name = $form->get('name')->getData();
             $mail = $form->get('email')->getData();
-            $passWord = $form->get('plainPassword')->getData();
-            $this->mailer->notifUser($name, $mail, $passWord, $formation->getTitle($defaultLang));
+            $start = $form->get('start')->getData()->format('d-m-Y');
+
+            $this->mailer->notifUser($name, $mail, $passWord, $start, $formation->getTitle($defaultLang));
             $this->addFlash('error', 'Le nouvelle utilisateur à été créé avec succés');  
         }
         

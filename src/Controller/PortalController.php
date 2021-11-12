@@ -44,11 +44,11 @@ class PortalController extends AbstractController
         
         if($start > $now)
         {
-           return $this->render('portal/info.html.twig', ['message' => "Votre formation débute le " . $user->getStart()->format('d:m:Y') ]);
+           return $this->render('portal/info.html.twig', ['message' => "Votre formation débute le " . $user->getStart()->format('d-m-Y') ]);
         }
         if($end < $now)
         {
-            return $this->render('portal/info.html.twig', ['message' => "Votre formation est finis depuis le " . $user->getEnd()->format('d:m:Y') ]);
+            return $this->render('portal/info.html.twig', ['message' => "Votre formation est finis depuis le " . $user->getEnd()->format('d-m-Y') ]);
         }
 
         // get the user formation and publish him sld
