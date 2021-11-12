@@ -15,14 +15,14 @@ class Mail extends AbstractController
         $this->mailer = $mailer;
     }
    
-    public function notifUser(string $name ,string $mail ,string $mdp)
+    public function notifUser(string $name ,string $mail ,string $mdp, string $formation)
     {
         // $form = $this->createForm(ContactType::class);
         // $form->handleRequest($request);
 
         // if ($form->isSubmitted() && $form->isValid()) {
             // $contact = $form->getData();
-            $contact = [ 'name' => $name, 'mail'=> $mail, 'mdp'=> $mdp ];
+            $contact = [ 'name' => $name, 'mail'=> $mail, 'mdp'=> $mdp, 'formation' => $formation ];
             // On crée le message
             $message = (new \Swift_Message(' Votre formation commence '))
                 // On attribue l'expéditeur
@@ -35,8 +35,7 @@ class Mail extends AbstractController
                         'contact/mail.html.twig', compact('contact')
                     ),
                     'text/html'
-                )
-            ;
+                );
             try {
                 $this->mailer->send($message);
             } catch (\Throwable $th) {

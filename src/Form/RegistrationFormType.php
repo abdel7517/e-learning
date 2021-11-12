@@ -3,21 +3,29 @@
 namespace App\Form;
 
 use App\Entity\User;
-use Symfony\Component\Console\Input\Input;
+use App\Entity\Language;
+use App\Entity\LearningModule;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\LanguageType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Image;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class RegistrationFormType extends AbstractType
 {
+    private $em; 
+
+    public function __construct( EntityManagerInterface $em )
+    {
+        $this->em = $em;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -93,6 +101,25 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'label'=> false
+            ])
+            ->add('formation', EntityType::class, [
+            
+                'class' => LearningModule::class,
+                'choice_label' => function($LearningModule){
+                    $defaultLang = $this->em->getRepository(Language::class)->findOneBy(['code' => 'en']);
+                    return $LearningModule->getTitle($defaultLang);
+                },
+                'data_class' => null,
+                'mapped'=>false,
+            ])
+            ->add('start', DateType::class, [
+                'data_class' => null,
+                'label' => 'Début de formation'
+            ])
+            ->add('end', DateType::class, [
+                'data_class' => null,
+                'label' => 'Fin de formation'
+
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

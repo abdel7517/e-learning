@@ -10,6 +10,7 @@ use App\Service\Contact\Mail;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthAuthenticator;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
@@ -19,9 +20,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegistrationController extends AbstractController
 {
     private $mailer;
+    private $security;
 
-    public function __construct( Mail $mailer){
+    public function __construct( Mail $mailer, Security $security){
         $this->mailer = $mailer;
+        $this->security = $security;
     }
 
     /**
@@ -64,14 +67,20 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+  
             $defaultLang = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
             $user->setLanguage($defaultLang);
-
+            // add formation of user 
+            $formation = $form->get('formation')->getData();
+            $user->setFormation($formation->getId());
             // TODO pass null to database to get automatic timestamp
             $dateTime = new DateTimeImmutable();
             $user->setCreated($dateTime);
             $user->setSessionId(0);
+            
+            // add market_id
+            $market = $this->security->getUser()->getId();
+            $user->setMarketId($market);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -82,12 +91,10 @@ class RegistrationController extends AbstractController
             $name = $form->get('name')->getData();
             $mail = $form->get('email')->getData();
             $passWord = $form->get('plainPassword')->getData();
-            $this->mailer->notifUser($name, $mail, $passWord);
-            $this->addFlash('error', 'Le nouvelle utilisateur à été créé avec succés ');
-
-           
+            $this->mailer->notifUser($name, $mail, $passWord, $formation->getTitle($defaultLang));
+            $this->addFlash('error', 'Le nouvelle utilisateur à été créé avec succés');  
         }
-
+        
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);

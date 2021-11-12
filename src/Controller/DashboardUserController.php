@@ -11,6 +11,7 @@ use App\Domain\LanguageTrait;
 use App\Domain\FlaggingManager;
 use App\Entity\TimeOfConnexion;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +19,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DashboardUserController extends AbstractController
 {
     use LanguageTrait;
-
+    private $security;
+    public function  __construct(Security $security)
+    {
+        $this->security = $security;
+    }
     /**
      * @Route("partner/dashboard/user/home/{all}", name="dashboard_user")
      * @return Response
@@ -31,18 +36,21 @@ class DashboardUserController extends AbstractController
         $pr = $this->getDoctrine()->getRepository(ChapterPage::class);
         $users = $this->getDoctrine()->getRepository(User::class);
         $fm = new FlaggingManager($languageCount);
+        $user = $this->security->getUser();
 
         if($request->isMethod('POST')){
            $mail =   $request->get('mail');
-           $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([ "email"=> $mail ]);
-
-           return $this->render('dashboard_user/index.html.twig', [
-               'fm' => $fm,
-               'language' => $language,
-               'pr' => $pr,
-               'user' => $user,
-               'languagecount' => $languageCount,
-           ]);
+           $answer = $this->getDoctrine()->getRepository(User::class)->findOneBy([ "email" => $mail, 'market_id' => $user->getId() ]);
+            if ($answer != null)
+                {
+                    return $this->render('dashboard_user/index.html.twig', [
+                        'fm' => $fm,
+                        'language' => $language,
+                        'pr' => $pr,
+                        'user' => $answer,
+                        'languagecount' => $languageCount,
+                    ]);
+                }
         }
         
         if($all == true){
@@ -51,16 +59,15 @@ class DashboardUserController extends AbstractController
                 'fm' => $fm,
                 'language' => $language,
                 'pr' => $pr,
-                "users" => $users->findAll(),
+                "users" => $users->findBy(['market_id' => $user->getId() ],null),
                 'languagecount' => $languageCount,
             ]);
         }
-
         return $this->render('dashboard_user/index.html.twig', [
             'fm' => $fm,
             'language' => $language,
             'pr' => $pr,
-            "users" => $users->findBy([],null,  5),
+            "users" => $users->findBy(['market_id' => $user->getId() ],null,  5),
             'languagecount' => $languageCount,
         ]);
        
@@ -193,5 +200,17 @@ class DashboardUserController extends AbstractController
         );
     }
 
+    /**
+     * @Route("delete/{id}", name="dashboard_user_delete")
+     */
+    public function delete(int $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository(User::class)->find($id);
+        $em->remove($user);
+        $em->flush();
+        return $this->redirectToRoute('dashboard_user');
+    }
 
 }

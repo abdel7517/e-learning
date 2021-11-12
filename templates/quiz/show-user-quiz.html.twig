@@ -62,16 +62,16 @@
                             -->
 
                             <div class="text-center modal-message">
-                                <p class="message-one">{{ 'Raté ...' | trans }}</p>
+                                <p class="message-one">{{ 'Dommage ...' | trans }}</p>
                                 <p><span id="process-percentage"></span> % {{ ' de bonne réponse' | trans }}</p>
                                 <p class="message-two">{{ 'Vous devez valider plus de 85% pour valider ce chapitre' | trans }}</p>
                             </div>
 
                             <div class="row ">
-                                <div class="col-6">
+                                <div class="col">
                                     <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">Retourner au chpitre</button></a>
                                 </div>
-                                <div class="col-6">
+                                <div class="col">
                                     <a href="./{{ quiz.id }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">Recommencer</button></a>
                                 </div>
                             </div>

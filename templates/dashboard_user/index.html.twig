@@ -36,6 +36,8 @@
                     <th scope="col">{{ 'Mail' | trans }}</th>
                     <th scope="col">{{ 'Date d\'entrée en formation' | trans }}</th>
                     <th scope="col">{{ 'Historique de connexion' | trans }}</th>
+                    <th scope="col">{{ 'Annuler la formation' | trans }}</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -46,6 +48,8 @@
                             <td>{{ user.email }}</td>
                             <td>{{ user.created|date("d-m-Y") }}</td>
                             <td> <a href=" {{ path('dashboard_user_history', { 'id': user.id }) }} ">Voir</a> </td>
+                            <td> <a href="  {{ path('dashboard_user_delete', { 'id': user.id }) }} " onclick="check()" >Annuler</a> </td>
+                            
                         </tr>
                     {% endfor %}
                 {% endif %}

@@ -101,3 +101,9 @@ document.querySelectorAll(".ck-content a:not(.prev):not(.next)").forEach(
     function (el) {
         el.target = "_blank";
     });
+
+  function check()
+  {
+    if (!confirm("Voulez-vous annuler cette formation ?"))
+         event.preventDefault();
+}

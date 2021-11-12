@@ -51,6 +51,11 @@ class User implements UserInterface
     private $username;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $formation;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatar;
@@ -106,6 +111,26 @@ class User implements UserInterface
      */
     private $session_id;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $start;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $end;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $market;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $market_id;
+
     public function __construct()
     {
         $this->topics = new ArrayCollection();
@@ -127,7 +152,10 @@ class User implements UserInterface
     {
         return $this->name;
     }
-
+    public function getFormation(): string
+    {
+        return $this->formation;
+    }
     public function setName(string $name): void
     {
         $this->name = $name;
@@ -195,7 +223,12 @@ class User implements UserInterface
 
         return $this;
     }
+    public function setFormation(string $formation): self
+    {
+        $this->formation = $formation;
 
+        return $this;
+    }
     public function getAvatar():? string
     {
         return $this->avatar;
@@ -473,6 +506,54 @@ class User implements UserInterface
     public function setSessionId(int $session_id): self
     {
         $this->session_id = $session_id;
+
+        return $this;
+    }
+
+    public function getStart(): ?\DateTimeInterface
+    {
+        return $this->start;
+    }
+
+    public function setStart(\DateTimeInterface $start): self
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    public function getEnd(): ?\DateTimeInterface
+    {
+        return $this->end;
+    }
+
+    public function setEnd(\DateTimeInterface $end): self
+    {
+        $this->end = $end;
+
+        return $this;
+    }
+
+    public function getMarket(): ?int
+    {
+        return $this->market;
+    }
+
+    public function setMarket(?int $market): self
+    {
+        $this->market = $market;
+
+        return $this;
+    }
+
+    public function getMarketId(): ?int
+    {
+        return $this->market_id;
+    }
+
+    public function setMarketId(int $market_id): self
+    {
+        $this->market_id = $market_id;
 
         return $this;
     }

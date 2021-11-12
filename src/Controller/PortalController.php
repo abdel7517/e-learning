@@ -3,21 +3,26 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Domain\LanguageTrait;
-use App\Domain\LearningModuleType;
-use App\Entity\Language;
-use App\Entity\LearningModule;
+use DateTime;
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Language;
+use App\Domain\LanguageTrait;
+use App\Entity\LearningModule;
+use App\Domain\LearningModuleType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PortalController extends AbstractController
 {
     use LanguageTrait;
-
-
+    private $security;
+    public function  __construct(Security $security)
+    {
+        $this->security = $security;
+    }
     /**
      * @Route("/portal", name="portal")
      */
@@ -30,14 +35,32 @@ class PortalController extends AbstractController
             $mode = 'ALL';
         }
 
-        // get the user formation and publish him sld
+        $user = $this->security->getUser();
+       
+        $n = DateTime::createFromFormat('Y-m-d', Date('Y-m-d') );
+        $start = date_format($user->getStart(), 'Y-m-d');
+        $end = date_format($user->getEnd(), 'Y-m-d');
+        $now = date_format($n, 'Y-m-d');
+        
+        if($start > $now)
+        {
+           return $this->render('portal/info.html.twig', ['message' => "Votre formation débute le " . $user->getStart()->format('d:m:Y') ]);
+        }
+        if($end < $now)
+        {
+            return $this->render('portal/info.html.twig', ['message' => "Votre formation est finis depuis le " . $user->getEnd()->format('d:m:Y') ]);
+        }
 
-        $modules = !isset($_GET['mode'])?
+        // get the user formation and publish him sld
+        $formation = $user->getFormation();
+        $modules = $this->getDoctrine()->getRepository(LearningModule::class)->findBy(['id' =>  $formation ]);
+
+       /* $modules = !isset($_GET['mode'])?
             $this->getDoctrine()->getRepository(LearningModule::class)->findBy(['isPublished' => true])
             : $this->getDoctrine()->getRepository(LearningModule::class)->findBy([
                 'isPublished' => true,
                 'type' => strtoupper($_GET['mode'])
-            ]);
+            ]);*/
 
         $mode = $_GET['mode'] ?? 'ALL';
 
@@ -53,8 +76,7 @@ class PortalController extends AbstractController
                 $activeModules[] = $learningModule;
             }
         }
-
-        return $this->render('portal/index.html.twig', [
+       return $this->render('portal/index.html.twig', [
             'mode' => $mode,
             'language' => $this->getLanguage($request),
             'activeModules' => $activeModules,

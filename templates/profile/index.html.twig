@@ -12,7 +12,7 @@
                     {% if user.avatar %}
                         <img src="{{ asset(user.avatar | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
                     {% else %}
-                        <img src="{{ asset('logo_transparent.png' | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
+                        <img src="{{ asset('E-learnia.png' | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
                     {% endif %}
                 </div>
                 <div class="profiletext">
@@ -20,9 +20,17 @@
                     <p>{{ user.name }}</p>
                     <p>{{ user.email }}</p>
 
-                    <div class="button button_2" id="imagebutton">{{ 'Edit' | trans }} {{ 'Profile' | trans }}</div>
+                    <div class="button  mt-3 w-100 btn btn-dark" id="imagebutton">{{ 'Edit' | trans }} {{ 'Profil' | trans }}</div>
+                    <div class="profiletext">
+                   
+
+                    <div class="button  text-center mt-1 pr-2 w-100 text-white btn btn-dark" id="">  <a href=" {{ path('user_history') }} " class=" text-white" > {{ ' Historique de connexion' | trans }} </a>  </div>
 
                 </div>
+
+                </div>
+              
+                
             </div>
             {# edit mode : only if "edit-btn" is clicked #}
             <div class="gone card absCenter" id="show">
@@ -61,7 +69,7 @@
                 <div class="progression">
                     {% if loop.first %}
 
-                        <h3 class="title-css progresstitle">{{ 'Active courses unlocked percentage' | trans | title }}</h3>
+                        <h3 class="title-css progresstitle">{{ 'Pourcentage de cours débloqué ' | trans | title }}</h3>
 
                     {% endif %}
                     <p class="coursetitle">{{ module.title(language) }}</p>
@@ -78,11 +86,12 @@
                         </div>
                     </div>
 
-                    <a href="{{ path('module', {'module': module.id}) }}" class="completebutton button_2 button">{{ 'Continue' | trans }}</a>
+                    <a href="{{ path('module', {'module': module.id}) }}" class="completebutton button_2 button">{{ 'Continuer' | trans }}</a>
 
                 </div>
             {% endfor %}
         </div>
+           
 
        {#  {% if badgeKeys %}
         <div class="badges col-md-4 row">

@@ -17,7 +17,6 @@ class SecurityController extends AbstractController
          if ($this->getUser()) {
             return $this->redirectToRoute($this->getUser()->isPartner() ? 'partner' : 'portal');
          }
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
