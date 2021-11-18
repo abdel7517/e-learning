@@ -5,15 +5,15 @@
 {% block body %}
 
 <div class="example-wrapper">
-    <h1>{{ 'Reset your password!' | trans }}</h1>
+    <h1>{{ 'Changer votre mot de passe' | trans }}</h1>
     <p>
-        {{ "If you've forgotten your password, enter your e-mail address and we'll send you an e-mail telling you how to recover it." | trans }}
+        {{ "Entrez votre email et vous receverez un lien pour changer votre mot de passe" | trans }}
     </p>
 
     <form action="" method="post">
-        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Enter your e-mail address" required autofocus>
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="exemple@.." required autofocus>
         <button class="button button_2 margintop" type="submit" name="reset-request-submit">
-            {{ 'Send' | trans }}
+            {{ 'Envoyer' | trans }}
         </button>
     </form>
 </div>

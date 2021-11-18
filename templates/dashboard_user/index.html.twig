@@ -10,7 +10,7 @@
                         data-toggle="tooltip" data-placement="right" title="Add a user">
                     <img class="addicon" src="{{ asset('assets/img/user.png') }}" alt="add icon">
                 </button>
-                <p class="mt-2">{{ 'Ajoutez un utilisateur' | trans }}</p>
+                <p class="btn btn-light">{{ 'Ajoutez un utilisateur' | trans }}</p>
             </a>
 
             <form action=" {{ path('dashboard_user') }}" method="POST">
@@ -21,7 +21,7 @@
                 <button type="submit" class="btn btn-primary">Cherchez</button>
             </form>
 
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-light">
                  <a href=" {{ path('dashboard_user', { 'all': true }) }} ">Voire tous les utilisateurs</a>
             </button>
 
@@ -35,7 +35,7 @@
                 <tr>
                     <th scope="col">{{ 'Mail' | trans }}</th>
                     <th scope="col">{{ 'Date d\'entrée en formation' | trans }}</th>
-                    <th scope="col">{{ 'Historique de connexion' | trans }}</th>
+                    <th scope="col">{{ 'Détails' | trans }}</th>
                     <th scope="col">{{ 'Annuler la formation' | trans }}</th>
 
                 </tr>
@@ -46,7 +46,7 @@
                     {% for user in users %}
                         <tr>
                             <td>{{ user.email }}</td>
-                            <td>{{ user.created|date("d-m-Y") }}</td>
+                            <td>{{ user.start|date("d-m-Y") }}</td>
                             <td> <a href=" {{ path('dashboard_user_history', { 'id': user.id }) }} ">Voir</a> </td>
                             <td> <a href="  {{ path('dashboard_user_delete', { 'id': user.id }) }} " onclick="check()" >Annuler</a> </td>
                             

@@ -60,6 +60,12 @@ class RegistrationFormType extends AbstractType
                         'class'=>'registerInput'),
                 'label'=> false
             ])
+            ->add('number', null, [
+                'attr'=>
+                    array(
+                        'placeholder'=>'Numéro de tel..'),
+                'label'=> false
+            ])
             ->add('formation', EntityType::class, [
             
                 'class' => LearningModule::class,
@@ -69,6 +75,11 @@ class RegistrationFormType extends AbstractType
                 },
                 'data_class' => null,
                 'mapped'=>false,
+            ])
+            ->add('duration', null, [
+                'attr'=>
+                    array('placeholder'=>'Durée formation'),
+                'label'=> false
             ])
             ->add('start', DateType::class, [
                 'data_class' => null,

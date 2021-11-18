@@ -59,7 +59,7 @@ class DashboardUserController extends AbstractController
                 'fm' => $fm,
                 'language' => $language,
                 'pr' => $pr,
-                "users" => $users->findBy(['market_id' => $user->getId() ],null),
+                "users" => $users->findBy(['market_id' => $user->getId() ],["start" => "DESC"]),
                 'languagecount' => $languageCount,
             ]);
         }
@@ -67,7 +67,7 @@ class DashboardUserController extends AbstractController
             'fm' => $fm,
             'language' => $language,
             'pr' => $pr,
-            "users" => $users->findBy(['market_id' => $user->getId() ],null,  5),
+            "users" => $users->findBy(['market_id' => $user->getId() ],["start" => "DESC"],  5),
             'languagecount' => $languageCount,
         ]);
        
@@ -90,6 +90,7 @@ class DashboardUserController extends AbstractController
         $fm = new FlaggingManager($languageCount);
 
         $history = $this->getDoctrine()->getRepository(TimeOfConnexion::class)->findBy(['user_id' => $id], ['toDay' => 'DESC']);
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $id]);
         $dateOfConnexion= [];
         
         // get all date of connexion  
@@ -173,7 +174,8 @@ class DashboardUserController extends AbstractController
             'pr' => $pr,
             'languagecount' => $languageCount,
             'history'=>$sessionAccordingToADay,
-            "totalOfConnexionForDay" => $dayWithTotal
+            "totalOfConnexionForDay" => $dayWithTotal,
+            "user" => $user
         ]);
     }
 
@@ -211,6 +213,89 @@ class DashboardUserController extends AbstractController
         $em->remove($user);
         $em->flush();
         return $this->redirectToRoute('dashboard_user');
+    }
+
+
+    public function getHistory($id)
+    {
+       /* $language = $this->getLanguage($request);
+        $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
+
+        $pr = $this->getDoctrine()->getRepository(ChapterPage::class);
+        $fm = new FlaggingManager($languageCount);*/
+
+        $history = $this->getDoctrine()->getRepository(TimeOfConnexion::class)->findBy(['user_id' => $id], ['toDay' => 'DESC']);
+        $dateOfConnexion= [];
+        
+        // get all date of connexion  
+        foreach($history as $item){
+
+            $day = $item->getToday()->format('Y-m-d');
+            $positionOfItem = array_search($day, $dateOfConnexion);
+
+            if($positionOfItem !== 0){
+
+                $dateOfConnexion[]=$day;
+
+            }
+            
+        }
+
+        // all session of co
+        $allSession = [];
+        $sessionAccordingToADay = [];
+        $totalOfConnexionForDay = 0;
+        // array with date of connexion and total min of co
+        $dayWithTotal = [];
+        $totalCo = 0;
+        foreach($dateOfConnexion as $date){
+
+            $detailsSessionForOneDay = [];
+
+            foreach($history as $item){
+
+                $day = $item->getToday()->format('Y-m-d');
+
+                // if the date of item element match with the 
+                if( $date == $day ){
+                    $detailsForOneSession = [];
+                    $detailsForOneSession['time_co'] = $item->getTimeCo();
+                    $detailsForOneSession['time_deco'] = $item->getTimeDeco();
+
+                    $dateStart = $item->getTimeCo();
+                    $dateFinish = $item->getTimeDeco();
+                    $diff = $dateFinish->diff($dateStart);
+                    $diff = date_diff($dateStart,$dateFinish);
+                    $min = $diff->format('%i');
+                    $hour = $diff->format('%H');
+                    $min = $min + ($hour * 60);
+                    
+                    
+
+                    $detailsForOneSession['timeOfCo'] = $min;
+                    $totalCo += $min;
+                    $totalOfConnexionForDay += $min;
+                    
+                    // save session info
+                    $detailsSessionForOneDay[] = $detailsForOneSession;
+                    // $sessionAccordingToADay[$day] = $allSessionForDay;
+
+                }
+                if(!empty($detailsSessionForOneDay))
+                {
+                    $allSession[] = $detailsSessionForOneDay;
+                }
+    
+            }
+
+            $sessionAccordingToADay[$date] = $detailsSessionForOneDay;
+            $dayWithTotal[$date] = $totalOfConnexionForDay;
+            $totalOfConnexionForDay = 0;
+
+        }
+
+        return $totalCo;        
+       
     }
 
 }

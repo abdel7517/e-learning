@@ -29,7 +29,6 @@
 				class="navbar navbar-expand-md navbar-dark bg nav-bar-color">
 				<!-- LOGO   -->
 
-				<a class="navbar-brand" href="{{ path('homepage') }}"><img src="{{ asset('assets/img/lightlogo-15.png') }}" height="50px" alt="logo"></a>
 
 				<!-- HAMBURGER ICON BUTTON   -->
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,6 +80,9 @@
         <div class="titlewrap">
     {% block back %}
         <h2>{{ 'Ajoutez un nouvelle utilisateur' | trans}}</h2>
+        <p class="btn btn-light link-black">
+            <a class="link-black" href="{{ path('dashboard_user') }}">{{ 'Retorunez au tableau admin' | trans }}</a>
+        </p>
     </div>
     {% endblock %}
 
@@ -101,7 +103,9 @@
         <div class="loginwrap">
                 {{ form_row(registrationForm.name) }}
                 {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.number) }}
                 {{ form_row(registrationForm.formation) }}
+                {{ form_row(registrationForm.duration) }}
                 {{ form_row(registrationForm.start) }}
                 {{ form_row(registrationForm.end) }}
                 {{ form_row(registrationForm.agreeTerms) }}
@@ -109,11 +113,11 @@
                 <button class="button button_1">{{ 'Ajoutez' | trans }}</button>
         </div>
     {{ form_end(registrationForm) }}
-        <p class="accountgot">
-                <a href="{{ path('partner') }}">{{ 'Retorunez au tableau admin' | trans }}</a>
+        <p class="btn btn-light accountgot">
+                <a href="{{ path('dashboard_user') }}">{{ 'Retorunez au tableau admin' | trans }}</a>
         </p>
 </div>
-{% endblock %}    <footer><a href="https://becode.org" target="_blank">© BeCode.org</a></footer>
+{% endblock %}   
         {% block javascripts %}{% endblock %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

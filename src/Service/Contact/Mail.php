@@ -26,7 +26,7 @@ class Mail extends AbstractController
             // On crée le message
             $message = (new \Swift_Message(' Votre Formation '))
                 // On attribue l'expéditeur
-                ->setFrom("contact@ifpro-france.fr")
+                ->setFrom("contact@abyformation.fr")
                 // On attribue le destinataire
                 ->setTo($mail)
                 // On crée le texte avec la vue
@@ -58,7 +58,7 @@ class Mail extends AbstractController
             // On crée le message
             $message = (new \Swift_Message('Modification de votre MDP '))
                 // On attribue l'expéditeur
-                ->setFrom("contact@staffdeco.fr")
+                ->setFrom("contact@abyformation.fr")
                 // On attribue le destinataire
                 ->setTo($mail)
                 // On crée le texte avec la vue
@@ -76,24 +76,23 @@ class Mail extends AbstractController
         // return $this->render('contact/index.html.twig',['contactForm' => $form->createView()]);
     }
 
-    public function notifAdmin(){
-        $contact = ['link' => 'https://boutique.staffdeco.fr/admin/'];
+    public function notif_end($user, $timeOfCo)
+    {
+        $co = ['user' => $user, 'timeOfCo' => $timeOfCo];
         // On crée le message
-        $message = (new \Swift_Message('Nouvelle Commande'))
+        $message = (new \Swift_Message('Fin de formation'))
             // On attribue l'expéditeur
-            ->setFrom("contact@staffdeco.com")
+            ->setFrom("contact@abyformation.fr")
+            ->setSubject('Fin de formation')
             // On attribue le destinataire
-            ->setTo('contact@staffdeco.com')
+            ->setTo("chabane.abdelkarim@gmail.com")
             // On crée le texte avec la vue
             ->setBody(
                 $this->renderView(
-                    'contact/newOrder.html.twig', compact('contact')
+                    'contact/endFormation.html.twig', compact('co')
                 ),
                 'text/html'
-            )
-        ;
-        $this->mailer->send($message);
+            );
+            $this->mailer->send($message);
     }
-
-
 }

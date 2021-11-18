@@ -8,7 +8,7 @@ class Session {
         this.startTimer(20*60);
         this.sendPresence();
         window.addEventListener('mousemove', function() {newSession.restartTimer()} );
-      
+        window.addEventListener('touchstart', function() {newSession.restartTimer()} );
         setInterval(function(){ newSession.sendPresence() }, 30000);
 
     }

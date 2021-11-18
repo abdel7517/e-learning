@@ -36,13 +36,13 @@ class PasswordResetController extends AbstractController
             // If everything is done, show the msg and take user to login page
             $this->addFlash(
                 'info',
-                'Email is sent, check your mail box!'
+                'Email envoyer avec succés'
             );
         } else {
             // If everything is done, show the msg and take user to login page
             $this->addFlash(
                 'error',
-                'Email cannot be sent.'
+                'Erreur lors de l\'envoye du mail.'
             );
         }
         return $this->redirectToRoute('app_login');
@@ -58,7 +58,7 @@ class PasswordResetController extends AbstractController
 
         // Throw error to the user with wrong URL
         if (!isset($selector) || !isset($validator)) {
-            $this->addFlash('error', 'Your request is not valid, please make new request again!');
+            $this->addFlash('error', 'Votre requête est invalide');
             return $this->redirectToRoute('password_reset');
         }
 
@@ -75,7 +75,7 @@ class PasswordResetController extends AbstractController
 
             //step1 : Input validation (not empty? both are same?)
             if (!$pwd || !$pwdRepeat || ($pwd != $pwdRepeat)) {
-                $this->addFlash('error', 'Enter your password correctly again!');
+                $this->addFlash('error', 'Veuillez confirmer votre mot de passe');
                 return $this->redirect($_SERVER['HTTP_REFERER']);
             }
 

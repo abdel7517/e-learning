@@ -131,6 +131,16 @@ class User implements UserInterface
      */
     private $market_id;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $duration;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $number;
+
     public function __construct()
     {
         $this->topics = new ArrayCollection();
@@ -554,6 +564,30 @@ class User implements UserInterface
     public function setMarketId(int $market_id): self
     {
         $this->market_id = $market_id;
+
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(int $duration): self
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getNumber(): ?int
+    {
+        return $this->number;
+    }
+
+    public function setNumber(int $number): self
+    {
+        $this->number = $number;
 
         return $this;
     }
