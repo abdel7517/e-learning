@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}E-learnia - {{ 'My profile' | trans | title }}{% endblock %}
+{% block title %}ABY formation - {{ 'My profile' | trans | title }}{% endblock %}
 
 {% block body %}
 <div class="example-wrapper">
@@ -12,7 +12,7 @@
                     {% if user.avatar %}
                         <img src="{{ asset(user.avatar | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
                     {% else %}
-                        <img src="{{ asset('E-learnia.png' | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
+                        <img src="{{ asset('logo.png' | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
                     {% endif %}
                 </div>
                 <div class="profiletext">
