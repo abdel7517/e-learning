@@ -81,7 +81,7 @@ class DashboardUserController extends AbstractController
      * @Route("partner/dashboard/user/history/{id}", name="dashboard_user_history")
      * @return Response
      */
-    public function history(Request $request, $id): Response
+    public function history(Request $request,int  $id): Response
     {
         $language = $this->getLanguage($request);
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();

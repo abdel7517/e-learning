@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<a href=" {{ path('profile') }} " class="previous">&laquo; Retour</a>
+
+<table class="table table-condensed"  id="myTable">
+    <thead>
+            <th>Date</th>
+            <th>Temps de connexion</th>
+            <th>#</th>
+        </tr>
+    </thead>
+    <tbody class="panel">
+        {% set lastDate = null %}
+        {% set first = true %}
+        {% set indexDate = 0 %}
+        {% set nbMinute = 0 %}
+        {% set indexOfDay = 0 %}
+        {% set totalOfCo = 0 %}
+
+        {# loop for all day of co #}
+       {% for  dayOfCo, totalTime in totalOfConnexionForDay %}
+        {% set totalOfCo = totalOfCo + totalTime %}
+            {# loop on all session of co #}
+            {% for day, sessionArray in history %}
+
+                    {# get details for session of co #}
+                    {% for session in sessionArray %}
+
+                                    
+                                    {# if the day of current session of co is match with cureent day #}
+                                    {% if dayOfCo|date('Y-m-d') == session.time_co|date('Y-m-d')   %}
+
+                                       {% if first == true %}
+                                            <tr data-toggle="collapse" data-target="#demo{{indexDate }}" data-parent="#myTable">
+                                                <td>{{ session.time_co|date('d-m-Y') }}</td>                
+                                                 {% if totalTime > 60 %}
+                                                <td class="text-error"> {{ (totalTime/60)|round(2, 'floor') }} heure(s) </td>
+                                                {% else %}
+                                                <td class="text-error"> {{ totalTime }} min(s) </td>
+                                                {% endif %}
+                                                <td> Voir les détails </td>
+
+                                                <tr id="demo{{indexDate }}" class="collapse">
+                                                <th>Heure de connexion</th>
+                                                <th>Heure de déconnexion</th>
+                                                <th>Temps de connexion</th>
+                                            </tr>
+                                            
+                                            {% set first = false %}
+
+                                        {% endif %}
+                                            {% if session.timeOfCo > 0 %}
+                                                <tr id="demo{{indexDate }}" class="collapse table table-dark table-striped">
+                                                    <td>{{ session.time_co|date("H:i") }}</td>
+                                                    <td>{{ session.time_deco|date("H:i") }}</td>
+                                                    {% if session.timeOfCo > 60 %}
+                                                    <td> {{ (session.timeOfCo / 60)|round(2, 'floor') }} heure(s)</td>
+                                                    {% else %}
+                                                    <td> {{ session.timeOfCo  }} min(s) </td>
+                                                    {% endif %}
+                                                </tr>
+                                            {% endif %}
+                                        
+                                {% endif %}
+
+                    {% endfor %}
+                        {% set indexOfDay = indexOfDay + 1 %}
+                   
+                
+               {# if dayco #}
+            {% endfor %}
+            {% set indexDate = indexDate + 1 %}
+            {% set first = true %}
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr scope="row">
+                    <th class="text-error"> Total des heures de connexion </th>
+                     {% if totalOfCo > 60 %}
+                    <th class="text-error"> {{ (totalOfCo/60)|round(2, 'floor') }} heure(s) </th>
+                    {% else %}
+                    <th class="text-error"> {{ totalOfCo }} min(s) </th>
+                    {% endif %}
+                </tr>
+            </tfoot>
+        </table>
+
+        <script>
+        let user_id = {{ app.user.id }};
+        let session_id = {{ app.user.sessionId }}
+        </script>
+
+{% endblock %}

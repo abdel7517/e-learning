@@ -267,7 +267,7 @@ class ProfileController extends AbstractController
 
         // exit;
          
-        return $this->render('dashboard_user/history.html.twig', [
+        return $this->render('profile/history.html.twig', [
             'fm' => $fm,
             'language' => $language,
             'pr' => $pr,
