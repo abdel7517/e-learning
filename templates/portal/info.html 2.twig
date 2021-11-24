@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-learnia - {{ 'Portal' | trans }}{% endblock %}
+
+{% block body %}
+
+    <div class="example-wrapper">
+
+        <h1 class="title-css">{{ 'Vos Modules' | trans | title }}</h1>
+        <p class="text-center intro-lh">{{ 'Naviguer parmi nos modules et monter en compétences ! ' | trans }}</p>
+
+        {# <h2 class="subtitle-css">{{ 'Your courses' | trans | title }}</h2> #}
+
+        {# <div class="row forum-cat-row">
+            <div class="col-3 col-md-auto skillset">select skillset:</div>
+
+            <div class="col-3 col-md-auto">
+                <a class="btn button_1 btn-default btn-skills {% if mode == 'ALL' %} active-mode {% endif %} "  href="{{ path('portal') }}">{{ 'all' | trans | upper }}</a>
+            </div>
+
+            <div class="col-3 col-md-auto">
+                <a class="btn button_1 btn-default btn-skills {% if mode == 'SOFT' %} active-mode {% endif %}" href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
+            </div>
+            <div class="col-3 col-md-auto">
+                <a class="btn button_1 btn-default btn-skills {% if mode == 'HARD' %} active-mode {% endif %}" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
+            </div>
+        </div> #}
+
+                <p>
+                         {{ message }}
+                </p> 
+
+    </div>
+{% endblock %}
