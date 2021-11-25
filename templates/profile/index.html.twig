@@ -45,7 +45,7 @@
                         { 'attr': {'class': 'profileupload'}
                         }) }}
                     {#                    </div>#}
-                    <button class="button_2 button bottom">{{ 'Update' | trans }} {{ 'Profile' | trans }}</button>
+                    <button class="button_2 button bottom">{{ 'Mettre à jour' | trans }} </button>
 
                     {{ form_end(profileForm) }}
 
@@ -57,8 +57,8 @@
                     <div>
                         {{ form_start(deleteBtn) }}
                         {{ form_widget(deleteBtn.delete_user,
-                            { 'label': 'Delete my account'
-                                , 'attr': {'onclick': 'return confirm("Are you sure to delete your account?")', 'class': 'btn-deletequestion button_2 deleteHover'}
+                            { 'label': 'Supprimer mon compte'
+                                , 'attr': {'onclick': 'return confirm("Êtes-vous sûre de vouloir supprimer votre compte ?")', 'class': 'btn-deletequestion button_2 deleteHover'}
                             }) }}
                         {{ form_end(deleteBtn) }}
                     </div>
