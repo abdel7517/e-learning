@@ -21,7 +21,7 @@ class EditProfileType extends AbstractType
     {
         $builder
 
-            ->add('avatar', FileType::class, [
+         /*    ->add('avatar', FileType::class, [
                 'required' => false,
                 'attr'=>
                     array(
@@ -37,7 +37,7 @@ class EditProfileType extends AbstractType
                         'image/gif',
                     ]
                 ])]
-            ])
+            ]) */
             ->add('username', null, [
                 'attr'=>
                     array(

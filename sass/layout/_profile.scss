@@ -12,18 +12,8 @@
   width: 100%;
 }
 
-.profileimgwrap form{
-  height: $imgWidth;
-}
-
 .profileimgwrap form .form-group label{
   color: $white;
-}
-
-.profileimg{
-  height: 300px;
-  overflow: hidden;
-  padding: 20px;
 }
 
 .bottom{
@@ -50,7 +40,11 @@
   padding: 20px;
   top: 0px;
   margin: 0 auto;
-  width: $imgWidth;
+  max-width: 100%;
+}
+
+#close{
+  margin-bottom: 1em;
 }
 
 #moduleprogress{
@@ -58,10 +52,11 @@
 }
 
 .completebutton{
-  width: 20%;
-  float: right;
+  width: 140px;
   height: 40px;
+  margin-top: 0.5em;
   line-height: 20px;
+
 }
 
 .progresstitle{
@@ -123,6 +118,11 @@
 }
 
 .profiletext{
+ display: flex;
+ justify-content: space-between;
+}
+
+.profileBtn{
   padding-left: 50px;
   width: 300px;
 }

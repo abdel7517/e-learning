@@ -35,18 +35,18 @@
 
                     <div class="col-2 questions-cards-forum">
                         {# Count Replies#}
-                        <p>{{ postCount[question.id] }} {{ 'Answer(s)' | trans | lower}}</p>
+                        <p>{{ postCount[question.id] }} {{ 'Réponse(s)' | trans | lower}}</p>
                     </div>
 
                     <div class="col-3 questions-cards-forum">
-                        <p>By: {{ question.posts[0].getCreatedBy().username }}</p>
+                        <p>Par: {{ question.posts[0].getCreatedBy().username }}</p>
                     </div>
 
                     <div class="col-3">
                         {# Link to the question's detail page#}
-                        <a class="btn-forum button_8"
+                        <a class="btn-light "
                            href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
-                            {{ 'Show' | trans }}
+                            {{ 'Voir' | trans }}
                         </a>
                     </div>
                 </div>

@@ -49,9 +49,8 @@ body {
   margin-top: 20px;
   padding: 10px 5px 10px 5px;
   border-radius: 20px;
-  background-color: $pink;
   position: relative;
-  
+  border: 1px solid #8b54a0;
 }
 
 .question-answer-row.odd {
@@ -80,8 +79,7 @@ button.btn-no-bg {
   background-color: $purple;
   font-family: $chivofamily;
   padding: 20px 20px 20px 20px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-radius: 10px;
   margin-top: 20px;
 }
 

@@ -91,10 +91,10 @@ class QuizQuestionController extends AbstractController
         $quizQuestionTranslations= $quizQuestion->getTranslations();
 
         if ($request->query->get('lang') === null){
-            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+            $language = $em->getRepository(Language::class)->findOneBy(['code'=>"EN"]);
             $request->query->set('lang', $language->getCode());
         }else {
-            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
+            $language = $em->getRepository(Language::class)->findOneBy(['code' => "EN"]);
         }
 
         foreach ($quizQuestionTranslations as $quizQuestionTrans){

@@ -66,7 +66,7 @@
                 {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
                     {{ include('question/_delete_question.html.twig') }}
                 {% endif %}
-                <p class="subtitle-css">{{ 'Replies' | trans | title  }}</p>
+                <p class="subtitle-css">{{ 'Réponses' | trans | title  }}</p>
             {% else %}
 
                 <div class="row question-answer-row {{ cycle(['odd', 'even'], loop.index0) }}">
@@ -123,12 +123,12 @@
         {% endfor %}
         </div>
 
-        <p class="subtitle-css mt-5">{{ 'Add new reply' | trans | title  }}</p>
+        <p class="subtitle-css mt-5">{{ 'Répondre' | trans | title  }}</p>
         <div class="postform">
             {# Input answer to question#}
             {{ form_start(postForm) }}
             {{ form_widget(postForm.subjectPost) }}
-            <button class="btn-forum submitPost button_8" type="submit" class="">{{ 'Send' | trans }}</button>
+            <button class="btn-forum submitPost button_8" type="submit" class="">{{ 'Envoyer' | trans }}</button>
             {{ form_end(postForm) }}
         </div>
 
