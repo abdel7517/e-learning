@@ -31,10 +31,11 @@ class CheckController extends AbstractController
         $date =  DateTime::createFromFormat('Y-m-d', Date('Y-m-d'));
         $date->modify("-1 day");
         $markets = $this->em->getRepository(User::class)->findBy(["market" => 1]);
-        echo count($markets);
         foreach($markets as $market)
         {
             $users = $this->em->getRepository(User::class)->getByDateAndMarket($date, $market->getId());
+            echo count($users);
+            echo $date->format("d-m-Y");
             foreach($users as $user)
             {
                 $timeOfCo = $this->co->getHistory($user->getId());

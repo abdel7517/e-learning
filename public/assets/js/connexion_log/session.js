@@ -4,12 +4,13 @@ class Session {
         this.endOfSession = false;
         this.time = 0;
         this.sessionId = session_id;
+        this.date = new Date;
         this.containerTimer = document.getElementById("timer");
         this.startTimer(20*60);
         this.sendPresence();
         window.addEventListener('mousemove', function() {newSession.restartTimer()} );
         window.addEventListener('touchstart', function() {newSession.restartTimer()} );
-        setInterval(function(){ newSession.sendPresence() }, 30000);
+        setInterval(function(){ newSession.sendPresence() }, 20000);
 
     }
    
@@ -29,7 +30,6 @@ class Session {
                     session_id = resultat.responseText;
                 }
                 });
-                
           }
     }
 
@@ -46,24 +46,23 @@ class Session {
                 complete: function(resultat){
                     $('.deco').css('display', 'block');
                     console.log('deco');
-                    window.alert('Vous êtes déconnecté (inactivé trop longue depuis votre dernière session ), vous allez commencez une nouvelle session');
+                    window.alert('Vous êtes déconnecté (inactivé trop longue depuis votre dernière session), vous allez commencez une nouvelle session');
                     window.location.reload();
-
-
-
                 }
               });
-
            this.endOfSession = true;
         }
 
     }
 
     sendPresence(){
-        if(this.endOfSession ==  false){
+        let now = new Date;
+        let long_freeze = this.timeDiffCalc(this.date, now);
+        console.log(this.date);
+        if(this.endOfSession ==  false && long_freeze == true ){
             let date = new Date;
             let dateString = this.formatDate(date);
-            let url = window.location.origin + "/presence/" +user_id + "/" + dateString + "/"+ this.sessionId;
+            let url = window.location.origin + "/presence/" + user_id + "/" + dateString + "/"+ this.sessionId;
             console.log(url);
             $.ajax({
                     type: 'POST',
@@ -72,10 +71,13 @@ class Session {
                         console.log(resultat);
                         if(resultat.responseText == "deco"){
                             newSession.endOfSession = true;
-                            window.alert('Vous êtes déconnecté, rechargez la page ');
+                            window.alert('Vous êtes déconnecté, rechargez la page');
+                            window.location.reload(); 
                         }
                     }
                 });
+        }else{
+            this.closeSession();
         }
        
     }
@@ -83,6 +85,8 @@ class Session {
     restartTimer(){
         // relaunch the timer 
         this.stopTimer();
+        this.date = new Date;
+        console.log(this.date);
         this.startTimer(20*60);
 
     }
@@ -114,8 +118,6 @@ class Session {
         console.log(minutes + ':' + seconds);
     }
 
-
-
     stopTimer() {
         clearInterval(this.reset);
         sessionStorage.removeItem('timer' + 'time');
@@ -131,9 +133,7 @@ class Session {
         
         if (hour.length < 2){
             hour = '0' + hour; 
-
         } 
-
         if (minute.length < 2) 
         minute = '0' + minute;
 
@@ -149,6 +149,40 @@ class Session {
         return days + "_"+ hours;
     }
 
-  
+   timeDiffCalc(lastDate, dateNow) {
+    let diffInMilliSeconds = Math.abs(lastDate - dateNow) / 1000;
+
+    // calculate days
+    const days = Math.floor(diffInMilliSeconds / 86400);
+    diffInMilliSeconds -= days * 86400;
+
+    // calculate hours
+    const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
+    diffInMilliSeconds -= hours * 3600;
+
+    // calculate minutes
+    const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
+    diffInMilliSeconds -= minutes * 60;
+
+    if (days > 0) {
+        return false;
+    }
+    if( hours > 0)
+    {
+        let nowMinute = dateNow.getMinutes() + 60;
+        console.log(lastDate.getMinutes() -  nowMinute);
+        if((lastDate.getMinutes() -  nowMinute) >= 20 )
+        {
+            return false;
+        }
+        return true;
+    }
+    if(minutes < 20)
+    {
+        return true;
+    }
+ 
+    
+  }
 
 }

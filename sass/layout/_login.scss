@@ -42,16 +42,16 @@
 }
 
 footer{
-  position: absolute;
-  bottom: 0;
-  background: $darkpurple;
+  background: $purple;
   width: 100%;
   z-index: -5;
   padding-left: 100px;
   padding-top: 5px;
   padding-bottom: 5px;
 }
-
+.copyright{
+  color: white;
+}
 .learnmore{
   position: absolute;
   right: 350px;
@@ -109,7 +109,7 @@ footer{
 }
 
 footer a{
-  color: $purple;
+  color: white;
 }
 
 @media only screen and (max-width: 600px) {

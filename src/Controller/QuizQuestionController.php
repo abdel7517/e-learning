@@ -37,7 +37,7 @@ class QuizQuestionController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(QuizQuestion::class);
 
-        $english = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
+        $english = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'EN']);
 
         $quizQuestion = $quiz->createNewQuestion();
         $quizQuestionTranslation = new QuizQuestionTranslation($quizQuestion, $english);
@@ -52,7 +52,7 @@ class QuizQuestionController extends AbstractController
             $quizQuestion->addTranslation($englishTranslation);
 
             foreach ($languageAll as $language) {
-                if ($language->getCode() !== 'en') {
+                if ($language->getCode() !== 'EN') {
                     $translation = new QuizQuestionTranslation($quizQuestion, $language);
                     $quizQuestion->addTranslation($translation);
                 }

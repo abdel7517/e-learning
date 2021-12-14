@@ -37,8 +37,6 @@ Class ApiTimeOfConnexion extends AbstractController {
         $manager->flush();
 
         $textResponse = new Response('ok' , 200);
-
-
         return $textResponse;
     }
 
@@ -49,7 +47,7 @@ Class ApiTimeOfConnexion extends AbstractController {
         // $date = strtotime($time);
         // $now =  date('d/M/Y h:i:s', $date);
         $sessionRepo = $this->getDoctrine()->getManager()->getRepository(TimeOfConnexion::class)->findOneBy([ 'user_id'=> $user_id, 'session_id'=> $session_id ]);
-        $userRepo =  $this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy([ 'id'=>$user_id]);
+        $userRepo =  $this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy(['id' => $user_id]);
 
         $actualSessionId = $userRepo->getSessionId();
         $newSessionId = $actualSessionId+1;
@@ -57,7 +55,6 @@ Class ApiTimeOfConnexion extends AbstractController {
 
         $time_good_format = str_replace("_"," ",$time);
         $date = DateTime::createFromFormat('Y-m-d H:i', $time_good_format);
-        
         
         $sessionRepo->setTimeDeco($date);
 
@@ -95,18 +92,19 @@ Class ApiTimeOfConnexion extends AbstractController {
             $lastCoString = date_format($sessionRepo->getTimeDeco(), "Y-m-d");
             $lastCo = DateTime::createFromFormat('Y-m-d', $lastCoString );
 
-            // dump($now);
-            // echo "<br>";
-            // dump($lastCo);
+         /*     dump($now);
+             echo "<br>";
+             dump($lastCo);
+             dump($sessionRepo->getSessionId()); */
 
             $diffForDay = date_diff($lastCo, $now);
             $diff_BetweenNowAndLastCo_InDay = $diffForDay->format('%d');
 
-            // echo $diff_BetweenNowAndLastCo_InDay;      
-            //  exit;
+           /*  dump($diff_BetweenNowAndLastCo_InDay);      
+            exit; */
 
             // if the last connexion have less than 1 day
-            if( $diff_BetweenNowAndLastCo_InDay <= 1 ){
+            if( $diff_BetweenNowAndLastCo_InDay < 1 ){
                  
                 // check if the last connexion have less than 20min
                 if( $diff_BetweenNowAndLastCo_InMin <= 20 ){
@@ -133,9 +131,9 @@ Class ApiTimeOfConnexion extends AbstractController {
             // if connexion have more than 1 day
             else{
 
-                     $userRepo =  $this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy([ 'id'=>$user_id]);
+                    $userRepo =  $this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy([ 'id' => $user_id]);
                     $actualSessionId = $userRepo->getSessionId();
-                    $newSessionId = $actualSessionId+1;
+                    $newSessionId = $actualSessionId + 1;
                     $userRepo->setSessionId($newSessionId);
                     
                     $message = $newSessionId;
