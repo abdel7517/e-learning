@@ -345,18 +345,6 @@ body {
     margin-right: 0;
   }
 
-  .formnav {
-    position: absolute;
-    top: 170px;
-    left: 130px;
-  }
-
-  .hubnav {
-    position: absolute;
-    top: 170px;
-    left: 70px;
-  }
-
   .profilenav {
     margin-top: 10px;
   }
@@ -482,6 +470,16 @@ h1 {
 
 .progress_2_bar {
   background-color: #8b54a0;
+}
+
+/* Navbar */
+.navbar-expand-md, .navbar-nav {
+  align-items: center;
+}
+
+.white {
+  color: white;
+  margin-left: 1em;
 }
 
 /*#330033d*/
@@ -644,6 +642,8 @@ footer {
   padding-left: 100px;
   padding-top: 5px;
   padding-bottom: 5px;
+  position: absolute;
+  bottom: 0;
 }
 
 .copyright {
