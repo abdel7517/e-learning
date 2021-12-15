@@ -10,6 +10,15 @@ body {
   overflow-x: hidden;
 }
 
+#zoom{
+  position: absolute;
+  right: 1em;
+  bottom: 0;
+  :hover{
+    cursor: pointer;
+  }
+}
+
 .spinnerstyle{
   margin-right: 120px;
 }

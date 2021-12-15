@@ -46,16 +46,8 @@
 				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 				<li class="nav-item formnav">
 						<div class="deco">Vous êtes déconnecter</div>
-					</li
-					<li class="nav-item active hubnav">
-						<a href="#" class="white"   >C.G.V  </a>
-					</li>
-					<li class="nav-item active hubnav">
-						<a href="#" class="white" >Signaler un bug  </a>
-					</li>
-					<li class="nav-item active hubnav">
-						<a href="#" class="white" >Contact</a>
-					</li>
+				</li>
+					
 					<li class="nav-item active hubnav">
 						<a class="nav-link" data-toggle="tooltip" data-placement="right" title="{{ 'Portal' | trans }}" href="{{ path('portal') }}"><img height="25px" src="{{ asset('assets/img/lightlogo-09.png') }}" alt="{{ 'Portal' | trans }}"><span class="sr-only">(current)</span>
 						</a>
@@ -75,6 +67,18 @@
 					{# <li class="nav-item dropdown">
 						{{ include('language_switcher/_switcher.html.twig') }}
 					</li> #}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						  Autres
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a href="https://landing.abyformation.fr/cgv.html" class=" dropdown-item" target="_blank" >C.G.V.  </a>
+							<a href="https://landing.abyformation.fr/cgu.html" class=" dropdown-item" target="_blank" >C.G.U. / R.G.P.D.  </a>
+							<div class="dropdown-divider"></div>
+							<a href="https://landing.abyformation.fr/contact.php" target="_blank" class=" dropdown-item" >Signaler un bug  </a>
+						  <a href="https://landing.abyformation.fr/contact.php"  target="_blank" class=" dropdown-item" >Contact</a>
+						</div>
+					  </li>
 				</ul>
 
 			</div>
@@ -91,6 +95,14 @@
 {% endfor %}{% endfor %}<ol class="breadcrumb text-muted"> {% block breadcrumbs %}{% endblock %}
 </ol>
 {% block body %}{% endblock %}
+<!-- <div id="zoom" >
+	<p id="more" >
+		PLUS
+	</p>
+	<p id="less">
+		MOINS
+	</p>
+</div> -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

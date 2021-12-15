@@ -107,3 +107,24 @@ document.querySelectorAll(".ck-content a:not(.prev):not(.next)").forEach(
     if (!confirm("Voulez-vous annuler cette formation ?"))
          event.preventDefault();
 }
+
+/* zoom */
+/* let more = document.getElementById("more");
+let less = document.getElementById("less");
+
+ less.addEventListener("click", less());
+ 
+more.addEventListener("click", add());
+
+function add()
+{
+    let p = document.getElementsByTagName("p");
+    console.log(p);
+
+    for (let elmnt of p) {
+        let size = elmnt.style.fontSize;
+        console.log(size);
+        elmnt.style.fontSize = size + 2 + "em";
+        }
+
+} */

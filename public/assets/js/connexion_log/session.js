@@ -47,7 +47,6 @@ class Session {
                     $('.deco').css('display', 'block');
                     console.log('deco');
                     window.alert('Vous êtes déconnecté (inactivé trop longue depuis votre dernière session), vous allez commencez une nouvelle session');
-                    window.location.reload();
                 }
               });
            this.endOfSession = true;
@@ -72,7 +71,6 @@ class Session {
                         if(resultat.responseText == "deco"){
                             newSession.endOfSession = true;
                             window.alert('Vous êtes déconnecté, rechargez la page');
-                            window.location.reload(); 
                         }
                     }
                 });
