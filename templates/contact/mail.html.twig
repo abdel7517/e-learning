@@ -1,8 +1,12 @@
 {% block body %}
 <h1>Bonjour {{contact.name}} </h1>
-<p> Votre formation commence le {{ contact.start }} , voici votre accès à notre plateforme </p>
+<p> Votre formation commence le {{ contact.start }} et finis le {{ contact.end }} , voici votre accès à notre plateforme </p>
 <p> Parcours de formation : {{ contact.formation }} </p>
 <p> identifiant : {{ contact.mail }} </p>
 <p> mot de passe : {{ contact.mdp }} </p>
 <a href="http://ifpro-france.fr/">Accèder à notre plateforme</a>
+<p> Pour validez votre formation, vous devrez avoir réaliser au moins 7 heures de connexion et avoir réaliser les quiz de fin de chapitre </p>
+<p> Vous devrez par la mêmes occasion réalisez une étude de cas et la pitché devant un jury. Dès l'étude finis, envoyer nous un mail à aby.formation.france@gmail.com avec vos disponibilité pour programmer votre soutenance.  </p>
+<a href="https://docs.google.com/document/d/1k2pv_6IDi0sSXWnLS8ZnRa2RcSZzn0WL/edit?usp=sharing&ouid=100250367765149610076&rtpof=true&sd=true"> Voici le sujet </a>
+<p>En cas de problèmes, contactez-nous à contact@abyformation</p>
 {% endblock %}
