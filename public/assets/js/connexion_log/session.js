@@ -10,10 +10,48 @@ class Session {
         this.sendPresence();
         window.addEventListener('mousemove', function() {newSession.restartTimer()} );
         window.addEventListener('touchstart', function() {newSession.restartTimer()} );
-        setInterval(function(){ newSession.sendPresence() }, 20000);
+        document.addEventListener('visibilitychange', this.changementVisibilite, false);
+        this.callPresence = setInterval(function(){ newSession.sendPresence() }, 20000);
 
     }
-   
+     changementVisibilite() {
+        if(document.hidden){
+            clearInterval(newSession.callPresence)
+            clearInterval(newSession.reset)
+            console.log("on me vois plus")
+
+        }else{
+            let now = new Date;
+            console.log("----------------------- re " + now)
+            let long_freeze = newSession.timeDiffCalc(newSession.date, now);
+            if(long_freeze)
+            {
+                newSession.callPresence = setInterval(function(){ newSession.sendPresence() }, 20000);
+                console.log('continue')
+                newSession.startTimer(20*60);
+                console.log("-------" + newSession.date)
+
+            }else{
+                console.log("-------" + newSession.date)
+
+                let dateString = newSession.formatDate(newSession.date);
+                console.log(window.location.origin + "/deco/" +user_id + "/" + dateString + "/"+ newSession.sessionId );
+                let url = window.location.origin + "/deco/" +user_id + "/" + dateString + "/"+ newSession.sessionId;
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    complete: function(resultat){
+                        console.log('deco');
+                        window.alert('Vous êtes déconnecté (inactivé trop longue depuis votre dernière session), vous allez commencez une nouvelle session');
+                        window.location.reload();
+                    }
+                  });
+               newSession.endOfSession = true;
+
+            }
+
+        }
+      }
 
     launchSession(){
         
@@ -56,10 +94,8 @@ class Session {
     }
 
     sendPresence(){
-        let now = new Date;
-        let long_freeze = this.timeDiffCalc(this.date, now);
         console.log(this.date);
-        if(this.endOfSession ==  false && long_freeze == true ){
+        if(this.endOfSession ==  false ){
             let date = new Date;
             let dateString = this.formatDate(date);
             let url = window.location.origin + "/presence/" + user_id + "/" + dateString + "/"+ this.sessionId;
@@ -115,7 +151,8 @@ class Session {
         if (seconds < 10) seconds = '0' + seconds;
 
         // $("#timer").html(minutes + ':' + seconds);
-        console.log(minutes + ':' + seconds);
+       // console.log(minutes + ':' + seconds);
+       console.log(new Date )
     }
 
     stopTimer() {
@@ -181,6 +218,7 @@ class Session {
     {
         return true;
     }
+    console.log(lastDate)
  
     
   }
