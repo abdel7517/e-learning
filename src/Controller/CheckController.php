@@ -34,12 +34,11 @@ class CheckController extends AbstractController
         foreach($markets as $market)
         {
             $users = $this->em->getRepository(User::class)->getByDateAndMarket($date, $market->getId());
-            echo count($users);
-            echo $date->format("d-m-Y");
+            //echo $date->format("d-m-Y");
             foreach($users as $user)
             {
                 $timeOfCo = $this->co->getHistory($user->getId());
-                $this->mailer->notif_end($user, $timeOfCo);
+                $this->mailer->notif_end($user, $timeOfCo, $market->getEmail());
                 echo $market->getEmail() ." a ". $user->getEmail(). "<br>";
             }
         }

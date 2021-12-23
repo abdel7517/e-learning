@@ -66,10 +66,7 @@ ClassicEditor.create(document.querySelector('.js-richtexteditor-minimal'), {
             '|',
             "alignment:left",
             "alignment:center",
-            "alignment:right",
-
-
-               
+            "alignment:right",     
         ]
     },
     language: 'fr',

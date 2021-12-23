@@ -12,7 +12,10 @@ class Session {
         window.addEventListener('touchstart', function() {newSession.restartTimer()} );
         document.addEventListener('visibilitychange', this.changementVisibilite, false);
         this.callPresence = setInterval(function(){ newSession.sendPresence() }, 20000);
-
+    
+    }
+     addMinutes(date, minutes) {
+        return new Date(date.getTime() + minutes*60000);
     }
      changementVisibilite() {
         if(document.hidden){
@@ -33,8 +36,8 @@ class Session {
 
             }else{
                 console.log("-------" + newSession.date)
-
-                let dateString = newSession.formatDate(newSession.date);
+                let timeDeco = newSession.addMinutes(newSession.date, 20);
+                let dateString = newSession.formatDate(timeDeco);
                 console.log(window.location.origin + "/deco/" +user_id + "/" + dateString + "/"+ newSession.sessionId );
                 let url = window.location.origin + "/deco/" +user_id + "/" + dateString + "/"+ newSession.sessionId;
                 $.ajax({
@@ -55,6 +58,7 @@ class Session {
 
     launchSession(){
         
+      
           if(this.endOfSession == false){
             let date = new Date;
             let dateString = this.formatDate(date);

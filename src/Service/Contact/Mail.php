@@ -15,14 +15,14 @@ class Mail extends AbstractController
         $this->mailer = $mailer;
     }
    
-    public function notifUser(string $name ,string $mail ,string $mdp,string $start , string $formation)
+    public function notifUser(string $name ,string $mail ,string $mdp,string $start ,string $end, string $formation)
     {
         // $form = $this->createForm(ContactType::class);
         // $form->handleRequest($request);
 
         // if ($form->isSubmitted() && $form->isValid()) {
             // $contact = $form->getData();
-            $contact = [ 'name' => $name, 'mail'=> $mail, 'mdp'=> $mdp, 'formation' => $formation, 'start' => $start ];
+            $contact = [ 'name' => $name, 'mail'=> $mail, 'mdp'=> $mdp, 'formation' => $formation, 'start' => $start, 'end' => $end  ];
             // On crée le message
             $message = (new \Swift_Message(' Votre Formation '))
                 // On attribue l'expéditeur
@@ -76,7 +76,7 @@ class Mail extends AbstractController
         // return $this->render('contact/index.html.twig',['contactForm' => $form->createView()]);
     }
 
-    public function notif_end($user, $timeOfCo)
+    public function notif_end($user, $timeOfCo, $market)
     {
         $co = ['user' => $user, 'timeOfCo' => $timeOfCo];
         // On crée le message
@@ -85,7 +85,7 @@ class Mail extends AbstractController
             ->setFrom("contact@abyformation.fr")
             ->setSubject('Fin de formation')
             // On attribue le destinataire
-            ->setTo("chabane.abdelkarim@gmail.com")
+            ->setTo([$market, "aby.formation.france@gmail.com"])
             // On crée le texte avec la vue
             ->setBody(
                 $this->renderView(
