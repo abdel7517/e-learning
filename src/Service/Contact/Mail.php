@@ -2,9 +2,12 @@
 
 namespace App\Service\Contact;
 
+use App\Entity\LearningModule;
 use App\Form\ContactType;
 use Symfony\Component\BrowserKit\Request;
+use App\Repository\LearningModuleRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\LearningModuleTranslationsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class Mail extends AbstractController
@@ -76,9 +79,11 @@ class Mail extends AbstractController
         // return $this->render('contact/index.html.twig',['contactForm' => $form->createView()]);
     }
 
-    public function notif_end($user, $timeOfCo, $market)
+    public function notif_end($user, $timeOfCo, $hourLog, $market)
     {
-        $co = ['user' => $user, 'timeOfCo' => $timeOfCo];
+        $hourLog = intdiv($timeOfCo, 60);
+        $formationRepo = $this->getDoctrine()->getRepository(LearningModule::class)->findOneBy(["id"=> $user->getFormation() ]);
+        $co = ['user' => $user, 'timeOfCo' => $timeOfCo, 'hour'=> $hourLog ,'formation' => $formationRepo->getTitle($user->getLanguage()) ];
         // On crée le message
         $message = (new \Swift_Message('Fin de formation'))
             // On attribue l'expéditeur
@@ -94,5 +99,43 @@ class Mail extends AbstractController
                 'text/html'
             );
             $this->mailer->send($message);
+    }
+
+    public function notif_dropOut($user, $timeOfCo, $hourLog, $market)
+    {
+        $formationRepo = $this->getDoctrine()->getRepository(LearningModule::class)->findOneBy(["id"=> $user->getFormation() ]);
+        $co = ['user' => $user, 'timeOfCo' => $timeOfCo,'hour'=>$hourLog, 'formation' => $formationRepo->getTitle($user->getLanguage()) ];
+        // On crée le message
+        $message = (new \Swift_Message('Vous nous manquez'))
+            // On attribue l'expéditeur
+            ->setFrom("contact@abyformation.fr")
+            ->setSubject('Vous nous manquez')
+            // On attribue le destinataire
+            ->setTo([$user->getEmail()])
+            // On crée le texte avec la vue
+            ->setBody(
+                $this->renderView(
+                    'contact/dropOutUser.html.twig', compact('co')
+                ),
+                'text/html'
+            );
+            $messageMarket = (new \Swift_Message('Relance necessaire'))
+            // On attribue l'expéditeur
+            ->setFrom("contact@abyformation.fr")
+            ->setSubject('Relance necessaire')
+            // On attribue le destinataire
+            ->setTo([$market, "aby.formation.france@gmail.com"])
+            // On crée le texte avec la vue
+            ->setBody(
+                $this->renderView(
+                    'contact/dropOutMarket.html.twig', compact('co')
+                ),
+                'text/html'
+            );
+            $this->mailer->send($messageMarket);
+            $this->mailer->send($message);
+
+
+
     }
 }

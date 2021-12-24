@@ -1,0 +1,10 @@
+{% block body %}
+
+<p>
+     {{ co.user.name }} à réaliser {{ co.hour }} heures {{ co.timeOfCo % 60}} min. de connexion durant les 3 premiers jours de connexion. <br>
+     contact : 
+    <br> mail : {{ co.user.email }}
+    <br> téléphone : {{ co.user.number }}
+</p>
+
+{% endblock %}

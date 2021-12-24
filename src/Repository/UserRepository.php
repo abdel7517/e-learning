@@ -63,4 +63,21 @@ class UserRepository extends ServiceEntityRepository
 
     return $result;
 }
+
+public function getByDateStartAndMarket(\Datetime $date, int $market_id)
+{
+    $from = new \DateTime($date->format("Y-m-d")." 00:00:00");
+    $to   = new \DateTime($date->format("Y-m-d")." 23:59:59");
+
+    $qb = $this->createQueryBuilder("e");
+    $qb->andWhere('e.start BETWEEN :from AND :to')
+    ->andWhere('e.market_id LIKE :market_id')
+        ->setParameter('from', $from )
+        ->setParameter('to', $to)
+        ->setParameter('market_id', $market_id);
+
+    $result = $qb->getQuery()->getResult();
+
+    return $result;
+}
 }
