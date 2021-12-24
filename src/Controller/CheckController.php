@@ -54,6 +54,7 @@ class CheckController extends AbstractController
     public function dropOut()
     {
         $date =  DateTime::createFromFormat('Y-m-d', Date('Y-m-d'));
+        $now = DateTime::createFromFormat('Y-m-d', Date('Y-m-d'));
         $date->modify("-3 day");
         $markets = $this->em->getRepository(User::class)->findBy(["market" => 1]);
         foreach($markets as $market)
@@ -63,9 +64,9 @@ class CheckController extends AbstractController
             {
                 $timeOfCo = $this->co->getHistory($user->getId());
                 $hourLog = intdiv($timeOfCo, 60);
-                if($hourLog < 2)
+                if($hourLog < ($user->getDuration()/4) )
                     $this->mailer->notif_dropOut($user, $timeOfCo, $hourLog, $market->getEmail());
-                echo $market->getEmail() ." a ". $user->getEmail(). "<br>";
+                echo $market->getEmail() ." a ". $user->getEmail(). " à faire ". ($user->getDuration()/4) ."<br>";
             }
         }
         $textResponse = new Response('ok' , 200);
