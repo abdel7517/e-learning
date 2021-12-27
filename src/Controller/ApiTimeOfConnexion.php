@@ -91,7 +91,7 @@ Class ApiTimeOfConnexion extends AbstractController {
             //diff between first co and now 
             $diff_first_co = date_diff($sessionRepo->getTimeCo(), $now);
             $diff_BetweenNowAndFirstCo_InHour = $diff_first_co->format('%h');
-            echo $diff_BetweenNowAndFirstCo_InHour . " h -----";
+            //echo $diff_BetweenNowAndFirstCo_InHour . " h -----";
             $lastCoString = date_format($sessionRepo->getTimeDeco(), "Y-m-d");
             $lastCo = DateTime::createFromFormat('Y-m-d', $lastCoString );
 
@@ -121,13 +121,15 @@ Class ApiTimeOfConnexion extends AbstractController {
                     
                     $message = $newSessionId;
 
-                    //add 20 min for the last presence 
+                    //add 20 min for time of co 
                     $lastCo = $sessionRepo->getTimeDeco();
                     $lastCoToString = $lastCo->format('Y-m-d H:i');
 
                     $newTimeDeco = DateTime::createFromFormat('Y-m-d H:i', $lastCoToString );
                     $newTimeDeco->add(new DateInterval('PT20M'));
                     $sessionRepo->setTimeDeco($newTimeDeco);
+                    $message = "deco";
+
                 }
 
             }
