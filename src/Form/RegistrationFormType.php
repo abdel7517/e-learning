@@ -78,7 +78,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('duration', null, [
                 'attr'=>
-                    array('placeholder'=>'Durée formation'),
+                    array('placeholder'=>'Durée formation EN HEURES '),
                 'label'=> false
             ])
             ->add('start', DateType::class, [
