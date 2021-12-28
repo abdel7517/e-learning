@@ -152,9 +152,6 @@ Class ApiTimeOfConnexion extends AbstractController {
                     $message = "deco";
             }
           
-            
-
-          
             $manager->persist($sessionRepo);
             $manager->flush();
 

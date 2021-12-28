@@ -830,9 +830,7 @@ footer a {
 
 #show {
   background: #fdfdfd;
-  position: absolute;
   padding: 20px;
-  top: 0px;
   margin: 0 auto;
   max-width: 100%;
 }
@@ -856,6 +854,10 @@ footer a {
   font-size: 1.5em;
   text-align: left;
   margin-top: 50px;
+}
+
+.progression {
+  margin-left: 4em;
 }
 
 .coursetitle {
@@ -915,6 +917,11 @@ footer a {
   justify-content: space-between;
 }
 
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .profileBtn {
   padding-left: 50px;
   width: 300px;
@@ -944,6 +951,15 @@ footer a {
   font-size: 1.2em;
 }
 
+.progression {
+  margin-left: 4em;
+}
+
+@media only screen and (max-width: 990px) {
+  .progression {
+    margin-left: inherit;
+  }
+}
 @media only screen and (max-width: 767px) {
   .badges {
     margin-top: 80px;
@@ -958,10 +974,6 @@ footer a {
   .profiletext {
     position: relative;
     padding-left: 0;
-  }
-
-  .progression {
-    margin-top: 80px;
   }
 
   .auto {
