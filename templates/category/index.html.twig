@@ -21,34 +21,56 @@
 
         <p class="subtitle-css">{{ 'Sujets' | trans | title  }}</p>
 
-
+		<div class="card-columns">
+            
         {% for topic in topics %}
 
 
-            <div class="container ">
-
-                <div class="row cards-forum center">
-
-                    <div class="col-6 title-cards-forum">
-                        {# Topic title#}
-                        {{ topic.title(language) }}
+            <div class="container">
+                <a  href="{{ path('topic', {'category': category.id, 'chapter': topic.id}) }}">
+                    <div class="">
+                            <div class="blog-card blog-card-blog">
+                                <div class="blog-table">
+                                    <h6 class="blog-category blog-text-success"><i class="far fa-newspaper"></i> Sujets</h6>
+                                    <h4 class="blog-card-caption">
+                                        {{ topic.title(language) }}
+                                    </h4>
+                                    <h6 class="blog-card-caption">
+                                        {{ qRepo.getQuestionCount(topic) }} {{ 'Question(s)' | trans | lower }}
+                                    </h6>
+                                    <p class="blog-card-description">Discuter ou aider vos camarades sur le chapitre : {{ topic.title(language) }}</p>
+                                </div>
+                            </div>
                     </div>
-
-                    <div class="col-3 questions-cards-forum">
-                        {# Count Questions for that Topic#}
-                        <p>{{ qRepo.getQuestionCount(topic) }} {{ 'Question(s)' | trans | lower }}</p>
-                    </div>
-
-                    <div class="col-3">
-                        {# Link to the Topic's detail (all question) page#}
-                        <a class="btn-forum button_8 "
-                           href="{{ path('topic', {'category': category.id, 'chapter': topic.id}) }}">
-                            {{ 'Voir' | trans }}
-                        </a>
-                    </div>
-                </div>
+                </a>
             </div>
+
+            <!--  <div class="container ">
+
+                    <div class="row cards-forum center">
+
+                        <div class="col-6 title-cards-forum">
+                            {# Topic title#}
+                            {{ topic.title(language) }}
+                        </div>
+
+                        <div class="col-3 questions-cards-forum">
+                            {# Count Questions for that Topic#}
+                            <p>{{ qRepo.getQuestionCount(topic) }} {{ 'Question(s)' | trans | lower }}</p>
+                        </div>
+
+                        <div class="col-3">
+                            {# Link to the Topic's detail (all question) page#}
+                            <a class="btn-forum button_8 "
+                            href="{{ path('topic', {'category': category.id, 'chapter': topic.id}) }}">
+                                {{ 'Voir' | trans }}
+                            </a>
+                        </div>
+                    </div>
+                </div> -->
         {% endfor %}
+    </div>
+
     </section>
 {% endblock %}
 

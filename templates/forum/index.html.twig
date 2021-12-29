@@ -16,8 +16,8 @@
 	<section class="example-wrapper">
 
 		<p class="title-css">{{ 'Forum' | trans | title  }}</p>
-		<p class="subtitle-css">{{ 'Modules' | trans | title  }}</p>
-
+<!-- 		<p class="subtitle-css">{{ 'Modules' | trans | title  }}</p>
+ -->
 	{# 	<div class="row forum-cat-row">
 			<div class="col-3 col-md-auto skillset">{{ 'Select skillset' | trans }}:</div>
 
@@ -35,18 +35,16 @@
 
 		<div class="card-columns">
 			{% for category in allCategories %}
-		
-
 				<div class="container">
 					<a href="{{ path('category', {'category': category.id}) }}">
 						<div class="">
 								<div class="blog-card blog-card-blog">
 									<div class="blog-table">
-										<h6 class="blog-category blog-text-success"><i class="far fa-newspaper"></i> Sujets</h6>
+										<h6 class="blog-category blog-text-success"><i class="far fa-newspaper"></i> Module</h6>
 										<h4 class="blog-card-caption">
 											{{ category.learningModule.title(app.user.language) }}
 										</h4>
-										<p class="blog-card-description">Un bloquage, un problèmes avec le cour {{ category.learningModule.title(app.user.language) }} ? Le forum est la pour vous ! </p>
+										<p class="blog-card-description">Un bloquage, un problèmes avec le module : {{ category.learningModule.title(app.user.language) }} ? Le forum est la pour vous ! </p>
 									</div>
 								</div>
 						</div>

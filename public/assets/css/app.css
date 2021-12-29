@@ -1007,7 +1007,7 @@ a {
 
 a:hover {
   text-decoration: none;
-  color: white;
+  color: inherit;
 }
 
 /*#330033d*/
@@ -1278,6 +1278,10 @@ th {
 }
 
 /*#330033d*/
+.card-columns {
+  display: flex;
+}
+
 /*#330033d*/
 .topic-questions {
   background-color: #8b54a0;
