@@ -35,15 +35,23 @@
 
 		<div class="card-columns">
 			{% for category in allCategories %}
-				<a href="{{ path('category', {'category': category.id}) }}">
-					<div class="card text-center">
-						<div class="card-body">
-							<p class="card-title forum-cat-title">
-								{{ category.learningModule.title(app.user.language) }}
-							</p>
+		
+
+				<div class="container">
+					<a href="{{ path('category', {'category': category.id}) }}">
+						<div class="">
+								<div class="blog-card blog-card-blog">
+									<div class="blog-table">
+										<h6 class="blog-category blog-text-success"><i class="far fa-newspaper"></i> Sujets</h6>
+										<h4 class="blog-card-caption">
+											{{ category.learningModule.title(app.user.language) }}
+										</h4>
+										<p class="blog-card-description">Un bloquage, un problèmes avec le cour {{ category.learningModule.title(app.user.language) }} ? Le forum est la pour vous ! </p>
+									</div>
+								</div>
 						</div>
-					</div>
-				</a>
+					</a>
+				</div>
 			{% endfor %}
 		</div>
 	</section>
