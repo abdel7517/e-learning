@@ -26,12 +26,12 @@
         {% for topic in topics %}
 
 
-            <div class="container">
+            <div class="container-subject">
                 <a  href="{{ path('topic', {'category': category.id, 'chapter': topic.id}) }}">
                     <div class="">
                             <div class="blog-card blog-card-blog">
                                 <div class="blog-table">
-                                    <h6 class="blog-category blog-text-success"><i class="far fa-newspaper"></i> Sujets</h6>
+                                    <h6 class="blog-category blog-text-success"><i class="far fa-newspaper"></i> Sujet</h6>
                                     <h4 class="blog-card-caption">
                                         {{ topic.title(language) }}
                                     </h4>

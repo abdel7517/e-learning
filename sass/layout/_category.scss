@@ -2,4 +2,8 @@
 .card-columns
 {
     display: flex;
+    flex-wrap: wrap;
+}
+.container-subject{
+    width: 49%;
 }

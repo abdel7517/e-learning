@@ -1010,6 +1010,10 @@ a:hover {
   color: inherit;
 }
 
+.container-forum {
+  width: 49%;
+}
+
 /*#330033d*/
 .btn-circle.btn-xl {
   width: 70px;
@@ -1280,6 +1284,11 @@ th {
 /*#330033d*/
 .card-columns {
   display: flex;
+  flex-wrap: wrap;
+}
+
+.container-subject {
+  width: 49%;
 }
 
 /*#330033d*/
