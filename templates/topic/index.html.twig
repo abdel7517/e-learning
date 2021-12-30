@@ -25,7 +25,12 @@
         <div class="container mt-5 mb-5">
             <div class="row-topic">
                 <div class="col-md-6 offset-md-3">
-                    <ul class="timeline">
+                    <ul class="timeline question">
+                       {# <li>
+                            <a  > {{ app.user.username }} </a>
+                            <a class="float-right"> {{ 'now'|date("d/m/Y") }} </a>
+                            <p class="subject" >Poser ma question</p>
+                        </li> #}
                      {% for question in questions %}
                         <li>
                             <a href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}" > {{ question.createdBy.username }} </a>
@@ -79,40 +84,45 @@
 
         <p class="subtitle-css mt-5">{{ 'Posez une question' | trans | title  }}</p>
 
-        <section class="container topic-questions">
+        <section class="container form-topic">
 
             {{ form_start(addQuestion) }}
-
-            <section class="row question-row">
-                <div class="col-3">
-                    {# Form text #}
-                    {{ form_label(addQuestion.question, 'Titre:', { 'label_attr': {'class': 'question-text'} }) }}
-                </div>
-                <div class="col-9">
+           
                     {# Form inputfield #}
-                    {{ form_widget(addQuestion.question, {'attr': {'class': 'question-label'} }) }}
-                </div>
-            </section>
-
-            <section class="row">
-                <div class="col-3">
-                    {# Form text #}
-                    {{ form_label(addQuestion.questionDescription, 'Description:', { 'label_attr': {'class': 'questionDescription-text'} }) }}
-                </div>
-
-                <div class="col-9">
+                    {{ form_widget(addQuestion.question, {'attr': {'class': 'feedback-input', 'placeholder': 'Sujet'} }) }}
+              
+                   
                     {# Form inputfield #}
-                    {{ form_widget(addQuestion.questionDescription, {'attr': {'class': 'questionDescriptionTextbox questionDescription-label','rows': '5'} }) }}
-                </div>
-            </section>
+                    {{ form_widget(addQuestion.questionDescription, {'attr': {'class': 'feedback-input', 'placeholder': 'Votre question'} }) }}
 
-           <button type="submit" class="btn-forum button_8">{{ 'Envoyer' | trans }}</button>
+           <button type="submit" class="btn-forum button_8 btn-topic ">{{ 'Envoyer' | trans }}</button>
 
             {{ form_end(addQuestion) }}
-
-
         </section>
-    </section>
+
+   
+
+
+
+{#<div class="registration-form">
+  <header>
+    <h1 ><i class="far fa-window-close close"></i> Poser votre question</h1>
+  </header>
+  <form>
+    <div class="input-section sujet-section">
+      <input class="sujet" type="text" placeholder="Votre Sujet" autocomplete="off"/>
+      <div class="animated-button"><span class="icon-paper-plane"><i class="fab fa-wpforms"></i></span><span class="next-button sujet"><i class="fa fa-arrow-up"></i></span></div>
+    </div>
+    <div class="input-section question-section folded">
+      <input class="question" type="text" placeholder="Votre Message"/>
+      <div class="animated-button"><span class="icon-lock"><i class="far fa-comment-dots"></i></span><span class="next-button question"><i class="fa fa-arrow-up"></i></span></div>
+    </div>
+
+    <div class="success"> 
+      <p class="p-form" >Question envoyer</p>
+    </div>
+  </form>
+</div>#}
 {% endblock %}
 
 

@@ -128,3 +128,60 @@ function add()
         }
 
 } */
+$('.question').on("click", function() {
+    $(".registration-form").css("display", "block");
+    console.log("heloooooo")
+});
+$('.close').on("click", function() {
+    $(".registration-form").css("display", "none");
+});
+
+$('.sujet').on("change keyup paste",
+  function(){
+    if($(this).val()){
+      $('.icon-paper-plane').addClass("next");
+    } else {
+      $('.icon-paper-plane').removeClass("next");
+    }
+  }
+);
+
+$('.next-button').hover(
+  function(){
+    $(this).css('cursor', 'pointer');
+  }
+);
+
+$('.next-button.sujet').click(
+  function(){
+    console.log("Something");
+    $('.sujet-section').addClass("fold-up");
+    $('.question-section').removeClass("folded");
+  }
+);
+
+$('.question').on("change keyup paste",
+  function(){
+    if($(this).val()){
+      $('.icon-lock').addClass("next");
+    } else {
+      $('.icon-lock').removeClass("next");
+    }
+  }
+);
+
+$('.next-button').hover(
+  function(){
+    $(this).css('cursor', 'pointer');
+  }
+);
+
+$('.next-button.question').click(
+  function(){
+    console.log("Something");
+    $('.repeat-question-section').addClass("fold-up");
+    $('.success').css("marginTop", 0);
+  }
+);
+
+
