@@ -21,37 +21,61 @@
         </h1>
 
         <p class="subtitle-css">{{ 'Questions' | trans | title  }}</p>
-
-        {% for question in questions %}
-
-            <div class="container ">
-
-                <div class="row cards-forum center">
-
-                    <div class="col-4 title-cards-forum">
-                        {# Question text#}
-                        {{ question.subject }}
-                    </div>
-
-                    <div class="col-2 questions-cards-forum">
-                        {# Count Replies#}
-                        <p>{{ postCount[question.id] }} {{ 'Réponse(s)' | trans | lower}}</p>
-                    </div>
-
-                    <div class="col-3 questions-cards-forum">
-                        <p>Par: {{ question.posts[0].getCreatedBy().username }}</p>
-                    </div>
-
-                    <div class="col-3">
-                        {# Link to the question's detail page#}
-                        <a class="btn-light "
-                           href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
-                            {{ 'Voir' | trans }}
-                        </a>
-                    </div>
-                </div>
+        
+        <div class="container mt-5 mb-5">
+            <div class="row-topic">
+                <div class="col-md-6 offset-md-3">
+                    <ul class="timeline">
+                     {% for question in questions %}
+                        <li>
+                            <a href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}" > {{ question.createdBy.username }} </a>
+                            <a  href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}" class="float-right"> {{ question.dateFormatted|date("d/m/Y") }} </a>
+                            <p class="subject" >{{ question.subject }}</p>
+                        </li>
+                        
+                        <!-- <div class="container ">
+                            
+                            <div class="row cards-forum center">
+                                
+                                <div class="col-4 title-cards-forum">
+                                    {# Question text#}
+                                    {{ question.subject }}
+                                </div>
+                                
+                                <div class="col-2 questions-cards-forum">
+                                    {# Count Replies#}
+                                    <p>{{ postCount[question.id] }} {{ 'Réponse(s)' | trans | lower}}</p>
+                                </div>
+                                
+                                <div class="col-3 questions-cards-forum">
+                                    <p>Par: {{ question.posts[0].getCreatedBy().username }}</p>
+                                </div>
+                                
+                                <div class="col-3">
+                                    {# Link to the question's detail page#}
+                                    <a class="btn-light "
+                                    href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
+                                    {{ 'Voir' | trans }}
+                                </a>
+                            </div>
+                        </div>
+                    </div> -->
+                    {% endfor %}
+                </ul>
             </div>
-        {% endfor %}
+        </div>
+    </div>
+                    
+
+
+
+
+
+
+
+
+
+        
 
         <p class="subtitle-css mt-5">{{ 'Posez une question' | trans | title  }}</p>
 

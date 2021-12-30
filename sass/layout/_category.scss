@@ -1,9 +1,11 @@
 @import "./../variables/variables";
-.card-columns
-{
-    display: flex;
-    flex-wrap: wrap;
+
+.link{
+    width: 40%;
 }
-.container-subject{
-    width: 49%;
+@media only screen and (max-width: 1100px) {
+  
+    .link{
+        width: 100%;
+    }
 }

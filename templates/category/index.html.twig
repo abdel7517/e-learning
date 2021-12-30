@@ -19,15 +19,14 @@
         {#    <p>{{ category.learningModule.description(language) }}</p>#}
 
 
-        <p class="subtitle-css">{{ 'Sujets' | trans | title  }}</p>
+        <p class="subtitle-css text-center">{{ 'Sujets' | trans | title  }}</p>
 
 		<div class="card-columns">
             
         {% for topic in topics %}
 
 
-            <div class="container-subject">
-                <a  href="{{ path('topic', {'category': category.id, 'chapter': topic.id}) }}">
+                <a  href="{{ path('topic', {'category': category.id, 'chapter': topic.id}) }}" class="link" >
                     <div class="">
                             <div class="blog-card blog-card-blog">
                                 <div class="blog-table">
@@ -43,7 +42,6 @@
                             </div>
                     </div>
                 </a>
-            </div>
 
             <!--  <div class="container ">
 

@@ -28,7 +28,8 @@ class TopicController extends AbstractController
         $questions = $this->getDoctrine()->getRepository(Question::class)->findBy([
             'chapter' => $chapter,
             'language'=>  $language->getId()
-        ]);
+        ], ['date' => 'DESC']
+    );
 
         $postCount = [];
         foreach ($questions AS $question) {

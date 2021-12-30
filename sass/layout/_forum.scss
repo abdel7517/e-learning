@@ -1,7 +1,12 @@
 @import "./../variables/variables";
 
 // forum OVERVIEW-CARDS
-
+.card-columns
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 .forum-cat-title {
   font-size: 23px;
   font-family: $chivofamily;
@@ -28,5 +33,15 @@ a:hover{
 }
 
 .container-forum{
-  width: 49%;
+  width: 40%;
+}
+@media only screen and (max-width: 800px) {
+  .container-forum{
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    width: 100%;
+  }
+  .container-forum > *{
+    width: 100%;
+}
 }

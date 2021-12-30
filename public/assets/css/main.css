@@ -39,12 +39,6 @@ a {
         margin: 1em !important;
         padding: inherit !important;
     }
-    .card {
-        -webkit-box-shadow: inherit !important;
-        box-shadow: inherit !important;
-        border: none;
-        border-radius: inherit !important;
-    }
     .example-wrapper{
         padding: inherit !important;
     }

@@ -96,17 +96,17 @@ class QuestionController extends AbstractController
         $post = $this->getDoctrine()->getManager()->getRepository(Post::Class)->findOneBy(['id' => $form->get('post_id')->getData()]);
 
         if ($post === null) {
-            $this->addFlash('error', 'This post does not exist!');
+            $this->addFlash('error', 'Cette réponse n\'existe pas');
             return $this->redirectToRoute('question', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $question->getId()]);
         }
 
         if ($post->getUsers()->contains($this->getUser())) {
-            $this->addFlash('error', 'You already voted!');
+            $this->addFlash('error', 'Vous avez déja aimer cette réponse');
             return $this->redirectToRoute('question', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $question->getId()]);
         } else {
             $post->addUser($this->getUser());
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Your vote was registered!');
+            $this->addFlash('success', 'Votre vote est enregistrer');
         }
 
         return $this->redirectToRoute('question', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $question->getId()]);

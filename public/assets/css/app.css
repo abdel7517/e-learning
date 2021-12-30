@@ -985,6 +985,12 @@ footer a {
   }
 }
 /*#330033d*/
+.card-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .forum-cat-title {
   font-size: 23px;
   font-family: "Chivo", sans-serif;
@@ -1011,9 +1017,20 @@ a:hover {
 }
 
 .container-forum {
-  width: 49%;
+  width: 40%;
 }
 
+@media only screen and (max-width: 800px) {
+  .container-forum {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    width: 100%;
+  }
+
+  .container-forum > * {
+    width: 100%;
+  }
+}
 /*#330033d*/
 .btn-circle.btn-xl {
   width: 70px;
@@ -1282,16 +1299,58 @@ th {
 }
 
 /*#330033d*/
-.card-columns {
-  display: flex;
-  flex-wrap: wrap;
+.link {
+  width: 40%;
 }
 
-.container-subject {
-  width: 49%;
+@media only screen and (max-width: 1100px) {
+  .link {
+    width: 100%;
+  }
 }
-
 /*#330033d*/
+.row-topic {
+  width: 100%;
+}
+
+ul.timeline {
+  list-style-type: none;
+  position: relative;
+}
+
+ul.timeline:before {
+  content: " ";
+  background: #d4d9df;
+  display: inline-block;
+  position: absolute;
+  left: 2px;
+  width: 2px;
+  height: 100%;
+  z-index: 400;
+}
+
+ul.timeline > li {
+  margin: 20px 0;
+  padding-left: 20px;
+}
+
+ul.timeline > li:before {
+  content: " ";
+  background: white;
+  display: inline-block;
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid #8b54a0;
+  left: -7px;
+  width: 20px;
+  height: 20px;
+  z-index: 400;
+}
+
+.subject {
+  width: 100%;
+}
+
 .topic-questions {
   background-color: #8b54a0;
   font-family: "Chivo", sans-serif;
@@ -1438,6 +1497,14 @@ p {
 /*#330033d*/
 body {
   background-color: #fdfdfd;
+}
+
+.row-question {
+  width: 100%;
+}
+
+.card {
+  margin-top: 1em;
 }
 
 .title-question-row {

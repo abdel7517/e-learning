@@ -19,108 +19,65 @@
         {#        <p class="title-css">{{ question.subject }}</p> #}
         <p class="subtitle-css">{{ 'Question' | trans | title  }}</p>
 
-        <div id="forum-question-container">
+        <div class="container mt-5">
+        <div class="row d-flex justify-content-around row-question">
+        <div class="col-md-8">
         {% for post in posts %}
             {% if loop.first %}
                 {# Question asked #}
-
-                <div class="row question-asked">
-                    <div class="col-2 image-name-column">
-
-                        <div class="row image-row imageForumAvatar justify-content-center">
-                            {% if post.createdBy.avatar %}
-                                <img style="width: 50px; height: 50px"
-                                     src="{{ asset(post.createdBy.avatar | imagine_filter('thumb')) }}"
-                                     alt="avatar of {{ post.createdBy.avatar }}">
-                            {% else %}
-                                <img style="width: 50px; height: 50px"
-                                     src="{{ asset('/logo_transparent.png' | imagine_filter('thumb')) }}"
-                                     alt="avatar of {{ post.createdBy.avatar }}">
+                <div class="card p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="user d-flex flex-row align-items-center"> <img src=" {{ asset('/assets/img/profile.png') }} " width="30" class="user-img rounded-circle mr-2"> <span> <small class="font-weight-bold text-primary">  {{ post.createdBy.username }} </small>  </span> </div> <small>  {{ question.dateFormatted|date("d/m/Y H:i") }} </small>
+                    </div>
+                    <div class="action d-flex justify-content-between mt-2 align-items-center">
+                        <div class="reply px-4"> <small class="font-weight-bold"> {{ question.subject }} </small> </div>
+                        <div class="icons align-items-center"> 
+                            {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
+                            {{ include('question/_delete_question.html.twig') }}
                             {% endif %}
                         </div>
-
-                        <div class="row name-row ">
-                            {# Question asked author #}
-                            <div class="col text-center"> {{ post.createdBy.username }}</div>
-                        </div>
-
-                    </div>
-
-                    <div class="col-10 question-datecreated-column">
-                        <div class="row title-question-row">
-                            {{ question.subject }}
-                        </div>
-
-                        <div class="row question-row">
-                            {{ post.subject |nl2br }}
-                        </div>
                     </div>
                 </div>
-
-                <div class="row question-asked-info">
-                    {# date posted #}
-                    <div class="col text-right "> {{ question.dateFormatted }} </div>
-                </div>
-
-                {# delete button question asked #}
-                {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
-                    {{ include('question/_delete_question.html.twig') }}
-                {% endif %}
-                <p class="subtitle-css">{{ 'Réponses' | trans | title  }}</p>
+                <p class="subtitle-css">Réponses</p>
             {% else %}
 
-                <div class="row question-answer-row {{ cycle(['odd', 'even'], loop.index0) }}">
 
-                    <div class="col-2 image-name-column imageForumAvatar justify-content-center">
-                        <div class="picturePost">
-                            {% if post.createdBy.avatar %}
-                                <img style="width: 50px; height: 50px"
-                                     src="{{ asset(post.createdBy.avatar | imagine_filter('thumb')) }}"
-                                     alt="avatar of {{ post.createdBy.avatar }}">
-                            {% else %}
-                                <img style="width: 50px; height: 50px"
-                                     src="{{ asset('/logo_transparent.png' | imagine_filter('thumb')) }}"
-                                     alt="avatar of {{ post.createdBy.avatar }}">
-                            {% endif %}
-
-                        </div>
-                        {# Reply to question author #}
-                        <div class="col text-center">{{ post.createdBy.username }} </div>
-                    </div>
-
-                    {# Reply to question #}
-                    <div class="col-9">
-                        {{ post.subject |nl2br }}
-                    </div>
-
-
-                    {# UPVOTES #}
-
-                    <div class="col-1 imageWrapperPost">
-                        {# if author> can delete post #}
-                        {% if is_granted('ROLE_PARTNER') or (userId == post.createdBy.Id) %}
-                            {{ include('question/_delete_post.html.twig') }}
+            <div class="card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="user d-flex flex-row align-items-center"> <img src=" {{ asset('/assets/img/profile.png') }} " width="30" class="user-img rounded-circle mr-2"> <span> <small class="font-weight-bold text-primary">  {{ post.createdBy.username }} </small>  </span> </div> <small>  {{ post.dateFormatted|date("d/m/Y H:i") }} </small>
+                </div>
+                <div class="action d-flex justify-content-between mt-2 align-items-center">
+                    <div class="reply px-4"> <small class="font-weight-bold"> {{ post.subject }} </small> </div>
+                    <div class="icons align-items-center"> 
+                        {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
+                        {{ include('question/_delete_question.html.twig') }}
                         {% endif %}
-
-                        <div class="float-right">
-                            {{ form_start(upvotes[post.id]) }}
-                            <div class="d-flex"><strong class="my-auto forum-upvote-count">{{ upvoters[post.id] }}</strong>
-                                <button type="submit" class="btn"><i class="fas fa-thumbs-up"></i></button>
-                            </div>
-                            {#                            {{ form_widget(upvotes[post.id].upvote, {'attr': {'class': 'upvote-img'}}) }}#}
-                            {{ form_end(upvotes[post.id]) }}
-                        </div>
                     </div>
-
                 </div>
+            </div>
 
 
-                <div class="row question-asked-info">
-                    {# Reply to question date posted #}
-                    <div class="col text-right "> {{ post.dateFormatted }} </div>
+            <div class="row question-asked-info">
+                {# Reply to question date posted #}
+                <div class="col text-right "> 
+                    {{ form_start(upvotes[post.id]) }}
+                    <div class=""><strong class="my-auto forum-upvote-count">{{ upvoters[post.id] }}</strong>
+                        <button type="submit" class="btn"><i class="fas fa-thumbs-up"></i></button>
+                    </div>
+                    {# {{ form_widget(upvotes[post.id].upvote, {'attr': {'class': 'upvote-img'}}) }}#}
+                    {{ form_end(upvotes[post.id]) }}    
                 </div>
-            {% endif %}
+            </div>
+             {% endif %}
         {% endfor %}
+    </div>
+</div>
+</div>
+
+                 
+       
+ 
+
         </div>
 
         <p class="subtitle-css mt-5">{{ 'Répondre' | trans | title  }}</p>
