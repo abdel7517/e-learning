@@ -1370,7 +1370,7 @@ ul.timeline > li:before {
   height: 120px;
 }
 
-h1 {
+.h1-topic {
   text-align: center;
   margin-bottom: 50px;
   margin-top: 50px;
@@ -1454,15 +1454,6 @@ a {
   text-decoration: none;
 }
 
-p {
-  color: #3C4857;
-}
-
-p {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
 .blog-card .ftr {
   margin-top: 15px;
 }
@@ -1543,7 +1534,7 @@ textarea {
   font-weight: 700;
 }
 
-[type=submit]:hover {
+.btn-topic:hover {
   background: #8b54a0;
 }
 
