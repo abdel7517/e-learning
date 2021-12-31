@@ -70,7 +70,7 @@ class ProfileController extends AbstractController
                 $this->UpdateUserAvatar($user, $request);
             }
             $this->flushUpdatedUser($user);
-            $this->addFlash('info', 'Updated successfully!');
+            $this->addFlash('info', 'Modification enregister');
 
             return $this->redirectToRoute('profile');
         }
@@ -164,7 +164,7 @@ class ProfileController extends AbstractController
     public function sendDeleteEmail(string $userEmail, Swift_Mailer $mailer): void
     {
         $message = (new Swift_Message('User deleted confirmation'))
-            ->setFrom('no-reply@example.com')
+            ->setFrom('contact@abyformation.fr')
             ->setTo($userEmail)
             ->setBody($this->renderView('profile/dltmail.html.twig'), 'text/html');
         $mailer->send($message);
