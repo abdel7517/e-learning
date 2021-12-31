@@ -957,12 +957,15 @@ footer a {
   margin-left: 4em;
 }
 
-@media only screen and (max-width: 990px) {
+@media only screen and (max-width: 767px) {
+  .container-profil {
+    justify-content: center;
+  }
+
   .progression {
     margin-left: inherit;
   }
-}
-@media only screen and (max-width: 767px) {
+
   .badges {
     margin-top: 80px;
   }
