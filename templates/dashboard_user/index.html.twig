@@ -54,10 +54,12 @@
                     {% endfor %}
                 {% endif %}
                 {% if user is defined %}
-                        <tr>
-                            <td>{{ user.email }}</td>
-                            <td> <a href=" {{ path('dashboard_user_history', { 'id': user.id }) }} ">Voir</a> </td>
-                        </tr>
+                <tr>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.start|date("d-m-Y") }}</td>
+                    <td> <a href=" {{ path('dashboard_user_history', { 'id': user.id }) }} ">Voir</a> </td>
+                    <td> <a href="  {{ path('dashboard_user_delete', { 'id': user.id }) }} " onclick="check()" >Annuler</a> </td>
+                </tr>
                 {% endif %}
             </tbody>
         </table>
