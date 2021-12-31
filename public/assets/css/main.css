@@ -41,6 +41,11 @@ a {
     }
     .example-wrapper{
         padding: inherit !important;
+        padding-left: 0.2em !important;
+    }
+    .card-lesson{
+      border: none;
+
     }
     .row{
         margin-left: inherit !important;
