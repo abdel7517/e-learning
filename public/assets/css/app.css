@@ -917,7 +917,7 @@ footer a {
   justify-content: space-between;
 }
 
-.container {
+.container-profil {
   display: flex;
   flex-wrap: wrap;
 }
@@ -985,10 +985,10 @@ footer a {
   }
 }
 /*#330033d*/
-.card-columns {
+.card-columns-forum {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .forum-cat-title {

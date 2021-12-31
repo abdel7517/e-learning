@@ -1,11 +1,11 @@
 @import "./../variables/variables";
 
 // forum OVERVIEW-CARDS
-.card-columns
+.card-columns-forum
 {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
 }
 .forum-cat-title {
   font-size: 23px;
