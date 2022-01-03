@@ -108,6 +108,10 @@ document.querySelectorAll(".ck-content a:not(.prev):not(.next)").forEach(
          event.preventDefault();
 }
 
+/* launch animation */
+    document.getElementsByClassName("card-lesson")[0].classList.add('anime')
+    console.log('----------------------')
+  
 /* zoom */
 /* let more = document.getElementById("more");
 let less = document.getElementById("less");
