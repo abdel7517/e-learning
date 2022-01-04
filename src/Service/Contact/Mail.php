@@ -18,14 +18,14 @@ class Mail extends AbstractController
         $this->mailer = $mailer;
     }
    
-    public function notifUser(string $name ,string $mail ,string $mdp,string $start ,string $end, string $formation)
+    public function notifUser(string $name ,string $mail ,string $mdp,string $start ,string $end, string $formation, int $duration)
     {
         // $form = $this->createForm(ContactType::class);
         // $form->handleRequest($request);
 
         // if ($form->isSubmitted() && $form->isValid()) {
             // $contact = $form->getData();
-            $contact = [ 'name' => $name, 'mail'=> $mail, 'mdp'=> $mdp, 'formation' => $formation, 'start' => $start, 'end' => $end  ];
+            $contact = [ 'name' => $name, 'mail'=> $mail, 'mdp'=> $mdp, 'formation' => $formation, 'start' => $start, 'end' => $end, 'duration' => $duration  ];
             // On crée le message
             $message = (new \Swift_Message(' Votre Formation '))
                 // On attribue l'expéditeur
