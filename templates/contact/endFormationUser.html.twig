@@ -1,4 +1,12 @@
 {% block body %}
+{# 
+    <p> {{ co.user.name }} à finis sa formation  </p>
+    <p> Parcours de formation : {{ co.formation }} </p>
+    <p> email : {{ co.user.email }} </p>
+    <p> Temps de connexion réalisé : {{ co.hour }} heures {{ co.timeOfCo % 60 }} min. sur {{ co.user.duration }} heures</p>
+    <a href="https://abyformation.fr/partner">Accèder à notre plateforme</a>    
+
+#}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -104,7 +112,7 @@
 																<table width="100%" border="0" cellspacing="0" cellpadding="0">
 																	<tr>
 																		<td class="text-top m-center" style="color:#7d7e80; font-family:'Quicksand', Arial,sans-serif; font-size:12px; line-height:24px; text-align:left;">
-																			Besoin d'aide ? 
+																			Fin de formation
 																		</td>
 																	</tr>
 																</table>
@@ -205,7 +213,7 @@
 														</tr>
 														<tr>
 															<td class="h1-1-white centered p-25-15" style="padding: 30px; color:#ffffff; font-family:'Barlow Condensed', Arial,sans-serif; font-size:44px; line-height:52px; text-align:center;" bgcolor="#8b54a0">
-                                                                Bonjour {{ co.user.name }} 
+																Bonjour {{ co.user.name }} 
 															</td>
 														</tr>
 														<tr>
@@ -213,7 +221,7 @@
 																<table width="100%" border="0" cellspacing="0" cellpadding="0">
 																	<tr>
 																		<td class="text-4-white centered" style="padding-bottom: 0px; color:#ffffff; font-family:'Quicksand', Arial,sans-serif; font-size:18px; line-height:24px; text-align:center;">
-                                                                            Vous nous manquez ! 
+                                                                            Votre avez finis votre formation ! 
 																		</td>
 																	</tr>
 																</table>
@@ -271,23 +279,28 @@
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td class="h2-white" style="padding-bottom: 5px; color:#ffffff; font-family:'Barlow Condensed', Arial,sans-serif; font-size:34px; line-height:42px; text-align:left;">
-                                                                                    Un imprévue ? 
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td class="h2-white" style="padding-bottom: 20px; color:#ffffff; font-family:'Barlow Condensed', Arial,sans-serif; font-size:24px; line-height:20px; text-align:left;">
-                                                                                    Nous somme la pour vous !
+                                                                                <td class="h2-white" style="padding-bottom: 5px; color:#ffffff; font-family:'Barlow Condensed', Arial,sans-serif; font-size:29px; line-height:42px; text-align:left;">
+                                                                                    Que faire maintenant ? 
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="text-2-white" style="padding-bottom: 10px; color:#ffffff; font-family:'Quicksand', Arial,sans-serif; font-size:12px; line-height:15px; text-align:left;">
-                                                                                    Cela fait {{ co.halfOfHourFormation}} jours que vous avez commencé votre formation. Vous avez réalisé {{ co.hour }} heures {{ co.timeOfCo % 60}} minute de connexion. 
+                                                                                    Pour bénéficié d'un <strong>accés offert de 3 mois à la plateforme</strong> et obtenir votre <strong>certificat de fin de formation</strong>. 
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="text-2-white" style="padding-bottom: 20px; color:#ffffff; font-family:'Quicksand', Arial,sans-serif; font-size:12px; line-height:12px; text-align:left;">
-                                                                                    Avez-vous rencontré un problème ? N'hésiter pas à nous faire part de vos difficultés en répondant à ce mail. 
+                                                                                    <ol style="margin-top: 0px; padding-left: 17px;" >
+                                                                                        <li>
+                                                                                            Répondez à ce <a target="_blank"  href="https://docs.google.com/forms/d/1025GJ6f5r9lD2TX4ccoU7wgFMISZPIbDcFG7kn88xtw/prefill" style="color: black; font-weight: bold;" > questionnaire de satisfaction </a>. 
+                                                                                        </li>
+                                                                                        <li>
+                                                                                             Une fois remplit, indiqué le nous en répondant à ce mail. 
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Nous vous enverons votre certifcat de fin de formation et vous donnerons vos accés offert à la plateforme.
+                                                                                        </li>
+                                                                                    </ol>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -352,13 +365,4 @@
 	</table>
 </body>
 </html>
-
-
-
-{#
-<p>
-    Bonjour, nous avons remarquer que lors des trois premiers jours vous avez réaliser {{ co.hour }} heures {{ co.timeOfCo % 60}} min. de connexion. <br> Avez-vous rencontré un problème ? Si oui, faites nous part de vos difficultés en répondant à ce mail. 
-</p> 
-#}
-
 {% endblock %}

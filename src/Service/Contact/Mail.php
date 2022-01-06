@@ -98,7 +98,22 @@ class Mail extends AbstractController
                 ),
                 'text/html'
             );
+            // On crée le message
+        $messageUser = (new \Swift_Message('Fin de formation'))
+        // On attribue l'expéditeur
+        ->setFrom("contact@abyformation.fr")
+        ->setSubject('Fin de formation')
+        // On attribue le destinataire
+        ->setTo([$user->getEmail()])
+        // On crée le texte avec la vue
+        ->setBody(
+            $this->renderView(
+                'contact/endFormationUser.html.twig', compact('co')
+            ),
+            'text/html'
+        );
             $this->mailer->send($message);
+            $this->mailer->send($messageUser);
     }
 
     public function notif_dropOut($user, $timeOfCo, $hourLog, $market, $halfOfHourFormation)

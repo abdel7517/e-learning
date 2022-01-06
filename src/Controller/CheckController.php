@@ -31,11 +31,11 @@ class CheckController extends AbstractController
     {
         $date =  DateTime::createFromFormat('Y-m-d', Date('Y-m-d'));
         $date->modify("-1 day");
-        $markets = $this->em->getRepository(User::class)->findBy(["market" => 1]);
+        $markets = $this->em->getRepository(User::class)->findBy(["is_partner" => 1]);
         foreach($markets as $market)
         {
             $users = $this->em->getRepository(User::class)->getByDateAndMarket($date, $market->getId());
-            //echo $date->format("d-m-Y");
+            echo $date->format("d-m-Y");
             foreach($users as $user)
             {
                 $timeOfCo = $this->co->getHistory($user->getId());
@@ -78,7 +78,7 @@ class CheckController extends AbstractController
      * @return Response
      */
     public function dropOut(){
-        $markets = $this->em->getRepository(User::class)->findBy(["market" => 1]);
+        $markets = $this->em->getRepository(User::class)->findBy(["is_partner" => 1]);
         foreach($markets as $market)
         {
             $users = $this->em->getRepository(User::class)->getUserNotFinishFormation($market->getId());
@@ -87,10 +87,10 @@ class CheckController extends AbstractController
                 $diffBetweenStartAndEnd = $this->getNumberOfDay($user->getEnd(), $user->getStart());
                 $halfOfHourFormation = floor($diffBetweenStartAndEnd / 2);
                 $stringForModify = "+". $halfOfHourFormation . " day";
-                $halfOfFormation =   $user->getStart()->modify($stringForModify);
+                $dateHalfOfFormation =   $user->getStart()->modify($stringForModify);
                 $today = new DateTime(); 
                 $today->setTime( 0, 0, 0 );
-                if ($halfOfFormation ==  $today){
+                if ($dateHalfOfFormation ==  $today){
                     $timeOfCo = $this->co->getHistory($user->getId());
                     $hourLog = intdiv($timeOfCo, 60);
                     if($hourLog < ($user->getDuration()/4) )
@@ -104,6 +104,7 @@ class CheckController extends AbstractController
 
     }
 
+    // call in dropOut 
     public function getNumberOfDay(DateTime $start, DateTime $end)
     {
         $diff = date_diff($end, $start);
