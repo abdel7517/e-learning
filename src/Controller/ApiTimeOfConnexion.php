@@ -195,15 +195,7 @@ Class ApiTimeOfConnexion extends AbstractController {
     //    return $textResponse;
     // }
 
-      /**
-     * @Route("/test", name="test")
-     */
-    function test(){
-        $to = DateTime::createFromFormat('Y-m-d H:i', '2021-05-07 15:49');
-        $to->add(new DateInterval('PT20M'));
-        var_dump($to);
-        exit;
-    }
+    
 }
 
 

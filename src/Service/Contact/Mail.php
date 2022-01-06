@@ -101,10 +101,10 @@ class Mail extends AbstractController
             $this->mailer->send($message);
     }
 
-    public function notif_dropOut($user, $timeOfCo, $hourLog, $market)
+    public function notif_dropOut($user, $timeOfCo, $hourLog, $market, $halfOfHourFormation)
     {
-        $formationRepo = $this->getDoctrine()->getRepository(LearningModule::class)->findOneBy(["id"=> $user->getFormation() ]);
-        $co = ['user' => $user, 'timeOfCo' => $timeOfCo,'hour'=>$hourLog, 'formation' => $formationRepo->getTitle($user->getLanguage()) ];
+        $formationRepo = $this->getDoctrine()->getRepository(LearningModule::class)->findOneBy(["id"=> $user->getFormation()]);
+        $co = ['user' => $user, 'timeOfCo' => $timeOfCo,'hour'=>$hourLog, 'formation' => $formationRepo->getTitle($user->getLanguage()), 'halfOfHourFormation' => $halfOfHourFormation ];
         // On crée le message
         $message = (new \Swift_Message('Vous nous manquez'))
             // On attribue l'expéditeur

@@ -80,4 +80,19 @@ public function getByDateStartAndMarket(\Datetime $date, int $market_id)
 
     return $result;
 }
+
+public function getUserNotFinishFormation(int $market_id)
+{
+    $toDay =  \DateTime::createFromFormat('Y-m-d', Date('Y-m-d'));
+    $qb = $this->createQueryBuilder("e");
+    $qb
+        ->andWhere('e.end > :toDay')
+        ->andWhere('e.market_id LIKE :market_id')
+        ->setParameter('toDay', $toDay )
+        ->setParameter('market_id', $market_id);
+    $result = $qb->getQuery()->getResult();
+
+    return $result;
+}
+
 }
