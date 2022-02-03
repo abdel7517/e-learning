@@ -1,6 +1,44 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
+   
+<style>
+    #lds-ring {
+display: none;
+position: relative;
+width: 80px;
+height: 80px;
+margin: auto;
+}
+#lds-ring div {
+box-sizing: border-box;
+display: block;
+position: absolute;
+width: 64px;
+height: 64px;
+margin: 8px;
+border: 8px solid #8B54A0;
+border-radius: 50%;
+animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+border-color: #8B54A0 transparent transparent transparent;
+}
+#lds-ring div:nth-child(1) {
+animation-delay: -0.45s;
+}
+#lds-ring div:nth-child(2) {
+animation-delay: -0.3s;
+}
+#lds-ring div:nth-child(3) {
+animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+0% {
+transform: rotate(0deg);
+}
+100% {
+transform: rotate(360deg);
+}
+}
+</style>
    
 
         <div class="d-flex justify-content-around">
@@ -20,6 +58,17 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Cherchez</button>
             </form>
+
+            <div>
+                <div class="form-group">
+                    <input type="email"  class="form-control" id="mailInfo" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input type="texte"  class="form-control" id="lienInfo" aria-describedby="emailHelp" placeholder="Lien de la formation">
+
+                    <small id="emailHelp2" class="form-text text-muted">Envoyer email d'info</small>
+                </div>  
+                <button type="submit" onclick="stop()" class="btn btn-primary" id="btn" >Envoyer</button>
+                <div class="lds-ring" id="lds-ring"><div></div><div></div><div></div><div></div></div>
+            </div>
 
             <button type="button" class="btn btn-light">
                  <a href=" {{ path('dashboard_user', { 'all': true }) }} ">Voire tous les utilisateurs</a>
@@ -64,9 +113,72 @@
             </tbody>
         </table>
     {% endif %}
+    
+    
+    <script>
+    function stop(e){
+        mail = document.getElementById('mailInfo').value;
+        lien = document.getElementById('lienInfo').value;
 
-        <script>
-        let user_id = {{ app.user.id }};
-        let session_id = {{ app.user.sessionId }}
-        </script>
+        loader = document.getElementById('lds-ring');
+        message = document.getElementById('emailHelp2');
+        button = document.getElementById("btn").style.display = "none";
+        loader.style.display = "block";
+
+        var delayInMilliseconds = 1000; //1 second
+        var body = {
+            "mail": mail,
+            "lien": lien
+        }
+        setTimeout(function() {
+            
+            // create XMLHttpRequest object
+            const xhr = new XMLHttpRequest()
+            xhr.onreadystatechange = function() {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+        message.textContent = "Mail envoyer avec succes";
+        message.style.fontSize = "1.5em";
+    }
+    else{
+        message.textContent = "Erreur lors de l'envoi du mail";
+
+    }
+}
+            // open a POST request
+            xhr.open("POST", "/partner/dashboard/user/sendInfo")
+            // set content-type header to JSON
+            xhr.setRequestHeader("Content-Type", "application/json");
+            // send JSON data to the remote server
+            xhr.send(JSON.stringify(body))
+
+            // triggered when data upload is finished
+xhr.upload.onload = function(e) {
+  console.log("---------------------" + e)
+}
+
+        //     fetch('/partner/dashboard/user/sendInfo', {
+        //         method: "POST", 
+        //         body: body
+        //     }).then(response => response.json()).then(data => {
+        //     console.log(data);
+        //     if(response.statusText == "OK"){
+        //         message.textContent = "Mail envoyer avec succes";
+        //         message.style.fontSize = "1.5em";
+        //     }else{
+        //         message.textContent = "Erreur lors de l'envoi du mail";
+        //     } 
+        // })
+        loader.style.display = "none";
+        button = document.getElementById("btn").style.display = "block";
+        }, delayInMilliseconds);
+
+    
+        }
+    
+    
+    let user_id = {{ app.user.id }};
+    let session_id = {{ app.user.sessionId }}
+
+    </script>
+ 
 {% endblock %}

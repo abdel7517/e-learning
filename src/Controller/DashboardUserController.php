@@ -8,6 +8,7 @@ use App\Entity\Chapter;
 use App\Entity\Language;
 use App\Entity\ChapterPage;
 use App\Domain\LanguageTrait;
+use App\Service\Contact\Mail;
 use App\Domain\FlaggingManager;
 use App\Entity\TimeOfConnexion;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +20,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DashboardUserController extends AbstractController
 {
     use LanguageTrait;
-    private $security;
-    public function  __construct(Security $security)
+    private $security, $mailer;
+    public function  __construct(Security $security, Mail $mailer)
     {
         $this->security = $security;
+        $this->mailer = $mailer;
     }
     /**
      * @Route("partner/dashboard/user/home/{all}", name="dashboard_user")
@@ -198,6 +200,22 @@ class DashboardUserController extends AbstractController
 
         return new Response(
             'All ok!',
+            Response::HTTP_OK
+        );
+    }
+
+      /**
+     * @Route("partner/dashboard/user/sendInfo", name="dashboard_sendInfo")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function sendInfoMail(Request $request)
+    {
+        // $mail =   $request->get('mail');
+        $payload = json_decode($request->getContent(), true);
+        $this->mailer->sendInfo($payload["mail"],  $payload["lien"]);
+
+        return new Response(
+            $payload["mail"],
             Response::HTTP_OK
         );
     }
