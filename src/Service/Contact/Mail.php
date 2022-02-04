@@ -158,7 +158,7 @@ class Mail extends AbstractController
         // $contact = $form->getData();
         $contact = ['mail' => $mail, 'lien' => $lien];
         // On crée le message
-        $message = (new \Swift_Message('Demande d\'information'))
+        $message = (new \Swift_Message('Procédure d\'inscription'))
             // On attribue l'expéditeur
             ->setFrom("contact@abyformation.fr")
             // On attribue le destinataire
@@ -166,7 +166,7 @@ class Mail extends AbstractController
             // On crée le texte avec la vue
             ->setBody(
                 $this->renderView(
-                    'contact/test.html.twig', compact('contact')
+                    'contact/info.html.twig', compact('contact')
                 ),
                 'text/html'
             )
