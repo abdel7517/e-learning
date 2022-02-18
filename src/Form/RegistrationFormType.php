@@ -98,14 +98,18 @@ class RegistrationFormType extends AbstractType
             ->add('choice', TextareaType::class, [
                 'attr'=>
                     array(
-                        'placeholder'=>'Besoins / Difficultés / Pourquoi la formation ?'),
+                        'placeholder'=>'Besoins / Difficultés / Pourquoi la formation ?'                       
+                    ),
+                    'required' => false,
                 'label'=> false
             ])
             ->add('prerequisite', TextareaType::class, [
                 'attr'=>
                     array(
-                        'placeholder'=>'Prés-requis'),
-                'label'=> false
+                        'placeholder'=>'Prés-requis', 
+                    ),
+                    'required' => false,
+                    'label'=> false
             ]);
 
             // ->add('agreeTerms', CheckboxType::class, [
