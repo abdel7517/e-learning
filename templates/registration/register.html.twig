@@ -24,56 +24,7 @@
     </head>
     <body class="loginbody">
 	{% block nav %}
-	<nav
-				class="navbar navbar-expand-md navbar-dark bg nav-bar-color">
-				<!-- LOGO   -->
 
-
-				<!-- HAMBURGER ICON BUTTON   -->
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<div class="collapse navbar-collapse nav-bar-collapse" id="navbarTogglerDemo02">
-
-					{% set searchbar = searchbar.getSearchbar() %}
-					{{ form_start(searchbar, {'attr': {'class': 'form-inline my-2 my-lg-0'}}) }}
-					{{ form_widget(searchbar.keywords, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Search'}}) }}
-				</form>
-
-				<!-- LINKS   -->
-
-				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-
-				<li class="nav-item formnav">
-					</li
-					<li class="nav-item active hubnav">
-						<a class="nav-link" data-toggle="tooltip" data-placement="right" title="{{ 'Portal' | trans }}" href="{{ path('portal') }}"><img height="25px" src="{{ asset('assets/img/lightlogo-09.png') }}" alt="{{ 'Portal' | trans }}"><span class="sr-only">(current)</span>
-						</a>
-					</li>
-
-
-					<li class="nav-item formnav">
-						<a class="nav-link" data-toggle="tooltip" data-placement="right" title="{{ 'Meetingplace' | trans }}" href="{{ path('forum') }}"><img height="25px" src="{{ asset('assets/img/lightlogo-10.png') }}" alt="{{ 'Meetingplace' | trans }}"></a>
-					</li>
-
-					<li class="nav-item profilenav">
-						<div class="nav-link" id="profiledrop"><img data-toggle="tooltip" data-placement="right" title="{{ 'Profile' | trans }}" height="25px" src="{{ asset('assets/img/lightlogo-11.png') }}" alt="{{ 'Profile' | trans }}"></div>
-						<div id="reveal" class="gone">
-							<a class="nav-link" href="{{ path('profile') }}">{{ 'My profile' | trans }}</a>
-							<a class="nav-link" href="{{ path('app_logout') }}">{{ 'Logout' | trans }}</a>
-						</div>
-					</li>
-					<li id="timer">
-						
-					</li>
-					{# <li class="nav-item dropdown">
-						{{ include('language_switcher/_switcher.html.twig') }}
-					</li> #}
-				</ul>
-
-			</div>
-		</nav>
 
 	{% endblock %}	
         <div class="titlewrap">
@@ -104,10 +55,10 @@
                 {{ form_row(registrationForm.email) }}
                 {{ form_row(registrationForm.number) }}
                 {{ form_row(registrationForm.formation) }}
-                {{ form_row(registrationForm.duration) }}
                 {{ form_row(registrationForm.start) }}
                 {{ form_row(registrationForm.end) }}
-                {{ form_row(registrationForm.agreeTerms) }}
+                {{ form_row(registrationForm.choice) }}
+                {{ form_row(registrationForm.prerequisite) }}
 
                 <button class="button button_1">{{ 'Ajoutez' | trans }}</button>
         </div>

@@ -10,6 +10,7 @@
                 <th scope="col">{{ 'Nom' | trans }}</th>
                 <th scope="col">{{ 'Tél..' | trans }}</th>
                 <th scope="col">{{ 'Mail' | trans }}</th>
+                <th scope="col">{{ 'Date de l\'entretien' | trans }}</th>
                 <th scope="col">{{ 'Date d\'entrée en formation' | trans }}</th>
                 <th scope="col">{{ 'Date de sortie' | trans }}</th>
             </tr>
@@ -20,11 +21,30 @@
                         <td>{{ user.name }}</td>
                         <td>{{ user.number }}</td>
                         <td>{{ user.email }}</td>
+                        <td>{{ user.created|date("d-m-Y") }}</td>
                         <td>{{ user.start|date("d-m-Y") }}</td>
                         <td>{{ user.end|date("d-m-Y") }}</td>                        
                     </tr>
         </tbody>
     </table>
+
+    <table class="mt-4 table table-hover text-center">
+        <thead>
+        <tr>
+            <th scope="col">{{ 'Besoin / Difficultés / Pourquoi la formation ?' | trans }}</th>
+            <th scope="col">{{ 'Prés-requis' | trans }}</th>
+         
+        </tr>
+        </thead>
+        <tbody>
+
+                <tr>
+                    <td>{{ user.choice }}</td>
+                    <td>{{ user.prerequisite }}</td>
+                                        
+                </tr>
+    </tbody>
+</table>
 
     <table class="table table-condensed"  id="myTable">
     <thead>

@@ -85,10 +85,10 @@ class RegistrationController extends AbstractController
             $mail = $form->get('email')->getData();
             $start = $form->get('start')->getData()->format('d-m-Y');
             $end = $form->get('end')->getData()->format('d-m-Y');
-            $duration = $form->get('duration')->getData();
+            // $duration = $form->get('duration')->getData() ? $form->get('duration')->getData() : 0;
 
 
-            $this->mailer->notifUser($name, $mail, $passWord, $start, $end, $formation->getTitle($defaultLang), $duration);
+            $this->mailer->notifUser($name, $mail, $passWord, $start, $end, $formation->getTitle($defaultLang));
             $this->addFlash('error', 'Le nouvelle utilisateur à été créé avec succés');  
         }
         

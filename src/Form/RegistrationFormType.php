@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\User;
 use App\Entity\Language;
 use App\Entity\LearningModule;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,8 +13,10 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -49,7 +50,7 @@ class RegistrationFormType extends AbstractType
             ->add('name', null, [
                 'attr'=>
                     array(
-                        'placeholder'=>'Name',
+                        'placeholder'=>'Nom prénom',
                         'class'=>'registerInput'),
                 'label'=> false
             ])
@@ -76,32 +77,45 @@ class RegistrationFormType extends AbstractType
                 'data_class' => null,
                 'mapped'=>false,
             ])
-            ->add('duration', null, [
-                'attr'=>
-                    array('placeholder'=>'Durée formation EN HEURES '),
-                'label'=> false
-            ])
+            // ->add('duration', null, [
+            //     'attr'=>
+            //         array('placeholder'=>'Durée formation EN HEURES '),
+            //     'label'=> false
+            // ])
             ->add('start', DateType::class, [
                 'data_class' => null,
                 'label' => 'Début de formation',
-                'data' => new \DateTime("now"),
+                'data' => new \DateTime("now +16 day"),
                 'format' => 'ddMMyyyy'
             ])
             ->add('end', DateType::class, [
                 'data_class' => null,
                 'label' => 'Fin de formation',
-                'data' => new \DateTime("now"),
+                'data' => new \DateTime("now +16 day"),
                 'format' => 'ddMMyyyy'
 
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Vous devez acceptez nos conditions générales',
-                    ]),
-                ],
+            ->add('choice', TextareaType::class, [
+                'attr'=>
+                    array(
+                        'placeholder'=>'Besoins / Difficultés / Pourquoi la formation ?'),
+                'label'=> false
+            ])
+            ->add('prerequisite', TextareaType::class, [
+                'attr'=>
+                    array(
+                        'placeholder'=>'Prés-requis'),
+                'label'=> false
             ]);
+
+            // ->add('agreeTerms', CheckboxType::class, [
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new IsTrue([
+            //             'message' => 'Vous devez acceptez nos conditions générales',
+            //         ]),
+            //     ],
+            // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

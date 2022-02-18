@@ -132,7 +132,7 @@ class User implements UserInterface
     private $market_id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $duration;
 
@@ -140,6 +140,16 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $number;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $choice;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $prerequisite;
 
     public function __construct()
     {
@@ -588,6 +598,30 @@ class User implements UserInterface
     public function setNumber(int $number): self
     {
         $this->number = $number;
+
+        return $this;
+    }
+
+    public function getChoice(): ?string
+    {
+        return $this->choice;
+    }
+
+    public function setChoice(?string $choice): self
+    {
+        $this->choice = $choice;
+
+        return $this;
+    }
+
+    public function getPrerequisite(): ?string
+    {
+        return $this->prerequisite;
+    }
+
+    public function setPrerequisite(?string $prerequisite): self
+    {
+        $this->prerequisite = $prerequisite;
 
         return $this;
     }
