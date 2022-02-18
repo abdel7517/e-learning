@@ -31,6 +31,7 @@
     <table class="mt-4 table table-hover text-center">
         <thead>
         <tr>
+            <th scope="col">{{ 'formation' | trans }}</th>
             <th scope="col">{{ 'Besoin / Difficultés / Pourquoi la formation ?' | trans }}</th>
             <th scope="col">{{ 'Prés-requis' | trans }}</th>
          
@@ -39,6 +40,7 @@
         <tbody>
 
                 <tr>
+                    <td>{{ formation }}</td>
                     <td>{{ user.choice }}</td>
                     <td>{{ user.prerequisite }}</td>
                                         

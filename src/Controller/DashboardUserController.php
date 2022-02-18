@@ -10,6 +10,7 @@ use App\Entity\ChapterPage;
 use App\Domain\LanguageTrait;
 use App\Service\Contact\Mail;
 use App\Domain\FlaggingManager;
+use App\Entity\LearningModule;
 use App\Entity\TimeOfConnexion;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -91,9 +92,13 @@ class DashboardUserController extends AbstractController
         $pr = $this->getDoctrine()->getRepository(ChapterPage::class);
         $fm = new FlaggingManager($languageCount);
 
+
         $history = $this->getDoctrine()->getRepository(TimeOfConnexion::class)->findBy(['user_id' => $id], ['toDay' => 'DESC']);
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $id]);
         $dateOfConnexion= [];
+        // find name of formation
+        $formation = $this->getDoctrine()->getRepository(LearningModule::class)->findOneBy(["id" => $user->getFormation()]);
+
         
         // get all date of connexion  
         foreach($history as $item){
@@ -177,7 +182,8 @@ class DashboardUserController extends AbstractController
             'languagecount' => $languageCount,
             'history'=>$sessionAccordingToADay,
             "totalOfConnexionForDay" => $dayWithTotal,
-            "user" => $user
+            "user" => $user, 
+            "formation" => $formation->getTitle($user->getLanguage())
         ]);
     }
 
