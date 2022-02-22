@@ -4,7 +4,7 @@
 /.env.local
 /.env.local.php
 /.env.*.local
-/public/bundles/
+/public/bundles/fosjsrouting
 /var/
 /vendor/
 /.sass-cache/
