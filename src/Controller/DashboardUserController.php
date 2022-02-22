@@ -28,10 +28,10 @@ class DashboardUserController extends AbstractController
         $this->mailer = $mailer;
     }
     /**
-     * @Route("partner/dashboard/user/home/{all}", name="dashboard_user")
+     * @Route("partner/dashboard/user/home/{all}/{date}", name="dashboard_user")
      * @return Response
      */
-    public function index($all = false, Request $request): Response
+    public function index($all = false, $date = false,  Request $request): Response
     {
         $language = $this->getLanguage($request);
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
@@ -41,28 +41,37 @@ class DashboardUserController extends AbstractController
         $fm = new FlaggingManager($languageCount);
         $user = $this->security->getUser();
 
-        if($request->isMethod('POST')){
-           $mail =   $request->get('mail');
-           $answer = $this->getDoctrine()->getRepository(User::class)->findOneBy([ "email" => $mail, 'market_id' => $user->getId() ]);
-            if ($answer != null)
-                {
-                    return $this->render('dashboard_user/index.html.twig', [
-                        'fm' => $fm,
-                        'language' => $language,
-                        'pr' => $pr,
-                        'user' => $answer,
-                        'languagecount' => $languageCount,
-                    ]);
-                }
+        if ($request->isMethod('POST')) {
+            $mail =   $request->get('mail');
+            $answer = $this->getDoctrine()->getRepository(User::class)->findOneBy(["email" => $mail, 'market_id' => $user->getId()]);
+            if ($answer != null) {
+                return $this->render('dashboard_user/index.html.twig', [
+                    'fm' => $fm,
+                    'language' => $language,
+                    'pr' => $pr,
+                    'user' => $answer,
+                    'languagecount' => $languageCount,
+                ]);
+            }
         }
-        
-        if($all == true){
+
+        if ($all == true) {
 
             return $this->render('dashboard_user/index.html.twig', [
                 'fm' => $fm,
                 'language' => $language,
                 'pr' => $pr,
-                "users" => $users->findBy(['market_id' => $user->getId() ],["start" => "DESC"]),
+                "users" => $users->findBy(['market_id' => $user->getId()], ["start" => "DESC"]),
+                'languagecount' => $languageCount,
+            ]);
+        }
+        if ($date) {
+            $date = DateTime::createFromFormat('Y-m-d', $date);
+            return $this->render('dashboard_user/index.html.twig', [
+                'fm' => $fm,
+                'language' => $language,
+                'pr' => $pr,
+                "users" => $this->getDoctrine()->getRepository(User::class)->getByDateStartAndMarket($date, $user->getId()),
                 'languagecount' => $languageCount,
             ]);
         }
@@ -70,21 +79,19 @@ class DashboardUserController extends AbstractController
             'fm' => $fm,
             'language' => $language,
             'pr' => $pr,
-            "users" => $users->findBy(['market_id' => $user->getId() ],["start" => "DESC"],  5),
+            "users" => $users->findBy(['market_id' => $user->getId()], ["start" => "DESC"],  5),
             'languagecount' => $languageCount,
         ]);
-       
-        
     }
 
-    
- 
 
-     /**
+
+
+    /**
      * @Route("partner/dashboard/user/history/{id}", name="dashboard_user_history")
      * @return Response
      */
-    public function history(Request $request,int  $id): Response
+    public function history(Request $request, int  $id): Response
     {
         $language = $this->getLanguage($request);
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
@@ -95,23 +102,21 @@ class DashboardUserController extends AbstractController
 
         $history = $this->getDoctrine()->getRepository(TimeOfConnexion::class)->findBy(['user_id' => $id], ['toDay' => 'DESC']);
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $id]);
-        $dateOfConnexion= [];
+        $dateOfConnexion = [];
         // find name of formation
         $formation = $this->getDoctrine()->getRepository(LearningModule::class)->findOneBy(["id" => $user->getFormation()]);
 
-        
+
         // get all date of connexion  
-        foreach($history as $item){
+        foreach ($history as $item) {
 
             $day = $item->getToday()->format('Y-m-d');
             $positionOfItem = array_search($day, $dateOfConnexion);
 
-            if($positionOfItem !== 0){
+            if ($positionOfItem !== 0) {
 
-                $dateOfConnexion[]=$day;
-
+                $dateOfConnexion[] = $day;
             }
-            
         }
 
         // all session of co
@@ -121,16 +126,16 @@ class DashboardUserController extends AbstractController
         // array with date of connexion and total min of co
         $dayWithTotal = [];
 
-        foreach($dateOfConnexion as $date){
+        foreach ($dateOfConnexion as $date) {
 
             $detailsSessionForOneDay = [];
 
-            foreach($history as $item){
+            foreach ($history as $item) {
 
                 $day = $item->getToday()->format('Y-m-d');
 
                 // if the date of item element match with the 
-                if( $date == $day ){
+                if ($date == $day) {
                     $detailsForOneSession = [];
                     $detailsForOneSession['time_co'] = $item->getTimeCo();
                     $detailsForOneSession['time_deco'] = $item->getTimeDeco();
@@ -138,51 +143,48 @@ class DashboardUserController extends AbstractController
                     $dateStart = $item->getTimeCo();
                     $dateFinish = $item->getTimeDeco();
                     $diff = $dateFinish->diff($dateStart);
-                    $diff = date_diff($dateStart,$dateFinish);
+                    $diff = date_diff($dateStart, $dateFinish);
                     $min = $diff->format('%i');
                     $hour = $diff->format('%H');
                     $min = $min + ($hour * 60);
-                    
-                    
+
+
 
                     $detailsForOneSession['timeOfCo'] = $min;
                     $totalOfConnexionForDay += $min;
-                    
+
                     // save session info
                     $detailsSessionForOneDay[] = $detailsForOneSession;
                     // $sessionAccordingToADay[$day] = $allSessionForDay;
 
                 }
-                if(!empty($detailsSessionForOneDay))
-                {
+                if (!empty($detailsSessionForOneDay)) {
                     $allSession[] = $detailsSessionForOneDay;
                 }
-    
             }
 
             $sessionAccordingToADay[$date] = $detailsSessionForOneDay;
             $dayWithTotal[$date] = $totalOfConnexionForDay;
             $totalOfConnexionForDay = 0;
-
         }
 
-        
-        
+
+
         //             echo "<pre>";
         //             print_r($sessionAccordingToADay);
         //             print_r($dayWithTotal);
         //             echo "</pre>";
 
         // exit;
-         
+
         return $this->render('dashboard_user/history.html.twig', [
             'fm' => $fm,
             'language' => $language,
             'pr' => $pr,
             'languagecount' => $languageCount,
-            'history'=>$sessionAccordingToADay,
+            'history' => $sessionAccordingToADay,
             "totalOfConnexionForDay" => $dayWithTotal,
-            "user" => $user, 
+            "user" => $user,
             "formation" => $formation->getTitle($user->getLanguage())
         ]);
     }
@@ -210,7 +212,7 @@ class DashboardUserController extends AbstractController
         );
     }
 
-      /**
+    /**
      * @Route("partner/dashboard/user/sendInfo", name="dashboard_sendInfo")
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -242,27 +244,25 @@ class DashboardUserController extends AbstractController
 
     public function getHistory($id)
     {
-       /* $language = $this->getLanguage($request);
+        /* $language = $this->getLanguage($request);
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
 
         $pr = $this->getDoctrine()->getRepository(ChapterPage::class);
         $fm = new FlaggingManager($languageCount);*/
 
         $history = $this->getDoctrine()->getRepository(TimeOfConnexion::class)->findBy(['user_id' => $id], ['toDay' => 'DESC']);
-        $dateOfConnexion= [];
-        
+        $dateOfConnexion = [];
+
         // get all date of connexion  
-        foreach($history as $item){
+        foreach ($history as $item) {
 
             $day = $item->getToday()->format('Y-m-d');
             $positionOfItem = array_search($day, $dateOfConnexion);
 
-            if($positionOfItem !== 0){
+            if ($positionOfItem !== 0) {
 
-                $dateOfConnexion[]=$day;
-
+                $dateOfConnexion[] = $day;
             }
-            
         }
 
         // all session of co
@@ -272,16 +272,16 @@ class DashboardUserController extends AbstractController
         // array with date of connexion and total min of co
         $dayWithTotal = [];
         $totalCo = 0;
-        foreach($dateOfConnexion as $date){
+        foreach ($dateOfConnexion as $date) {
 
             $detailsSessionForOneDay = [];
 
-            foreach($history as $item){
+            foreach ($history as $item) {
 
                 $day = $item->getToday()->format('Y-m-d');
 
                 // if the date of item element match with the 
-                if( $date == $day ){
+                if ($date == $day) {
                     $detailsForOneSession = [];
                     $detailsForOneSession['time_co'] = $item->getTimeCo();
                     $detailsForOneSession['time_deco'] = $item->getTimeDeco();
@@ -289,37 +289,32 @@ class DashboardUserController extends AbstractController
                     $dateStart = $item->getTimeCo();
                     $dateFinish = $item->getTimeDeco();
                     $diff = $dateFinish->diff($dateStart);
-                    $diff = date_diff($dateStart,$dateFinish);
+                    $diff = date_diff($dateStart, $dateFinish);
                     $min = $diff->format('%i');
                     $hour = $diff->format('%H');
                     $min = $min + ($hour * 60);
-                    
-                    
+
+
 
                     $detailsForOneSession['timeOfCo'] = $min;
                     $totalCo += $min;
                     $totalOfConnexionForDay += $min;
-                    
+
                     // save session info
                     $detailsSessionForOneDay[] = $detailsForOneSession;
                     // $sessionAccordingToADay[$day] = $allSessionForDay;
 
                 }
-                if(!empty($detailsSessionForOneDay))
-                {
+                if (!empty($detailsSessionForOneDay)) {
                     $allSession[] = $detailsSessionForOneDay;
                 }
-    
             }
 
             $sessionAccordingToADay[$date] = $detailsSessionForOneDay;
             $dayWithTotal[$date] = $totalOfConnexionForDay;
             $totalOfConnexionForDay = 0;
-
         }
 
-        return $totalCo;        
-       
+        return $totalCo;
     }
-
 }

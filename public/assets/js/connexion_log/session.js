@@ -21,30 +21,30 @@ class Session {
         if(document.hidden){
             clearInterval(newSession.callPresence)
             clearInterval(newSession.reset)
-            console.log("on me vois plus")
+            // console.log("on me vois plus")
 
         }else{
             let now = new Date;
-            console.log("----------------------- re " + now)
+            // console.log("----------------------- re " + now)
             let long_freeze = newSession.timeDiffCalc(newSession.date, now);
             if(long_freeze)
             {
                 newSession.callPresence = setInterval(function(){ newSession.sendPresence() }, 20000);
-                console.log('continue')
+                // console.log('continue')
                 newSession.startTimer(20*60);
-                console.log("-------" + newSession.date)
+                // console.log("-------" + newSession.date)
 
             }else{
-                console.log("-------" + newSession.date)
+                // console.log("-------" + newSession.date)
                 let timeDeco = newSession.addMinutes(newSession.date, 20);
                 let dateString = newSession.formatDate(timeDeco);
-                console.log(window.location.origin + "/deco/" +user_id + "/" + dateString + "/"+ newSession.sessionId );
+                // console.log(window.location.origin + "/deco/" +user_id + "/" + dateString + "/"+ newSession.sessionId );
                 let url = window.location.origin + "/deco/" +user_id + "/" + dateString + "/"+ newSession.sessionId;
                 $.ajax({
                     type: 'POST',
                     url: url,
                     complete: function(resultat){
-                        console.log('deco');
+                        // console.log('deco');
                         window.alert('Vous êtes déconnecté (inactivé trop longue depuis votre dernière session), vous allez commencez une nouvelle session');
                         window.location.reload();
                     }
@@ -62,13 +62,13 @@ class Session {
           if(this.endOfSession == false){
             let date = new Date;
             let dateString = this.formatDate(date);
-            console.log(window.location.origin + "/co/" +user_id + "/" + dateString + "/"+ this.sessionId );
+            // console.log(window.location.origin + "/co/" +user_id + "/" + dateString + "/"+ this.sessionId );
             let url = window.location.origin + "/co/" +user_id + "/" + dateString + "/"+ this.sessionId;
             $.ajax({
                 type: 'POST',
                 url: url,
                 complete: function(resultat){
-                    console.log( "--------------" + resultat.responseText);
+                    // console.log( "--------------" + resultat.responseText);
                     session_id = resultat.responseText;
                 }
                 });
@@ -80,14 +80,14 @@ class Session {
         if(this.endOfSession == false){
             let date = new Date;
             let dateString = this.formatDate(date);
-            console.log(window.location.origin + "/deco/" +user_id + "/" + dateString + "/"+ this.sessionId );
+            // console.log(window.location.origin + "/deco/" +user_id + "/" + dateString + "/"+ this.sessionId );
             let url = window.location.origin + "/deco/" +user_id + "/" + dateString + "/"+ this.sessionId;
             $.ajax({
                 type: 'POST',
                 url: url,
                 complete: function(resultat){
                     $('.deco').css('display', 'block');
-                    console.log('deco');
+                    // console.log('deco');
                     window.alert('Vous êtes déconnecté (inactivé trop longue depuis votre dernière session), vous allez commencez une nouvelle session');
                     window.location.reload();
                 }
@@ -98,17 +98,17 @@ class Session {
     }
 
     sendPresence(){
-        console.log(this.date);
+        // console.log(this.date);
         if(this.endOfSession ==  false ){
             let date = new Date;
             let dateString = this.formatDate(date);
             let url = window.location.origin + "/presence/" + user_id + "/" + dateString + "/"+ this.sessionId;
-            console.log(url);
+            // console.log(url);
             $.ajax({
                     type: 'POST',
                     url: url,
                     complete: function(resultat){
-                        console.log(resultat);
+                        // console.log(resultat);
                         if(resultat.responseText == "deco"){
                             newSession.endOfSession = true;
                             window.alert('Vous êtes déconnecté, rechargez la page');
@@ -126,7 +126,7 @@ class Session {
         // relaunch the timer 
         this.stopTimer();
         this.date = new Date;
-        console.log(this.date);
+        // console.log(this.date);
         this.startTimer(20*60);
 
     }
@@ -155,8 +155,8 @@ class Session {
         if (seconds < 10) seconds = '0' + seconds;
 
         // $("#timer").html(minutes + ':' + seconds);
-       // console.log(minutes + ':' + seconds);
-       console.log(new Date )
+    //    console.log(minutes + ':' + seconds);
+    //    console.log(new Date )
     }
 
     stopTimer() {
@@ -211,7 +211,7 @@ class Session {
     if( hours > 0)
     {
         let nowMinute = dateNow.getMinutes() + 60;
-        console.log(lastDate.getMinutes() -  nowMinute);
+        // console.log(lastDate.getMinutes() -  nowMinute);
         if((lastDate.getMinutes() -  nowMinute) >= 20 )
         {
             return false;
@@ -222,7 +222,7 @@ class Session {
     {
         return true;
     }
-    console.log(lastDate)
+    // console.log(lastDate)
  
     
   }

@@ -39,9 +39,13 @@ transform: rotate(360deg);
 }
 }
 </style>
+<script src="{{asset('bundles/vanilla-calendar-master/src/js/vanilla-calendar.js')}}"></script>
+<link rel="stylesheet" href="{{ asset('bundles/vanilla-calendar-master/src/css/vanilla-calendar.css') }}">
+
+
    
 
-        <div class="d-flex justify-content-around">
+        <div class="d-flex flex-wrap justify-content-around">
 
           <a href="{{ path('app_register') }}">
                 <button type="button" class="btn  btn-circle btn-xl"
@@ -69,6 +73,12 @@ transform: rotate(360deg);
                 <button type="submit" onclick="stop()" class="btn btn-primary" id="btn" >Envoyer</button>
                 <div class="lds-ring" id="lds-ring"><div></div><div></div><div></div><div></div></div>
             </div>
+            <div id="myCalendar" class="vanilla-calendar">
+
+    
+                
+            </div>
+
 
             <button type="button" class="btn btn-light">
                  <a href=" {{ path('dashboard_user', { 'all': true }) }} ">Voire tous les utilisateurs</a>
@@ -114,7 +124,8 @@ transform: rotate(360deg);
         </table>
     {% endif %}
     
-    
+    <script src="{{asset('bundles/vanilla-calendar-master/src/js/main.js')}}"></script>
+
     <script>
     function stop(e){
         mail = document.getElementById('mailInfo').value;
