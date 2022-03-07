@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker.min.css">
+<table class="table table-striped">
+   
+    <div class="d-flex justify-content-center" >      
+        <div class="btn-group" role="group" aria-label="Basic ">
+            <button type="button" class="btn btn-primary">Nouveau</button>
+            <button type="button" class="btn btn-primary">NRP</button>
+            <button type="button" class="btn btn-primary">Pas interessé</button>
+        </div>
+    </div>
+
+    <thead>
+        <tr class="headers">
+            {% for key,value in headers %}
+
+            <th> {{ key }} </th>
+
+            {% endfor %}
+            <th> action </th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        {% for lead in data %}
+        <tr class="content" id="{{ lead.id }}">
+            {% for key,value in lead.data %}
+            <th  contenteditable="true" id="{{key}}-{{lead.id}}" onblur="saveChange('{{key}}', {{lead.id}})" > {{ value }} </th>
+            {% endfor %}
+            <th>
+                <button type="button" class="btn btn-success" onclick="interested({{ lead.id }})"> Inscription </button>
+                <button type="button" class="btn btn-secondary" onclick="nrp({{ lead.id }})">NRP</button>
+                <button type="button" class="btn btn-danger" onclick="nointerested({{ lead.id }})">Pas
+                    interessez</button>
+            </th>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src=" {{ asset('assets/js/leads/all_leads.js') }} "></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker.min.css">
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+
+
+{% endblock %}
+
+

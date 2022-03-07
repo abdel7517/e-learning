@@ -1,0 +1,32 @@
+.form_leads{
+    display: flex;
+    width: 100%;
+}
+#leads_import_fichier{
+    width: 22em;
+    display: flex;
+}
+#leads_form_file{
+    width: 50%;
+}
+.leads_field{
+    width: 50%;
+}
+.none{
+    display: none !important;
+}
+.form-control:focus{
+    border-color: $purple !important;
+    box-shadow: none !important;
+}
+.swal2-styled, .swal2-confirm{
+    background-color: $purple !important;
+    z-index: 1 !important;
+
+}
+.swal2-actions{
+    z-index: 1 !important;
+}
+.datepicker{
+    z-index: 10000000 !important;
+}

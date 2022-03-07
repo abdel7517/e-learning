@@ -36,10 +36,17 @@
 
             <a href="{{ path('dashboard_user') }}">
                 <button type="button" class="btn  btn-circle btn-xl"
-                        data-toggle="tooltip" data-placement="right" title="Voir le liste des utilisateurs">
+                        data-toggle="tooltip" data-placement="right" title="Voir le liste des formations">
                     <img class="addicon" src="{{ asset('assets/img/user.png') }}" alt="add icon">
                 </button>
-                <p class="mt-2">{{ 'Utilisateurs' | trans }}</p>
+                <p class="mt-2">{{ 'Formation' | trans }}</p>
+            </a>
+            <a href="{{ path('leads') }}">
+                <button type="button" class="btn  btn-circle btn-xl"
+                        data-toggle="tooltip" data-placement="right" title="Voir le liste des leads">
+                    <img class="addicon" src="{{ asset('assets/img/user.png') }}" alt="add icon">
+                </button>
+                <p class="mt-2">{{ 'Leads' | trans }}</p>
             </a>
         </section>
         {% if app.user.market != 1 %}

@@ -1076,7 +1076,7 @@ a:hover {
 
 .main-page-button {
   margin: 0 auto 30px;
-  width: 320px;
+  width: 50%;
   display: flex;
   justify-content: center;
   text-align: center;
@@ -1277,10 +1277,6 @@ a:hover {
 table {
   margin-top: 2em;
   width: 100%;
-}
-
-th {
-  background-color: #faefff;
 }
 
 .table-main-header {
@@ -1816,6 +1812,46 @@ button.btn-no-bg {
 .deleteHover:hover {
   border: 3pt solid lightcoral;
   color: red;
+}
+
+.form_leads {
+  display: flex;
+  width: 100%;
+}
+
+#leads_import_fichier {
+  width: 22em;
+  display: flex;
+}
+
+#leads_form_file {
+  width: 50%;
+}
+
+.leads_field {
+  width: 50%;
+}
+
+.none {
+  display: none !important;
+}
+
+.form-control:focus {
+  border-color: #8b54a0 !important;
+  box-shadow: none !important;
+}
+
+.swal2-styled, .swal2-confirm {
+  background-color: #8b54a0 !important;
+  z-index: 1 !important;
+}
+
+.swal2-actions {
+  z-index: 1 !important;
+}
+
+.datepicker {
+  z-index: 10000000 !important;
 }
 
 .custom-file-input {
