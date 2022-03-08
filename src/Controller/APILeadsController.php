@@ -36,7 +36,7 @@ class APILeadsController extends AbstractController
         foreach ($headers as $header) {
             $headers[] =  $header;
         }
-        return new JsonResponse(json_encode($headers, JSON_FORCE_OBJECT), 200, [], true);
+        return new JsonResponse(\json_encode($headers, JSON_FORCE_OBJECT), 200, [], true);
     }
 
     /**
@@ -45,7 +45,7 @@ class APILeadsController extends AbstractController
     public function add(Request $request)
     {
         $body = $request->getContent();
-        $headers =  json_decode($body);
+        $headers =  \json_encode($body);
         $this->header = $headers[0];
         $filename = $headers[1];
         $path = $this->getParameter('kernel.project_dir') . '/public/uploads/' . $filename;
@@ -103,7 +103,7 @@ class APILeadsController extends AbstractController
      * @Route("/api/updateField", name="api_leads_updateField")
      */
     public function updateField(Request $request){
-        $payload = json_decode($request->getContent(), true);
+        $payload = \json_encode($request->getContent(), true);
         $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $payload["id"]]); 
         $data = $lead->getData();
         $data[$payload["key"]] = str_replace(' ', '', $payload["value"]);
@@ -119,7 +119,7 @@ class APILeadsController extends AbstractController
      */
     public function linkFormationMail(Request $request)
     {
-        $data = json_decode($request->getContent(), true);
+        $data = \json_encode($request->getContent(), true);
         $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $data["mail"]]);    
         $mail = str_replace(' ', '', $lead->getData()["Mail"]);
         $lien = $data["link"];
@@ -153,6 +153,6 @@ class APILeadsController extends AbstractController
         foreach($leads as $lead){
             $data[] = $lead->getData();
         }
-        return new Response(json_encode($data, JSON_FORCE_OBJECT));
+        return new Response(\json_encode($data, JSON_FORCE_OBJECT));
     }
 }

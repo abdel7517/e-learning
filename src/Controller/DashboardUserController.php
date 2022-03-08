@@ -219,7 +219,7 @@ class DashboardUserController extends AbstractController
     public function sendInfoMail(Request $request)
     {
         // $mail =   $request->get('mail');
-        $payload = json_decode($request->getContent(), true);
+        $payload = \json_encode($request->getContent(), true);
         $this->mailer->sendInfo($payload["mail"],  $payload["lien"]);
 
         return new Response(
