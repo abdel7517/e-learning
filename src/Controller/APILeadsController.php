@@ -118,7 +118,7 @@ class APILeadsController extends AbstractController
      */
     public function linkFormationMail(Request $request)
     {
-        $data = json_encode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $data["mail"]]);    
         $mail = str_replace(' ', '', $lead->getData()["Mail"]);
         $lien = $data["link"];
