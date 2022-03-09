@@ -33,7 +33,7 @@ class Badgr
             ]
         ]);
 
-        $tokenData = /json_decode($response->getContent(), true);
+        $tokenData = json_decode($response->getContent(), true);
 
         $this->refreshToken = $tokenData['refresh_token'];
         $this->accessToken = $tokenData['access_token'];
@@ -52,7 +52,7 @@ class Badgr
             ]
         ]);
 
-        $tokenData = /json_decode($response->getContent(), true);
+        $tokenData = json_decode($response->getContent(), true);
 
         $this->refreshToken = $tokenData['refresh_token'];
         $this->accessToken = $tokenData['access_token'];
@@ -123,7 +123,7 @@ class Badgr
             ]);
 
             //put each badge in array userBadges
-            $badgeData = /json_decode($response->getContent(), true);
+            $badgeData = json_decode($response->getContent(), true);
             $userBadges[] = $badgeData;
         }
         return $userBadges;

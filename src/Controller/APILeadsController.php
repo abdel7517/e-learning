@@ -44,7 +44,7 @@ class APILeadsController extends AbstractController
     public function add(Request $request)
     {
         $body = $request->getContent();
-        $headers =  json_encode($body);
+        $headers =  json_decode($body);
         $this->header = $headers[0];
         $filename = $headers[1];
         $path = $this->getParameter('kernel.project_dir') . '/public/uploads/' . $filename;
