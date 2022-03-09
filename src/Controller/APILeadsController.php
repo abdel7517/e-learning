@@ -102,7 +102,7 @@ class APILeadsController extends AbstractController
      * @Route("/api/updateField", name="api_leads_updateField")
      */
     public function updateField(Request $request){
-        $payload = json_encode($request->getContent(), true);
+        $payload = json_decode($request->getContent(), true);
         $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $payload["id"]]); 
         $data = $lead->getData();
         $data[$payload["key"]] = str_replace(' ', '', $payload["value"]);
@@ -110,7 +110,7 @@ class APILeadsController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($lead);
         $em->flush();
-        return new Response("ok");
+        return new Response();
     }
 
      /**
