@@ -14,7 +14,9 @@
 
     <thead>
         <tr class="headers">
-            {% for key,value in headers %}
+            {% set header = data[0] %}
+
+            {% for key,value in header.data %}
 
             <th> {{ key }} </th>
 
