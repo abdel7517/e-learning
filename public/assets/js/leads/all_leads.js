@@ -108,15 +108,15 @@ function registerLead(id) {
         }
     })
     let firstDay = new Date();
-    firstDay.setDate(firstDay.getDate()+ 16);
+    firstDay.setDate(firstDay.getDate() + 16);
     const elem = document.getElementById('foo');
     const datepicker = new DateRangePicker(elem, {
         defaultViewDate: firstDay,
-        minDate : firstDay,
+        minDate: firstDay,
         format: 'dd-mm-yyyy',
-        clearBtn : true,
-        orientation : 'left',
-        language :'fr'
+        clearBtn: true,
+        orientation: 'left',
+        language: 'fr'
     });
 }
 
@@ -180,8 +180,8 @@ function changeState(newState, id) {
     }).then(response => {
         return response.text();
     }).then(data => {
-            if (data == "ok") hideLeads(id)
-        });
+        if (data == "ok") hideLeads(id)
+    });
 }
 
 function hideLeads(id) {
@@ -204,14 +204,72 @@ function saveChange(key, id) {
     });
 }
 
-function getLeads(type){
-    fetch("/api/get/leads/" + type , {
+function displayLeads(type) {
+    getLeads("new");
+}
+
+function getLeads(type) {
+    fetch("/api/get/leads/" + type, {
         method: "POST",
     }).then(response => {
         return response.text();
     })
         .then(data => {
-            console.log(data)
+            addToDOM(data)
         });
 }
-getLeads("formation");
+
+function addToDOM(lead) {
+    let leads = JSON.parse(lead)
+    let table = document.getElementsByTagName("tbody")
+    let buttons = document.querySelectorAll('.buttons')
+    table[0].textContent = ''
+
+    // for all lead 
+    for (const [key, value] of Object.entries(leads)) {
+        let tr = document.createElement('tr')
+        let dataObj = JSON.parse(value)
+        // for all data of lead
+        for (const [i, v] of Object.entries(dataObj)) {
+            let th = document.createElement('th')
+            
+            if (i == "id") {
+                let btns = addButtons(v, buttons[0])
+                btns.forEach(btn => {
+                    th.appendChild(btn)
+                });
+                tr.appendChild(th)
+                th.setAttribute('class', 'buttons')
+                break
+            }
+            th.setAttribute('contenteditable', true)
+            th.setAttribute('id', i + "-" + dataObj.id)
+            th.setAttribute('onblur', "saveChange('"+ i + "', '" + dataObj.id + "' )")
+            tr.setAttribute('id', dataObj.id)
+            th.textContent = v
+            tr.appendChild(th)
+            console.log(v)
+        }
+        table[0].appendChild(tr);
+    }
+    console.log(leads)
+}
+
+
+function addButtons(id, buttons) {
+    let btn = buttons.querySelectorAll(':scope > button')
+    let buttonsnew = btn[0].cloneNode(true)
+    let buttonsnew2 = btn[1].cloneNode(true)
+    let buttonsnew3 = btn[2].cloneNode(true)
+    let btns = []
+
+    buttonsnew.setAttribute('onclick', 'interested(' + id + ')')
+    buttonsnew2.setAttribute('onclick', 'nrp(' + id + ')')
+    buttonsnew3.setAttribute('onclick', 'nointerested(' + id + ')')
+
+    btns.push(buttonsnew, buttonsnew2, buttonsnew3)
+
+    return btns
+
+}
+

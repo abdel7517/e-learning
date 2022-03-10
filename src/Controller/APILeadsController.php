@@ -74,7 +74,7 @@ class APILeadsController extends AbstractController
     }
 
     /**
-     * @Route("/api/{newState}/{id}", name="api_leads_changeState")
+     * @Route("/api/register/{newState}/{id}", name="api_leads_changeState")
      */
     public function changeState(Request $request, String $newState, String $id)
     {
@@ -92,18 +92,19 @@ class APILeadsController extends AbstractController
     public function infoMail(Request $request)
     {
         $idLead = $request->getContent();
-        $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $idLead]);    
+        $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $idLead]);
         $mail = str_replace(' ', '', $lead->getData()["Mail"]);
         $this->mailer->sendInfo($mail,  "https://www.moncompteformation.gouv.fr/espace-prive/html/#/connexion");
         return new Response("ok");
     }
 
-      /**
+    /**
      * @Route("/api/updateField", name="api_leads_updateField")
      */
-    public function updateField(Request $request){
+    public function updateField(Request $request)
+    {
         $payload = json_decode($request->getContent(), true);
-        $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $payload["id"]]); 
+        $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $payload["id"]]);
         $data = $lead->getData();
         $data[$payload["key"]] = str_replace(' ', '', $payload["value"]);
         $lead->setData($data);
@@ -113,20 +114,20 @@ class APILeadsController extends AbstractController
         return new Response();
     }
 
-     /**
+    /**
      * @Route("/api/linkFormationMail", name="api_leads_linkFormationMail")
      */
     public function linkFormationMail(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-        $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $data["mail"]]);    
+        $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $data["mail"]]);
         $mail = str_replace(' ', '', $lead->getData()["Mail"]);
         $lien = $data["link"];
         $this->mailer->sendInfo($mail,  $lien);
         return new Response("ok");
     }
 
-     /**
+    /**
      * @Route("/api/register/{id}/{start}/{end}", name="api_leads_registerDate")
      */
     public function registerDate($id, $start, $end)
@@ -140,7 +141,6 @@ class APILeadsController extends AbstractController
         $em->persist($lead);
         $em->flush();
         return new Response("ok");
-
     }
     /**
      * @Route("/api/get/leads/{type}", name="api_leads_get")
@@ -148,9 +148,11 @@ class APILeadsController extends AbstractController
     public function getLeads($type)
     {
         $data = [];
-        $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id"=> 1 , "status"=> $type]);
-        foreach($leads as $lead){
-            $data[] = $lead->getData();
+        $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id" => 1, "status" => $type]);
+        foreach ($leads as $lead) {
+            $newdata =  $lead->getData();
+            $newdata["id"] = $lead->getId();
+            $data[] = json_encode($newdata);
         }
         return new Response(json_encode($data, JSON_FORCE_OBJECT));
     }
