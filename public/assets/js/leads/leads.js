@@ -31,14 +31,14 @@ function send(){
   let headers = [];
   let body = []
 
-  console.log(all_select.length);
+  // console.log(all_select.length);
   all_select.forEach(select => {
     headers[select.labels[0].textContent] = select.value;
   });
 
   json_headers = Object.assign({}, headers);
   body.push(json_headers, filename)
-  console.log(body)
+  // console.log(body)
 
   fetch("/api/add", {
     method: "POST",
@@ -47,7 +47,7 @@ function send(){
     return response.text();
   })
     .then(data => {
-      console.log(data);
+      // console.log(data);
     });
 
 }

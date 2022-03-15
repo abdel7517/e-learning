@@ -33,6 +33,11 @@ class LeadsImportType extends AbstractType
                 'mapped' => 'false',
                 'attr' => ['class' => 'leads_options'],
             ])
+            ->add('date', ChoiceType::class, [
+                'mapped' => 'false',
+                'attr' => ['class' => 'leads_options'],
+            ])
+            
             
             
             ;
