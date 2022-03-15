@@ -156,4 +156,14 @@ class APILeadsController extends AbstractController
         }
         return new Response(json_encode($data, JSON_FORCE_OBJECT));
     }
+
+    /**
+     * @Route("/api/get/leads/with/{fieldName}", name="api_leads_getWith")
+     */
+    public function getLeadsWith(Request $request, $fieldName){
+        $data = json_decode($request->getContent());
+        $leads = $this->getDoctrine()->getRepository(Leads::class)->findByField($fieldName, $data);
+        return new Response(json_encode($leads));
+
+    }
 }

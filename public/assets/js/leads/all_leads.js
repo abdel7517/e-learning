@@ -232,7 +232,7 @@ function addToDOM(lead) {
         // for all data of lead
         for (const [i, v] of Object.entries(dataObj)) {
             let th = document.createElement('th')
-            
+
             if (i == "id") {
                 let btns = addButtons(v, buttons[0])
                 btns.forEach(btn => {
@@ -244,15 +244,16 @@ function addToDOM(lead) {
             }
             th.setAttribute('contenteditable', true)
             th.setAttribute('id', i + "-" + dataObj.id)
-            th.setAttribute('onblur', "saveChange('"+ i + "', '" + dataObj.id + "' )")
+            th.setAttribute('onblur', "saveChange('" + i + "', '" + dataObj.id + "' )")
             tr.setAttribute('id', dataObj.id)
+            tr.setAttribute('class', i)
+
             th.textContent = v
             tr.appendChild(th)
             console.log(v)
         }
         table[0].appendChild(tr);
     }
-    console.log(leads)
 }
 
 
@@ -273,3 +274,76 @@ function addButtons(id, buttons) {
 
 }
 
+function search(search) {
+    // let fields = document.querySelectorAll('.'+ search)
+    let searchValue = document.querySelector('.search' + search)
+    // let response;
+    // fields.forEach(field => {
+    //     console.log(searchValue.value +" - "+ field.textContent )
+    //     if(searchValue.value.trim() == field.textContent.trim()){
+    //         let id = field.id.split('-')
+    //         let row = document.getElementById(id[1])
+    //         response = row
+    //         // pop up aucune rep
+    //     }
+    // });
+    // let table = document.getElementsByTagName("tbody")
+    // table[0].textContent = ''
+    // console.log(response)
+    // table[0].appendChild(response)
+    getLeadsWith(search, searchValue.value)
+}
+
+
+function getLeadsWith(typeSearch, data) {
+    fetch("/api/get/leads/with/" + typeSearch, {
+        method: "POST",
+        body: JSON.stringify(data)
+    }).then(response => {
+        return response.text();
+    })
+        .then(data => {
+            console.log(JSON.parse(data))
+            addToDOMLeadsObject(data)
+        });
+}
+
+function addToDOMLeadsObject(lead) {
+    let leads = JSON.parse(lead)
+    let table = document.getElementsByTagName("tbody")
+    let buttons = document.querySelectorAll('.buttons')
+    table[0].textContent = ''
+
+    // for all lead 
+    for (const [key, value] of Object.entries(leads)) {
+        let tr = document.createElement('tr')
+        let dataObj = JSON.parse(value.data)
+
+        // for all data of lead
+        for (const [i, v] of Object.entries(dataObj)) {
+            let th = document.createElement('th')
+
+            if (i == "id") {
+
+                break
+            }
+            th.setAttribute('contenteditable', true)
+            th.setAttribute('id', i + "-" + value.id)
+            th.setAttribute('onblur', "saveChange('" + i + "', '" + value.id + "' )")
+            tr.setAttribute('id', value.id)
+            tr.setAttribute('class', i)
+
+            th.textContent = v
+            tr.appendChild(th)
+        }
+        let th = document.createElement('th')
+        let btns = addButtons(value.id, buttons[0])
+        btns.forEach(btn => {
+            th.appendChild(btn)
+        });
+        tr.appendChild(th)
+        th.setAttribute('class', 'buttons')
+
+        table[0].appendChild(tr);
+    }
+}

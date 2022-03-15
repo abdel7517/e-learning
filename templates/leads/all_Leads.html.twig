@@ -15,8 +15,7 @@
     <div class="buttons none">
         <button type="button" class="btn btn-success" onclick="interested()"> Inscription </button>
         <button type="button" class="btn btn-secondary" onclick="nrp()">NRP</button>
-        <button type="button" class="btn btn-danger" onclick="nointerested()">Pas
-            interessez</button>
+        <button type="button" class="btn btn-danger" onclick="nointerested()">Pas interessez</button>
     </div>
 
     <thead>
@@ -24,8 +23,15 @@
             {% set header = data[0] %}
 
             {% for key,value in header.data %}
-
-            <th> {{ key }} </th>
+            <th>
+                <div class='input-group mb-3'>
+                    <input type='texte' class='form-control search{{key}}' id='link' placeholder='Cherchez par {{key}}'>
+                    <button onclick="search('{{key}}')" id='button-addon1'
+                        class='btn btn-outline-secondary' type='button' id='button-addon1'>Envoyer</button>
+                </div>
+                <br>
+                {{ key }}
+            </th>
 
             {% endfor %}
             <th> action </th>
@@ -37,7 +43,8 @@
         {% for lead in data %}
         <tr class="content" id="{{ lead.id }}">
             {% for key,value in lead.data %}
-            <th contenteditable="true" id="{{key}}-{{lead.id}}" onblur="saveChange('{{key}}', {{lead.id}})"> {{ value }}
+            <th contenteditable="true" class="{{key}}" id="{{key}}-{{lead.id}}"
+                onblur="saveChange('{{key}}', {{lead.id}})"> {{ value }}
             </th>
             {% endfor %}
             <th class="buttons">

@@ -22,19 +22,15 @@ class LeadsRepository extends ServiceEntityRepository
     // /**
     //  * @return Leads[] Returns an array of Leads objects
     //  */
-    /*
-    public function findByExampleField($value)
+    public function findByField(String $fieldName, String $value)
     {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $conn = $this->getEntityManager()
+            ->getConnection();
+        $sql = " SELECT * FROM leads WHERE LOWER(JSON_EXTRACT(data, '$.\"$fieldName\"')) LIKE '\"%".$value."%\"'";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Leads
