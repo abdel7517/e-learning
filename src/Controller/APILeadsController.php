@@ -61,7 +61,7 @@ class APILeadsController extends AbstractController
                 //         $data[$keyLp] = $rowValue;
                 // }
             }
-
+            $data["commentaire"] = "";
             $lead->setData($data);
             $lead->setLandingId(1);
             $lead->setStatus("new");
@@ -71,6 +71,24 @@ class APILeadsController extends AbstractController
         });
 
         return new Response("ok");
+    }
+    /**
+     * @Route("/api/addField", name="api_leads_addField")
+     */
+    public  function addField(Request $request)
+    {
+        $payload = json_decode($request->getContent(), true);
+        $leads = $this->getDoctrine()->getRepository(Leads::class)->findAll();
+        $em = $this->getDoctrine()->getManager();
+        foreach ($leads as $lead) {
+            $data = $lead->getData();
+            $data[$payload["key"]] = $payload["value"];
+            $lead->setData($data);
+            $em->persist($lead);
+        }
+        $em->flush();
+        $data = $lead->getData();
+        return new Response("fait");
     }
 
     /**
@@ -160,10 +178,10 @@ class APILeadsController extends AbstractController
     /**
      * @Route("/api/get/leads/with/{fieldName}", name="api_leads_getWith")
      */
-    public function getLeadsWith(Request $request, $fieldName){
+    public function getLeadsWith(Request $request, $fieldName)
+    {
         $data = json_decode($request->getContent());
         $leads = $this->getDoctrine()->getRepository(Leads::class)->findByField($fieldName, $data);
         return new Response(json_encode($leads));
-
     }
 }

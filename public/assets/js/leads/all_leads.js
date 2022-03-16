@@ -347,3 +347,19 @@ function addToDOMLeadsObject(lead) {
         table[0].appendChild(tr);
     }
 }
+
+function addField() {
+    // api request to save change 
+    // let value = document.getElementById(key + "-" + id).textContent;
+    let body = { "key": "commentaire","value": "" }
+    fetch("/api/addField", {
+        method: "POST",
+        body: JSON.stringify(body)
+    }).then(response => {
+        return response.text();
+    }).then(data => {
+        console.log(data)
+    });
+}
+
+// addField();
