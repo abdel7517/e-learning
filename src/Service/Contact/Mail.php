@@ -180,7 +180,7 @@ class Mail extends AbstractController
         // On crée le message
         $message = (new \Swift_Message('Lien d\'inscription'))
             // On attribue l'expéditeur
-            ->setFrom("ABY Formation")
+            ->setFrom("contact@abyformation.fr", "ABY Formation")
             // On attribue le destinataire
             ->setTo($mail)
             // On crée le texte avec la vue
@@ -200,7 +200,7 @@ class Mail extends AbstractController
         // On crée le message
         $message = (new \Swift_Message('Lien pour changement de mot de passe'))
             // On attribue l'expéditeur
-            ->setFrom("ABY Formation")
+            ->setFrom("contact@abyformation.fr","ABY Formation")
             // On attribue le destinataire
             ->setTo($mail)
             // On crée le texte avec la vue
