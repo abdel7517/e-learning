@@ -112,7 +112,32 @@ class APILeadsController extends AbstractController
         $idLead = $request->getContent();
         $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $idLead]);
         $mail = str_replace(' ', '', $lead->getData()["Mail"]);
-        $this->mailer->sendInfo($mail,  "https://www.moncompteformation.gouv.fr/espace-prive/html/#/connexion");
+        $this->mailer->linkConnexion($mail,  "https://www.moncompteformation.gouv.fr/espace-prive/html/#/connexion");
+        return new Response("ok");
+    }
+
+    /**
+     * @Route("/api/resetLink", name="api_leads_resetLink")
+     */
+    public function resetMail(Request $request)
+    {
+        $idLead = $request->getContent();
+        $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $idLead]);
+        $mail = str_replace(' ', '', $lead->getData()["Mail"]);
+        $this->mailer->linkReset($mail,  "https://assure.ameli.fr/PortailAS/appmanager/PortailAS/assure?_nfpb=true&_pageLabel=as_demande_code_conf_page");
+        return new Response("ok");
+    }
+
+    /**
+     * @Route("/api/inscriptionLink", name="api_leads_inscriptionLink")
+     */
+    public function inscriptionMail(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $data["mail"]]);
+        $mail = str_replace(' ', '', $lead->getData()["Mail"]);
+        $lien = $data["link"];
+        $this->mailer->linkFormation($mail,  $lien);
         return new Response("ok");
     }
 
@@ -130,19 +155,6 @@ class APILeadsController extends AbstractController
         $em->persist($lead);
         $em->flush();
         return new Response();
-    }
-
-    /**
-     * @Route("/api/linkFormationMail", name="api_leads_linkFormationMail")
-     */
-    public function linkFormationMail(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
-        $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $data["mail"]]);
-        $mail = str_replace(' ', '', $lead->getData()["Mail"]);
-        $lien = $data["link"];
-        $this->mailer->sendInfo($mail,  $lien);
-        return new Response("ok");
     }
 
     /**

@@ -153,14 +153,34 @@ class Mail extends AbstractController
 
 
     }
-    public function sendInfo(string $mail, string $lien){
+    public function linkConnexion(string $mail, string $lien){
        
         // $contact = $form->getData();
         $contact = ['mail' => $mail, 'lien' => $lien];
         // On crée le message
-        $message = (new \Swift_Message('Procédure d\'inscription'))
+        $message = (new \Swift_Message('Lien de connexion'))
             // On attribue l'expéditeur
-            ->setFrom("contact@abyformation.fr")
+            ->setFrom("contact@abyformation.fr", "ABY formation")
+            // On attribue le destinataire
+            ->setTo($mail)
+            // On crée le texte avec la vue
+            ->setBody(
+                $this->renderView(
+                    'contact/co.html.twig', compact('contact')
+                ),
+                'text/html'
+            )
+        ;
+        $this->mailer->send($message);
+    }
+    public function linkFormation(string $mail, string $lien){
+       
+        // $contact = $form->getData();
+        $contact = ['mail' => $mail, 'lien' => $lien];
+        // On crée le message
+        $message = (new \Swift_Message('Lien d\'inscription'))
+            // On attribue l'expéditeur
+            ->setFrom("ABY Formation")
             // On attribue le destinataire
             ->setTo($mail)
             // On crée le texte avec la vue
@@ -173,4 +193,25 @@ class Mail extends AbstractController
         ;
         $this->mailer->send($message);
     }
+    public function linkReset(string $mail, string $lien){
+       
+        // $contact = $form->getData();
+        $contact = ['mail' => $mail, 'lien' => $lien];
+        // On crée le message
+        $message = (new \Swift_Message('Lien pour changement de mot de passe'))
+            // On attribue l'expéditeur
+            ->setFrom("ABY Formation")
+            // On attribue le destinataire
+            ->setTo($mail)
+            // On crée le texte avec la vue
+            ->setBody(
+                $this->renderView(
+                    'contact/info.html.twig', compact('contact')
+                ),
+                'text/html'
+            )
+        ;
+        $this->mailer->send($message);
+    }
+    
 }

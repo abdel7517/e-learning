@@ -2,7 +2,8 @@
 function interested(id) {
     Swal.fire({
         title: "1 ère étape - lien de connexion",
-        html: "<button type='button' onclick='infoMail(" + id + ")' class='btn btn-primary'>Envoyer lien de connexion</button>",
+        html: "<button type='button' onclick='infoMail(" + id + ")' class='btn btn-primary'>Envoyer lien de connexion</button>"
+        + "<button type='button' onclick='resetMail(" + id + ")' class='btn btn-primary'>Envoyer lien de mdp oublié amelie</button>",
         showCloseButton: true,
         showClass: {
             popup: 'animate__animated animate__fadeInDown'
@@ -66,10 +67,21 @@ function infoMail(mail) {
     });
 }
 
+function resetMail(mail) {
+    fetch("/api/resetLink", {
+        method: "POST",
+        body: JSON.stringify(mail)
+    }).then(response => {
+        return response.text();
+    }).then(data => {
+        console.log(data)
+    });
+}
+
 function linkFormationMail(mail) {
     let link = document.getElementById("link").value;
     let body = { "mail": mail, "link": link }
-    fetch("/api/linkFormationMail", {
+    fetch("/api/inscriptionLink", {
         method: "POST",
         body: JSON.stringify(body)
     }).then(response => {
