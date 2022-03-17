@@ -124,7 +124,12 @@ class APILeadsController extends AbstractController
         $payload = json_decode($request->getContent(), true);
         $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $payload["id"]]);
         $data = $lead->getData();
-        $data[$payload["key"]] = str_replace(' ', '', $payload["value"]);
+        
+        if($payload["key"] !== "commentaire" ){
+            $data[$payload["key"]] = str_replace(' ', '', $payload["value"]);
+        }else{
+            $data[$payload["key"]] = $payload["value"];
+        }
         $lead->setData($data);
         $em = $this->getDoctrine()->getManager();
         $em->persist($lead);

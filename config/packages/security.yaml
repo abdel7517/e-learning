@@ -38,3 +38,4 @@ security:
          - { path: ^/profile, roles: ROLE_USER }
          - { path: ^/partner, roles: ROLE_PARTNER }
          - { path: ^/register, roles: ROLE_PARTNER }
+         - { path: ^/api, roles: ROLE_PARTNER }

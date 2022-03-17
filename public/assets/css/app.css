@@ -1854,6 +1854,10 @@ button.btn-no-bg {
   z-index: 10000000 !important;
 }
 
+.commentaire {
+  max-width: 1em;
+}
+
 .custom-file-input {
   opacity: 1;
 }
