@@ -159,6 +159,9 @@ function nrp(id) {
 function nointerested(id) {
     alert('Ce leads n\'est pas interessez ?', "ni", id)
 }
+function rdv(id) {
+    alert('Connvertir le lead en RDV ?', "rdv", id)
+}
 
 function alert(message, newState, id) {
 
@@ -262,13 +265,16 @@ function addButtons(id, buttons) {
     let buttonsnew = btn[0].cloneNode(true)
     let buttonsnew2 = btn[1].cloneNode(true)
     let buttonsnew3 = btn[2].cloneNode(true)
+    let buttonsnew4 = btn[3].cloneNode(true)
+
     let btns = []
 
     buttonsnew.setAttribute('onclick', 'interested(' + id + ')')
     buttonsnew2.setAttribute('onclick', 'nrp(' + id + ')')
     buttonsnew3.setAttribute('onclick', 'nointerested(' + id + ')')
+    buttonsnew4.setAttribute('onclick', 'rdv(' + id + ')')
 
-    btns.push(buttonsnew, buttonsnew2, buttonsnew3)
+    btns.push(buttonsnew, buttonsnew2, buttonsnew3, buttonsnew4)
 
     return btns
 
