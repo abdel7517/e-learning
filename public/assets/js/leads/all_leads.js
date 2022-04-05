@@ -246,7 +246,7 @@ function addToDOM(lead) {
             th.setAttribute('id', i + "-" + dataObj.id)
             th.setAttribute('onblur', "saveChange('" + i + "', '" + dataObj.id + "' )")
             tr.setAttribute('id', dataObj.id)
-            tr.setAttribute('class', i)
+            th.setAttribute('class', i)
 
             th.textContent = v
             tr.appendChild(th)
