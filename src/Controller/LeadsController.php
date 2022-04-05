@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class LeadsController extends AbstractController
 {
     /**
-     * @Route("/leads", name="leads")
+     * @Route("/leads/home", name="leads")
      */
     public function index(Request $request): Response
     {
@@ -56,7 +56,7 @@ class LeadsController extends AbstractController
     }
 
      /**
-     * @Route("/all_leads", name="all_leads")
+     * @Route("/leads/all_leads", name="all_leads")
      */
     public function allLeads(Request $request): Response
     {

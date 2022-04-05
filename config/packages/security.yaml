@@ -39,3 +39,4 @@ security:
          - { path: ^/partner, roles: ROLE_PARTNER }
          - { path: ^/register, roles: ROLE_PARTNER }
          - { path: ^/api, roles: ROLE_PARTNER }
+         - { path: ^/leads, roles: ROLE_PARTNER }
