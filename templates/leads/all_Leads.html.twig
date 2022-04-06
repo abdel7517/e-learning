@@ -10,6 +10,8 @@
             <button type="button" onclick="getLeads('nrp')" class="btn btn-primary">NRP</button>
             <button type="button" onclick="getLeads('ni')" class="btn btn-primary">Pas interessé</button>
             <button type="button" onclick="getLeads('rdv')" class="btn btn-primary">RDV</button>
+            <button type="button" onclick="getLeads('signe')" class="btn btn-primary">Signé</button>
+
         </div>
     </div>
 
@@ -17,7 +19,9 @@
         <button type="button" class="btn btn-success" onclick="interested()"> Inscription </button>
         <button type="button" class="btn btn-secondary" onclick="nrp()">NRP</button>
         <button type="button" class="btn btn-danger" onclick="nointerested()">Pas interessez</button>
-        <button type="button" class="btn btn-success" onclick="rdv()"> RDV </button>
+        <button type="button" class="btn btn-info" onclick="rdv()"> RDV </button>
+        <button type="button" class="btn btn-success" onclick="signe()"> Signé </button>
+
     </div>
 
     <thead>
@@ -56,7 +60,9 @@
                 <button type="button" class="btn btn-success" onclick="interested({{ lead.id }})"> Inscription </button>
                 <button type="button" class="btn btn-secondary" onclick="nrp({{ lead.id }})">NRP</button>
                 <button type="button" class="btn btn-danger" onclick="nointerested({{ lead.id }})">Pas interessez</button>
-                    <button type="button" class="btn btn-secondary" onclick="rdv({{ lead.id }})">RDV</button>
+                <button type="button" class="btn btn-info" onclick="rdv({{ lead.id }})">RDV</button>
+                <button type="button" class="btn btn-secondary" onclick="signe({{ lead.id }})">Signé</button>
+
             </th>
         </tr>
 

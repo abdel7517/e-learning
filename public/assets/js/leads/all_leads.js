@@ -162,6 +162,9 @@ function nointerested(id) {
 function rdv(id) {
     alert('Connvertir le lead en RDV ?', "rdv", id)
 }
+function signe(id) {
+    alert('Connvertir le lead en signé ?', "signe", id)
+}
 
 function alert(message, newState, id) {
 
@@ -266,6 +269,8 @@ function addButtons(id, buttons) {
     let buttonsnew2 = btn[1].cloneNode(true)
     let buttonsnew3 = btn[2].cloneNode(true)
     let buttonsnew4 = btn[3].cloneNode(true)
+    let buttonsnew5 = btn[4].cloneNode(true)
+
 
     let btns = []
 
@@ -273,8 +278,10 @@ function addButtons(id, buttons) {
     buttonsnew2.setAttribute('onclick', 'nrp(' + id + ')')
     buttonsnew3.setAttribute('onclick', 'nointerested(' + id + ')')
     buttonsnew4.setAttribute('onclick', 'rdv(' + id + ')')
+    buttonsnew5.setAttribute('onclick', 'signe(' + id + ')')
 
-    btns.push(buttonsnew, buttonsnew2, buttonsnew3, buttonsnew4)
+
+    btns.push(buttonsnew, buttonsnew2, buttonsnew3, buttonsnew4, buttonsnew5)
 
     return btns
 
