@@ -1854,7 +1854,7 @@ button.btn-no-bg {
   z-index: 10000000 !important;
 }
 
-.commentaire {
+.commentaire, .Tel, .Date, .Mail, .Formation {
   max-width: 1em;
 }
 
