@@ -15,6 +15,10 @@
 {
   overflow: inherit !important;
 }
+[name="media"]
+  {
+    width: 100% !important;
+}
 a {
     text-decoration: none;
     display: inline-block;
