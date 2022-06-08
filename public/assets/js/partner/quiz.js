@@ -90,7 +90,7 @@ function supp(index)
         console.log(quiz.id + '==' + index)
         if(quiz.id == index) {
             console.log("ok --- " + (quizs[i]).id)
-             quizs.splice(i)
+             quizs.splice(i, 1)
         }
     })
     console.log(quizs + " --  " + quizs.length)
