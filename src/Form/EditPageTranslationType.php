@@ -19,8 +19,15 @@ class EditPageTranslationType extends AbstractType
             ->add('content', TextareaType::class, [
                 'required' => false,
                 'empty_data' => '',
-                'label' => false            ])
-        ;
+                'label' => false
+                ])
+                ->add('quiz', TextareaType::class, 
+                [
+                    'required' => false,
+                    'empty_data' => '',
+                    'label' => false
+                    ])
+                ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

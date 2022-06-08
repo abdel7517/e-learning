@@ -39,6 +39,13 @@ class ChapterPageTranslation
      */
     private $chapterPage;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $quiz;
+
+    
+
     public function __construct(Language $language,  ChapterPage $chapterPage, string $title = '', string $content ='')
     {
         $this->language = $language;
@@ -102,4 +109,18 @@ class ChapterPageTranslation
 
         return $this;
     }
+
+    public function getQuiz(): ?string
+    {
+        return $this->quiz;
+    }
+
+    public function setQuiz(?string $quiz): self
+    {
+        $this->quiz = $quiz;
+
+        return $this;
+    }
+
+    
 }

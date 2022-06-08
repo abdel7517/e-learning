@@ -779,6 +779,10 @@ footer a {
   }
 }
 /*#330033d*/
+.quiz-input {
+  display: none;
+}
+
 /*#330033d*/
 .modalbutton {
   background-color: #8b54a0;

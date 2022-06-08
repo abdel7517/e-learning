@@ -32,6 +32,21 @@
 			</div> 
 						{{ form_row(form.content, {'attr': {'class': 'js-richtexteditor'}}) }}
 
+						{{ form_row(form.quiz, {'attr': {'class': 'quiz-input'}}) }}
+						<div class="0 add-quiz btn-primary" onclick="create()"> Ajoutez un Quiz </div>
+						<div id="quiz-parent" >
+							<div class="quiz">
+								<label>
+									Script du quiz  <textarea name=""  class="script-quiz 0" id="" cols="30" rows="10" ></textarea>
+								</label>
+								<label> segonde de déclenchement <input class="seg-quiz 0" type="text"> </label>
+								<div class="supprimer" ></div>
+							</div>
+						</div>
+						<div class="0 save-quiz btn-primary" onclick="save('0')" >Enregistrer</div>
+						<div id="old-quiz">
+						</div>
+
 			<div class="text-center">
 				<button id="save" class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Save' | trans }}</button>
 				{{ form_end(form) }}
@@ -51,6 +66,8 @@
 
 	<script src="/assets/js/ckeditor5/build/ckeditor.js"></script>
 	<script src="/assets/js/l2g-ckeditor.js"></script>
+	<script src="/assets/js/partner/quiz.js"></script>
+
 
 	
 {% endblock %}
