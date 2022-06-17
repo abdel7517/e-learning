@@ -62,6 +62,8 @@ class APILeadsController extends AbstractController
                         $data[$keyLp] = date('d-m-Y');
                         break;
                     }
+                    $data[$keyLp] = date('d-m-Y', strtotime($rowProperties[$keySheet]));
+                    break;
                 }
                 $data[$keyLp] =  $rowProperties[$keySheet];
                 // foreach ($rowProperties as $rowKey => $rowValue) {
@@ -176,16 +178,22 @@ class APILeadsController extends AbstractController
         return new Response("ok");
     }
     /**
-     * @Route("/api/get/leads/{type}", name="api_leads_get")
+     * @Route("/api/get/leads/{type}/{date}", name="api_leads_get")
      */
-    public function getLeads($type)
+    public function getLeads($type, $date = null)
     {
         $data = [];
+        $date = $date ? date('d-m-Y', strtotime($date["Date"])) : date('d-m-Y');
         $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id" => 1, "status" => $type]);
         foreach ($leads as $lead) {
+            
             $newdata =  $lead->getData();
-            $newdata["id"] = $lead->getId();
-            $data[] = json_encode($newdata);
+            $dateLead = date('d-m-Y', strtotime($newdata["Date"]));
+            if($dateLead == $date)
+            {
+                $newdata["id"] = $lead->getId();
+                $data[] = json_encode($newdata);
+            }
         }
         return new Response(json_encode($data, JSON_FORCE_OBJECT));
     }

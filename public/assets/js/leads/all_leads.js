@@ -1,3 +1,5 @@
+// getLeads();
+
 // launch when user click on inscription
 function interested(id) {
     Swal.fire({
