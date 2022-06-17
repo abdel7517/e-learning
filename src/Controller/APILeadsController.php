@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Service\Contact\Mail;
+use Sentry\Util\JSON;
 
 class APILeadsController extends AbstractController
 {
@@ -55,12 +56,20 @@ class APILeadsController extends AbstractController
             // in the first pass $rowProperties will contain
             // ['email' => 'john@example.com', 'first_name' => 'john']
             foreach ($this->header as $keyLp => $keySheet) {
+               
+                if ($keyLp == 'Date') {
+                    if (!$this->isDate($rowProperties[$keySheet])) {
+                        $data[$keyLp] = date('d-m-Y');
+                        break;
+                    }
+                }
                 $data[$keyLp] =  $rowProperties[$keySheet];
                 // foreach ($rowProperties as $rowKey => $rowValue) {
                 //     if ($keySheet = $rowKey)
                 //         $data[$keyLp] = $rowValue;
                 // }
             }
+            $this->header = json_encode($data);
             $data["commentaire"] = "";
             $lead->setData($data);
             $lead->setLandingId(1);
@@ -69,6 +78,7 @@ class APILeadsController extends AbstractController
             $em->persist($lead);
             $em->flush();
         });
+        
 
         return new Response("ok");
     }
@@ -124,10 +134,10 @@ class APILeadsController extends AbstractController
         $payload = json_decode($request->getContent(), true);
         $lead = $this->getDoctrine()->getRepository(Leads::class)->findOneBy(["id" => $payload["id"]]);
         $data = $lead->getData();
-        
-        if($payload["key"] !== "commentaire" ){
+
+        if ($payload["key"] !== "commentaire") {
             $data[$payload["key"]] = str_replace(' ', '', $payload["value"]);
-        }else{
+        } else {
             $data[$payload["key"]] = $payload["value"];
         }
         $lead->setData($data);
@@ -188,5 +198,23 @@ class APILeadsController extends AbstractController
         $data = json_decode($request->getContent());
         $leads = $this->getDoctrine()->getRepository(Leads::class)->findByField($fieldName, $data);
         return new Response(json_encode($leads));
+    }
+
+    // This function checks if a string is a valid date or not
+    function isDate($string)
+    {
+
+        // If the string can be converted to UNIX timestamp
+        if (strtotime($string)) {
+
+            // true if valid date 
+            return true;
+        }
+
+        // Else if the string cannot be converted to UNIX timestamp
+        else {
+            // false if not valid date 
+            return false;
+        }
     }
 }

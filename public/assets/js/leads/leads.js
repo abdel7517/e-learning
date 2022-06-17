@@ -47,7 +47,11 @@ function send(){
     return response.text();
   })
     .then(data => {
-      alert("Leads ajouté avec succès");
+      if(data == "ok"){
+          alert(data);
+        }else{
+          alert("Erreur lors de l'ajout " . data);
+        }
     });
 
 }
