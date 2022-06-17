@@ -189,11 +189,11 @@ class APILeadsController extends AbstractController
             
             $newdata =  $lead->getData();
             $dateLead = date('d-m-Y', strtotime($newdata["Date"]));
-            if($dateLead == $date)
-            {
+            // if($dateLead == $date)
+            // {
                 $newdata["id"] = $lead->getId();
                 $data[] = json_encode($newdata);
-            }
+            // }
         }
         return new Response(json_encode($data, JSON_FORCE_OBJECT));
     }
