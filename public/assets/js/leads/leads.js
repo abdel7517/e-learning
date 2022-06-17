@@ -38,7 +38,7 @@ function send(){
 
   json_headers = Object.assign({}, headers);
   body.push(json_headers, filename)
-  // console.log(body)
+  // console.log(body); 
 
   fetch("/api/add", {
     method: "POST",
@@ -47,7 +47,7 @@ function send(){
     return response.text();
   })
     .then(data => {
-      // console.log(data);
+      alert("Leads ajouté avec succès");
     });
 
 }

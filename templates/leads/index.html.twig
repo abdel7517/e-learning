@@ -6,7 +6,7 @@
 
 <section class="row justify-content-between rowaddbutton main-page-button">
 
-    <a href="{{ path('dashboard_user') }}">
+    <a href="{{ path('add_leads') }}">
         <button type="button" class="btn  btn-circle btn-xl" data-toggle="tooltip" data-placement="right"
             title="Voir le liste des formations">
             <img class="addicon" src="{{ asset('assets/img/user.png') }}" alt="add icon">
@@ -21,32 +21,8 @@
         <p class="mt-2">{{ 'Voir mes leads' | trans }}</p>
     </a>
 
-
-
-    <div class="form_leads">
-        {{ form_start(form, { 'attr' : {'id': 'leads_form_file'} } ) }}
-        {{ form_row(form.fichier) }}
-        <div class="none choice_leads">
-            {{ form_row(form.nom) }}
-            {{ form_row(form.mail) }}
-            {{ form_row(form.formation) }}
-            {{ form_row(form.tel) }}
-            {{ form_row(form.date) }}
-        </div>
-        <button id="btn_send" class="button button_1" >{{ 'Ajoutez' | trans }}</button>
-        <span id="btn_api" class="button button_1 none" onclick="send()" > Ajoutez </span>
-        {{ form_end(form) }}
-    </div>
-
 </section>
 
-{% if filename is defined %}
 
-<script>
-    let filename =  "{{ filename }}";
-</script>
-<script src="{{ asset('assets/js/leads/leads.js') }}">
-</script>
-{% endif %}
 
 {% endblock %}

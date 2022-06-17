@@ -21,6 +21,30 @@ class LeadsController extends AbstractController
     public function index(Request $request): Response
     {
 
+        return $this->render('leads/index.html.twig');
+    }
+
+     /**
+     * @Route("/leads/all_leads", name="all_leads")
+     */
+    public function allLeads(Request $request): Response
+    {
+        $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(["id" => 1]);
+        $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id"=>1, "status"=>"new"]);
+        $headers = $landing->getdata();
+
+        return $this->render('leads/all_Leads.html.twig', [
+            'headers'=> $headers,
+            'data'=> $leads
+        ]);
+    }
+
+     /**
+     * @Route("/leads/add", name="add_leads")
+     */
+    public function addLeads(Request $request): Response
+    {
+
         $form = $this->createForm(LeadsImportType::class);
         $form->handleRequest($request);
         $newFilename = "";
@@ -45,28 +69,13 @@ class LeadsController extends AbstractController
                 // ['email' => 'john@example.com', 'first_name' => 'john']
 
             });
-            return $this->render('leads/index.html.twig', [
+            return $this->render('leads/add_leads.html.twig', [
                 'form' => $form->createView(),
                 'filename' => $newFilename
             ]);
         }
-        return $this->render('leads/index.html.twig', [
+        return $this->render('leads/add_leads.html.twig', [
             'form' => $form->createView(),
-        ]);
-    }
-
-     /**
-     * @Route("/leads/all_leads", name="all_leads")
-     */
-    public function allLeads(Request $request): Response
-    {
-        $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(["id" => 1]);
-        $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id"=>1, "status"=>"new"]);
-        $headers = $landing->getdata();
-
-        return $this->render('leads/all_Leads.html.twig', [
-            'headers'=> $headers,
-            'data'=> $leads
         ]);
     }
 }
