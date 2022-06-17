@@ -13,6 +13,9 @@
 {% endblock %}
 
 {% block body %}
+<div>
+    <span id="close" >&#10060;</span>
+</div>
 	<div class="example-wrapper">
 
 		<div class="card-lesson">
@@ -20,6 +23,20 @@
 			<div class="ck-content">
 				<h1>{{ page.getTitle(language) | raw }}</h1>
 				{{ page.getContent(language) | raw }}
+				<script class="">
+					(function (d)
+{ 
+    var js, id = "genially-embed-js", ref = d.getElementsByTagName("script")[0]; 
+    if (d.getElementById(id)) { return; }
+    js = d.createElement("script"); 
+    js.id = id; 
+    js.async = true; 
+    js.src = "https://view.genial.ly/static/embed/embed.js"; 
+	console.log(ref.parentNode)
+    ref.parentNode.insertBefore(js, ref); 
+}
+(document));
+				</script>
 			</div>
 
 
@@ -45,4 +62,46 @@
 
 		</div>
 	</div>
+	<div class="container-wrapper-genially ">
+		<div id="6290ecd30d7e0700181b4e77" class="genially-embed" style="margin: 0px auto; position: relative; height: auto; width: 100%;"></div>
+	</div>
+	<p class="q" style="display: none;">
+		{{((page.getTranslations())[0].getQuiz())}}
+	</p>
+	
+	<script src="/assets/js/i-quiz.js"></script>
+	
+	<style>
+    #close{
+        position: fixed;
+        top : 0.5em;
+        left: 50%;
+        z-index: 10000;
+        display: none;
+		cursor: pointer;
+    }
+   .container-wrapper-genially {
+        position: absolute; 
+        left: -1999px;
+    }
+
+    .visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+    }
+    .hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 3s, opacity 2s linear;
+    }
+    .come {
+    left: 0px;
+    transition: left 0s 0s, left 1s linear;
+    }
+    .hide{
+        left: -1999px;
+        transition: left 0s 0s, left 1s linear;
+    }
+</style>
 {% endblock %}
