@@ -1,5 +1,5 @@
-// getLeads();
-
+let lastType = "new";
+displayLeads();
 // launch when user click on inscription
 function interested(id) {
     Swal.fire({
@@ -213,11 +213,14 @@ function saveChange(key, id) {
 }
 
 function displayLeads(type) {
-    getLeads("new");
+    getLeads("new", "");
 }
 
-function getLeads(type) {
-    fetch("/api/get/leads/" + type, {
+function getLeads(type, page) {
+    lastType = type ? type : lastType;
+    console.log(lastType + "---------")
+
+    fetch("/api/get/leads/" + ( type !== null ? type : lastType ) + "/null/" + ( !isNaN(page) ? page : "null"), {
         method: "POST",
     }).then(response => {
         return response.text();
@@ -232,6 +235,8 @@ function addToDOM(lead) {
     let table = document.getElementsByTagName("tbody")
     let buttons = document.querySelectorAll('.buttons')
     table[0].textContent = ''
+    let leadsLength = 0;
+
 
     // for all lead 
     for (const [key, value] of Object.entries(leads)) {
@@ -240,7 +245,6 @@ function addToDOM(lead) {
         // for all data of lead
         for (const [i, v] of Object.entries(dataObj)) {
             let th = document.createElement('th')
-
             if (i == "id") {
                 let btns = addButtons(v, buttons[0])
                 btns.forEach(btn => {
@@ -258,10 +262,11 @@ function addToDOM(lead) {
 
             th.textContent = v
             tr.appendChild(th)
-            console.log(v)
         }
+        leadsLength++;
         table[0].appendChild(tr);
     }
+    handlePagination(leadsLength);
 }
 
 
@@ -361,6 +366,38 @@ function addToDOMLeadsObject(lead) {
 
         table[0].appendChild(tr);
     }
+}
+
+function handlePagination(page) {
+    let pagination = document.querySelector('.pagination')
+    let paginations = [];
+    console.log(page)
+    page = (page / 10) >= 1 ? (page/10)+1 : page/10;
+    console.log(page)
+    if(page > 0){
+        for (let i = 0; i < page; i++) {
+            // console.log( (((pagination.children)[0]).children[0]) )
+            let a =  ( (((pagination.children)[0]).children[0])).cloneNode(true);
+            a.setAttribute('onclick', "getLeads('" + lastType +"', " + i + ")")
+            a.innerHTML = i+1
+            let li = document.createElement('li');
+            li.append(a);
+            paginations.push(li);
+        }
+    }else{
+        let a =  ( (((pagination.children)[0]).children[0])).cloneNode(true);
+            a.setAttribute('onclick', "getLeads('" + lastType +"', " + (1) + ")")
+            a.innerHTML = 1
+            let li = document.createElement('li');
+            li.append(a);
+            paginations.push(li);
+    }
+    // loop on pagination and delete all children
+    pagination.innerHTML = '';
+    paginations.forEach(li => {
+        pagination.appendChild(li);
+    })
+
 }
 // For add new field 
 // function addField() {

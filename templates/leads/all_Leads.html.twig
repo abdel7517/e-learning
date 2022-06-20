@@ -69,6 +69,20 @@
         {% endfor %}
     </tbody>
 </table>
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination d-flex">
+{% if pages >= 2 %}
+            {% for i in 1..pages %}
+            <li class="page-item"><a class="page-link" href="#" onclick="getLeads(null, {{ i }})" >{{ i }}</a></li>
+            {% endfor %}
+    {% else %}
+            <li class="page-item"><a class="page-link" href="#" onclick="getLeads(null, 1)" >1</a></li>
+{% endif %}
+</ul>
+</nav>
+</div>
+
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src=" {{ asset('assets/js/leads/all_leads.js') }} "></script>

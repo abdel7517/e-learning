@@ -74,6 +74,7 @@ class APILeadsController extends AbstractController
             $this->header = json_encode($data);
             $data["commentaire"] = "";
             $lead->setData($data);
+            $lead->setAdded(new \DateTime());
             $lead->setLandingId(1);
             $lead->setStatus("new");
             $em = $this->getDoctrine()->getManager();
@@ -178,17 +179,17 @@ class APILeadsController extends AbstractController
         return new Response("ok");
     }
     /**
-     * @Route("/api/get/leads/{type}/{date}", name="api_leads_get")
+     * @Route("/api/get/leads/{type}/{date}/{page}", name="api_leads_get")
      */
-    public function getLeads($type, $date = null)
+    public function getLeads($type, $date = null, $page = null)
     {
         $data = [];
-        $date = $date ? date('d-m-Y', strtotime($date["Date"])) : date('d-m-Y');
-        $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id" => 1, "status" => $type]);
+        // $date = $date ? date('d-m-Y', strtotime($date["Date"])) : date('d-m-Y');
+        $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id" => 1, "status" => $type], ["added" => "DESC"],10, is_numeric($page) ? round($page, 0)* 10 : 0);
         foreach ($leads as $lead) {
             
             $newdata =  $lead->getData();
-            $dateLead = date('d-m-Y', strtotime($newdata["Date"]));
+            // $dateLead = date('d-m-Y', strtotime($newdata["Date"]));
             // if($dateLead == $date)
             // {
                 $newdata["id"] = $lead->getId();

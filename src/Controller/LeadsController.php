@@ -30,12 +30,16 @@ class LeadsController extends AbstractController
     public function allLeads(Request $request): Response
     {
         $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(["id" => 1]);
-        $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id"=>1, "status"=>"new"]);
+        $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id"=>1, "status"=>"new"], ["added" => "DESC"]);
+        $pages = (count($leads)/10);
+        $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id"=>1, "status"=>"new"], ["added" => "DESC"], 10);
+
         $headers = $landing->getdata();
 
         return $this->render('leads/all_Leads.html.twig', [
             'headers'=> $headers,
-            'data'=> $leads
+            'data'=> $leads, 
+            'pages' => $pages
         ]);
     }
 

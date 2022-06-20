@@ -32,6 +32,14 @@ class Leads
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $added;
+
+
+   
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,4 +80,18 @@ class Leads
 
         return $this;
     }
+
+    public function getAdded(): ?\DateTime
+    {
+        return $this->added;
+    }
+
+    public function setAdded(\DateTime $added): self
+    {
+        $this->added = $added;
+
+        return $this;
+    }
+
+  
 }
