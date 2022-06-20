@@ -213,7 +213,7 @@ function saveChange(key, id) {
 }
 
 function displayLeads(type) {
-    getLeads("new", "");
+    getLeads("new", 0);
 }
 
 function getLeads(type, page) {
