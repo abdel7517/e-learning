@@ -1,4 +1,6 @@
 let lastType = "new";
+let nbLeads = 10;
+let page = 1;
 displayLeads();
 // launch when user click on inscription
 function interested(id) {
@@ -217,16 +219,14 @@ function displayLeads(type) {
 }
 
 function getLeads(type, page) {
+    console.log(page)
     lastType = type ? type : lastType;
-    console.log(type + "---------")
-    page = (!isNaN(page) ? page : "null");
+    page = (page !== undefined ? page : 0);
     fetch("/api/get/leads/" + (type !== null ? type : lastType) + "/null/" + page, {
         method: "POST",
     }).then(response => {
         return response.text();
-    })
-
-        .then(data => {
+    }).then(data => {
             addToDOM(data, page)
         });
 }
@@ -237,8 +237,8 @@ function addToDOM(lead, page) {
     let buttons = document.querySelectorAll('.buttons')
     let leadsLength = 0;
     // the index of first lead to display
-    let iFirstLead = page < 1 ? 0 : (page - 1) * 10;
-    iLastLead = page <= 1 ? 1 * 10 : page * 10;
+    let iFirstLead = page < 1 ? 0 : (page - 1) * nbLeads;
+    iLastLead = page <= 1 ? 1 * nbLeads : page * nbLeads;
     table[0].textContent = ''
 
 
@@ -248,9 +248,7 @@ function addToDOM(lead, page) {
         let dataObj = JSON.parse(value)
         // for all data of lead
         for (const [i, v] of Object.entries(dataObj)) {
-            console.log(leadsLength + " " + iFirstLead)
             if ((leadsLength > iFirstLead) && (leadsLength <= iLastLead)) {
-                console.log(leadsLength + " > " + iFirstLead)
                 let th = document.createElement('th')
                 if (i == "id") {
                     let btns = addButtons(v, buttons[0])
@@ -380,12 +378,12 @@ function addToDOMLeadsObject(lead) {
 
 function handlePagination(leads) {
     let pagination = document.querySelector('.pagination')
+    let nbLeadsElmnt = document.querySelector('.nbLeads')
+    let nbLeadsElmntCpy = (nbLeadsElmnt)
     let paginations = [];
-    console.log(leads)
-    page = (leads / 10) >= 1 ? (leads / 10) + 1 : leads / 10;
-    console.log(page)
-    if (page > 0) {
-        for (let i = 1; i < page; i++) {
+    let pages = (leads / nbLeads) >= 1 ? (leads / nbLeads) + 1 : leads / nbLeads;
+    if (pages > 0) {
+        for (let i = 1; i < pages; i++) {
             // console.log( (((pagination.children)[0]).children[0]) )
             let a = ((((pagination.children)[0]).children[0])).cloneNode(true);
             a.setAttribute('onclick', "getLeads('" + lastType + "', " + i + ")")
@@ -407,6 +405,9 @@ function handlePagination(leads) {
     paginations.forEach(li => {
         pagination.appendChild(li);
     })
+    nbLeadsElmntCpy.innerHTML = "Nombres de leads affichés : "+ nbLeads;
+    console.log(nbLeadsElmntCpy)
+    pagination.appendChild(nbLeadsElmntCpy);
 
 }
 // For add new field
@@ -425,3 +426,10 @@ function handlePagination(leads) {
 // }
 
 // addField();
+
+function changeNbLeads(){
+    let nbLeadsElmnt = document.querySelector('.nbLeads')
+    nbLeads = (nbLeadsElmnt.innerHTML).split(':')[1] 
+    console.log("before "+ page)
+    getLeads(lastType, page);  
+}
