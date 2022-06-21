@@ -179,13 +179,13 @@ class APILeadsController extends AbstractController
         return new Response("ok");
     }
     /**
-     * @Route("/api/get/leads/{type}/{date}/{page}", name="api_leads_get")
+     * @Route("/api/get/leads/{type}/{date}/{page}/{limit}", name="api_leads_get")
      */
-    public function getLeads($type, $date = null, $page = null)
+    public function getLeads($type, $date = null, $page = null, $limit = null)
     {
         $data = [];
         // $date = $date ? date('d-m-Y', strtotime($date["Date"])) : date('d-m-Y');
-        $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id" => 1, "status" => $type], ["added" => "DESC"],10, is_numeric($page) ? round($page, 0)* 10 : 0);
+        $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id" => 1, "status" => $type], ["added" => "DESC"],$limit);
         foreach ($leads as $lead) {
             
             $newdata =  $lead->getData();
