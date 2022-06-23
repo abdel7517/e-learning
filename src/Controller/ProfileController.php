@@ -2,29 +2,32 @@
 
 namespace App\Controller;
 
-use App\Domain\Badgr;
-use App\Domain\ImageManager;
-use App\Domain\LanguageTrait;
-use App\Entity\Chapter;
-use App\Entity\Image;
-use App\Entity\LearningModule;
-use App\Entity\PwdResetToken;
-use App\Entity\User;
-use App\Entity\UserChapter;
-use App\Entity\Language;
-use App\Entity\ChapterPage;
-use App\Domain\FlaggingManager;
-use App\Entity\TimeOfConnexion;
-use App\Form\EditProfileType;
 use Swift_Mailer;
 use Swift_Message;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpClient\Exception\ClientException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Entity\User;
+use App\Domain\Badgr;
+use App\Entity\Image;
+use App\Entity\Chapter;
+use App\Entity\Language;
+use App\Entity\QuizResult;
+use App\Entity\ChapterPage;
+use App\Entity\UserChapter;
+use App\Domain\ImageManager;
+use App\Domain\LanguageTrait;
+use App\Entity\PwdResetToken;
+use App\Form\EditProfileType;
+use Knp\Snappy\Pdf as Snappy;
+use App\Entity\LearningModule;
+use App\Domain\FlaggingManager;
+use App\Entity\TimeOfConnexion;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpClient\Exception\ClientException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProfileController extends AbstractController
 {
@@ -188,6 +191,113 @@ class ProfileController extends AbstractController
 
         $id = $this->getUser()->getId();
 
+        $history = $this->getDoctrine()->getRepository(TimeOfConnexion::class)->findBy(['user_id' => $id], ['toDay' => 'DESC']);
+        $dateOfConnexion= [];
+
+        $quizresult = $this->getDoctrine()->getRepository(QuizResult::class)->findBy(["id_user" => $id], ['id_chapter' => 'ASC']);
+
+        
+        // get all date of connexion  
+        foreach($history as $item){
+
+            $day = $item->getToday()->format('Y-m-d');
+            $positionOfItem = array_search($day, $dateOfConnexion);
+
+            if($positionOfItem !== 0){
+
+                $dateOfConnexion[]=$day;
+
+            }
+            
+        }
+
+        // all session of co
+        $allSession = [];
+        $sessionAccordingToADay = [];
+        $totalOfConnexionForDay = 0;
+        // array with date of connexion and total min of co
+        $dayWithTotal = [];
+
+        foreach($dateOfConnexion as $date){
+
+            $detailsSessionForOneDay = [];
+
+            foreach($history as $item){
+
+                $day = $item->getToday()->format('Y-m-d');
+
+                // if the date of item element match with the 
+                if( $date == $day ){
+                    $detailsForOneSession = [];
+                    $detailsForOneSession['time_co'] = $item->getTimeCo();
+                    $detailsForOneSession['time_deco'] = $item->getTimeDeco();
+
+                    $dateStart = $item->getTimeCo();
+                    $dateFinish = $item->getTimeDeco();
+                    $diff = $dateFinish->diff($dateStart);
+                    $diff = date_diff($dateStart,$dateFinish);
+                    $min = $diff->format('%i');
+                    $hour = $diff->format('%H');
+                    $min = $min + ($hour * 60);
+                    
+                    
+
+                    $detailsForOneSession['timeOfCo'] = $min;
+                    $totalOfConnexionForDay += $min;
+                    
+                    // save session info
+                    $detailsSessionForOneDay[] = $detailsForOneSession;
+                    // $sessionAccordingToADay[$day] = $allSessionForDay;
+
+                }
+                if(!empty($detailsSessionForOneDay))
+                {
+                    $allSession[] = $detailsSessionForOneDay;
+                }
+    
+            }
+
+            $sessionAccordingToADay[$date] = $detailsSessionForOneDay;
+            $dayWithTotal[$date] = $totalOfConnexionForDay;
+            $totalOfConnexionForDay = 0;
+
+        }
+
+        
+        
+        //             echo "<pre>";
+        //             print_r($sessionAccordingToADay);
+        //             print_r($dayWithTotal);
+        //             echo "</pre>";
+
+        // exit;
+
+                
+        return $this->render('profile/history.html.twig', [
+            'fm' => $fm,
+            'language' => $language,
+            'pr' => $pr,
+            'languagecount' => $languageCount,
+            'history'=>$sessionAccordingToADay,
+            "totalOfConnexionForDay" => $dayWithTotal,
+            'quizresult' => $quizresult
+        ]);
+    }
+
+    /**
+     * @Route("profile/user/history/pdf/{id}", name="user_history_pdf")
+     * @return Response
+     */
+    public function history_pdf(Request $request, Snappy $knpSnappyPdf, int $id = null): Response
+    {
+        $language = $this->getLanguage($request);
+        $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
+
+        $pr = $this->getDoctrine()->getRepository(ChapterPage::class);
+        $fm = new FlaggingManager($languageCount);
+
+        $id = $id == null ? $this->getUser()->getId() : $id;
+
 
         $history = $this->getDoctrine()->getRepository(TimeOfConnexion::class)->findBy(['user_id' => $id], ['toDay' => 'DESC']);
         $dateOfConnexion= [];
@@ -266,8 +376,8 @@ class ProfileController extends AbstractController
         //             echo "</pre>";
 
         // exit;
-         
-        return $this->render('profile/history.html.twig', [
+
+        $html = $this->renderView('profile/proof.html.twig', [
             'fm' => $fm,
             'language' => $language,
             'pr' => $pr,
@@ -275,5 +385,12 @@ class ProfileController extends AbstractController
             'history'=>$sessionAccordingToADay,
             "totalOfConnexionForDay" => $dayWithTotal
         ]);
+
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html),
+            'file.pdf'
+        );
+         
     }
+        
 }

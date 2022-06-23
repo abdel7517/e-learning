@@ -11,6 +11,7 @@ use App\Domain\LanguageTrait;
 use App\Service\Contact\Mail;
 use App\Domain\FlaggingManager;
 use App\Entity\LearningModule;
+use App\Entity\QuizResult;
 use App\Entity\TimeOfConnexion;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -39,7 +40,7 @@ class DashboardUserController extends AbstractController
         $pr = $this->getDoctrine()->getRepository(ChapterPage::class);
         $users = $this->getDoctrine()->getRepository(User::class);
         $fm = new FlaggingManager($languageCount);
-        $user = $this->security->getUser();
+        $user = $this->security->getUser();        
 
         if ($request->isMethod('POST')) {
             $mail =   $request->get('mail');
@@ -106,7 +107,8 @@ class DashboardUserController extends AbstractController
         // find name of formation
         $formation = $this->getDoctrine()->getRepository(LearningModule::class)->findOneBy(["id" => $user->getFormation()]);
 
-
+        $quizresult = $this->getDoctrine()->getRepository(QuizResult::class)->findBy(["id_user" => $id],  ['id_chapter' => 'ASC']);
+ 
         // get all date of connexion  
         foreach ($history as $item) {
 
@@ -185,6 +187,7 @@ class DashboardUserController extends AbstractController
             'history' => $sessionAccordingToADay,
             "totalOfConnexionForDay" => $dayWithTotal,
             "user" => $user,
+            "quizresult" => $quizresult,
             "formation" => $formation->getTitle($user->getLanguage())
         ]);
     }
