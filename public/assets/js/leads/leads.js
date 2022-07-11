@@ -40,7 +40,7 @@ function send(){
 
   json_headers = Object.assign({}, headers);
   body.push(json_headers, filename)
-  // console.log(body); 
+  console.log(body); 
 
   fetch("/api/add", {
     method: "POST",
@@ -52,6 +52,7 @@ function send(){
       if(data == "ok"){
           alert(data);
         }else{
+          console.log(data)
           alert("Erreur lors de l'ajout " . data);
         }
     });

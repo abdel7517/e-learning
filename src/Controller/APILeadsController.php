@@ -43,7 +43,7 @@ class APILeadsController extends AbstractController
      * @Route("/api/add", name="api_leads_add")
      */
     public function add(Request $request)
-    {
+     {
         $body = $request->getContent();
         $headers =  json_decode($body);
         $this->header = $headers[0];
@@ -56,32 +56,21 @@ class APILeadsController extends AbstractController
             // in the first pass $rowProperties will contain
             // ['email' => 'john@example.com', 'first_name' => 'john']
             foreach ($this->header as $keyLp => $keySheet) {
-               
-                if ($keyLp == 'Date') {
-                    if (!$this->isDate($rowProperties[$keySheet])) {
-                        $data[$keyLp] = date('d-m-Y');
-                        break;
-                    }
-                    $data[$keyLp] = date('d-m-Y', strtotime($rowProperties[$keySheet]));
-                    break;
-                }
                 $data[$keyLp] =  $rowProperties[$keySheet];
                 // foreach ($rowProperties as $rowKey => $rowValue) {
                 //     if ($keySheet = $rowKey)
                 //         $data[$keyLp] = $rowValue;
                 // }
             }
-            $this->header = json_encode($data);
             $data["commentaire"] = "";
             $lead->setData($data);
-            $lead->setAdded(new \DateTime());
             $lead->setLandingId(1);
             $lead->setStatus("new");
+            $lead->setAdded(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($lead);
             $em->flush();
         });
-        
 
         return new Response("ok");
     }
