@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Landing;
 use App\Entity\Leads;
+use App\Form\LeadsImportType;
 use LDAP\Result;
 use Spatie\SimpleExcel\SimpleExcelReader;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,6 +76,39 @@ class APILeadsController extends AbstractController
 
         return new Response("ok");
     }
+
+
+    /**
+     * @Route("/open_api/addAuto/{landing_id}", name="api_leads_add_auto")
+     * method="POST"
+     */
+    public function addAuto(Request $request, int $landing_id)
+    {
+        $body = $request->getContent();
+        $lead_data =  json_decode($body, true);
+        $em = $this->getDoctrine()->getManager();
+        $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(['id' => $landing_id]);
+        $field = $landing->getData(); 
+        $data = [];
+        $lead = new Leads;
+        foreach($lead_data as $propretyName => $value){
+            if(array_key_exists($propretyName, $field)){
+                $data[$propretyName] = $value;
+            }else{
+                return new Response("Error: ".$propretyName." is not in the landing");
+            }
+        }
+        $data["commentaire"] = "";
+        $lead->setData($data);
+        $lead->setLandingId($landing_id);
+        $lead->setStatus("new");
+        $lead->setAdded(new \DateTime());
+        $em->persist($lead);
+        $em->flush();
+        return new Response("ok");
+
+    }
+
     /**
      * @Route("/api/addField", name="api_leads_addField")
      */

@@ -219,7 +219,6 @@ function displayLeads(type) {
 }
 
 function getLeads(type, page) {
-    console.log(page)
     lastType = type ? type : lastType;
     page = (page !== undefined ? page : 0);
     fetch("/api/get/leads/" + (type !== null ? type : lastType) + "/null/" + page, {
@@ -241,14 +240,13 @@ function addToDOM(lead, page) {
     iLastLead = page <= 1 ? 1 * nbLeads : page * nbLeads;
     table[0].textContent = ''
 
-
     // for all lead 
     for (const [key, value] of Object.entries(leads)) {
         let tr = document.createElement('tr')
         let dataObj = JSON.parse(value)
         // for all data of lead
         for (const [i, v] of Object.entries(dataObj)) {
-            if ((leadsLength > iFirstLead) && (leadsLength <= iLastLead)) {
+            if ((leadsLength >= iFirstLead) && (leadsLength <= iLastLead)) {
                 let th = document.createElement('th')
                 if (i == "id") {
                     let btns = addButtons(v, buttons[0])
