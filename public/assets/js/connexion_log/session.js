@@ -98,22 +98,22 @@ class Session {
     }
 
     sendPresence(){
-        // console.log(this.date);
+        console.log("la");
         if(this.endOfSession ==  false ){
             let date = new Date;
             let dateString = this.formatDate(date);
             let url = window.location.origin + "/presence/" + user_id + "/" + dateString + "/"+ this.sessionId;
-            // console.log(url);
+            console.log(url);
             $.ajax({
                     type: 'POST',
                     url: url,
                     complete: function(resultat){
                         // console.log(resultat);
-                        if(resultat.responseText == "deco"){
+                        // if(resultat.responseText == "deco"){
                             newSession.endOfSession = true;
-                            window.alert('Vous êtes déconnecté, rechargez la page');
+                            Swal.fire('Vous êtes déconnecté (inactivé trop longue depuis votre dernière session). Vous allez commencez une nouvelle session');
                             window.location.reload(); 
-                        }
+                        // }
                     }
                 });
         }else{
