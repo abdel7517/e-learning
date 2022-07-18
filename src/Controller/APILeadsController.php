@@ -76,7 +76,7 @@ class APILeadsController extends AbstractController
 
         return new Response("ok");
     }
-    
+
     /**
      * @Route("/open_api/addAuto/{landing_id}", name="api_leads_add_auto")
      * method="POST"
@@ -84,7 +84,6 @@ class APILeadsController extends AbstractController
     public function addAuto(Request $request, int $landing_id)
     {
         header("Access-Control-Allow-Origin: *");
-
         $body = $request->getContent();
         $lead_data =  json_decode($body, true);
         $em = $this->getDoctrine()->getManager();

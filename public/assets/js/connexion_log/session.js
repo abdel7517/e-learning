@@ -109,11 +109,11 @@ class Session {
                     url: url,
                     complete: function(resultat){
                         // console.log(resultat);
-                        // if(resultat.responseText == "deco"){
+                        if(resultat.responseText == "deco"){
                             newSession.endOfSession = true;
                             Swal.fire('Vous êtes déconnecté (inactivé trop longue depuis votre dernière session). Vous allez commencez une nouvelle session');
                             window.location.reload(); 
-                        // }
+                        }
                     }
                 });
         }else{

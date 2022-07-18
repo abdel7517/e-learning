@@ -257,14 +257,22 @@ function addToDOM(lead, page) {
                     th.setAttribute('class', 'buttons')
                     break
                 }
+               
                 th.setAttribute('contenteditable', true)
                 th.setAttribute('id', i + "-" + dataObj.id)
                 th.setAttribute('onblur', "saveChange('" + i + "', '" + dataObj.id + "' )")
                 tr.setAttribute('id', dataObj.id)
                 th.setAttribute('class', i)
 
-                th.textContent = v
-                tr.appendChild(th)
+                if(i == "date"){
+                    let mydate = new Date();
+                    th.textContent = mydate.toLocaleDateString("fr" , { day: "2-digit", month: "2-digit", year: "numeric", hour: '2-digit', minute: '2-digit' });
+                    tr.appendChild(th)  
+            }else
+                {
+                    th.textContent = v
+                    tr.appendChild(th)
+                }
             }
 
         }
