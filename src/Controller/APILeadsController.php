@@ -87,7 +87,6 @@ class APILeadsController extends AbstractController
         header("Access-Control-Allow-Origin: *");
         $body = $request->getContent();
         $lead_data =  json_decode($body);
-        $loger->info("--------------------------------------------------" . $body);
         $em = $this->getDoctrine()->getManager();
         $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(['id' => $landing_id]);
         $field = $landing->getData(); 
@@ -95,6 +94,7 @@ class APILeadsController extends AbstractController
         $lead = new Leads;
         foreach($lead_data as $propretyName => $value){
             if(array_key_exists($propretyName, $field)){
+                $loger->info(  $data[$propretyName]  . "--------------------------------------------------" . $value);
                 $data[$propretyName] = $value;
             }else{
                 return new Response("Error: ".$propretyName." is not in the landing");
