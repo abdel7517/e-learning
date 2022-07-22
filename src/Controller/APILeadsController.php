@@ -93,8 +93,8 @@ class APILeadsController extends AbstractController
         $data = [];
         $lead = new Leads;
         foreach($lead_data as $propretyName => $value){
+            $loger->info(  $propretyName  . "--------------------------------------------------" . $value);
             if(array_key_exists($propretyName, $field)){
-                $loger->info(  $data[$propretyName]  . "--------------------------------------------------" . $value);
                 $data[$propretyName] = $value;
             }else{
                 return new Response("Error: ".$propretyName." is not in the landing");
