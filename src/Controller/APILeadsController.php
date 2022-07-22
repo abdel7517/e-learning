@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Service\Contact\Mail;
+use Psr\Log\LoggerInterface;
 use Sentry\Util\JSON;
 
 class APILeadsController extends AbstractController
@@ -81,11 +82,12 @@ class APILeadsController extends AbstractController
      * @Route("/open_api/addAuto/{landing_id}", name="api_leads_add_auto")
      * method="POST"
      */
-    public function addAuto(Request $request, int $landing_id)
+    public function addAuto(Request $request, int $landing_id, LoggerInterface $loger)
     {
         header("Access-Control-Allow-Origin: *");
         $body = $request->getContent();
-        $lead_data =  json_decode($body, true);
+        $lead_data =  json_decode($body);
+        $loger->info("--------------------------------------------------" . $body);
         $em = $this->getDoctrine()->getManager();
         $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(['id' => $landing_id]);
         $field = $landing->getData(); 
