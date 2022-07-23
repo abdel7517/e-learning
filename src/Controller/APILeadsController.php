@@ -88,9 +88,8 @@ class APILeadsController extends AbstractController
         $body = $request->getContent();
         $em = $this->getDoctrine()->getManager();
         $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(['id' => $landing_id]);
-        $field = $landing->getData(); 
-	$data = [];
-	$tmp = ["Nom" =>  "Nom","Mail"=> "E-mail","prenom"=> "Prénom","t"=> "Téléphone","t"=> "Quel_est_votre_status_?","t"=> "Combien_de_temps_avez_vous_travailé_en_France_?","Formation"=> "Sélectionner_une_formation_"];
+        $data = [];
+        $tmp = ["nom" =>  "Nom", "tel"=> "Téléphone", "mail"=> "E-mail","prenom"=> "Prénom","formation"=> "Sélectionner_une_formation_", "date"=> "Date"];
         $lead = new Leads;
         $arrLead = [];
         parse_str(utf8_encode($body), $arrLead);
