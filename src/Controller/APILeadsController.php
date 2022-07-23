@@ -89,7 +89,8 @@ class APILeadsController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(['id' => $landing_id]);
         $field = $landing->getData(); 
-        $data = [];
+	$data = [];
+	$tmp = ["Nom" =>  "Nom","Mail"=> "E-mail","prenom"=> "Prénom","t"=> "Téléphone","t"=> "Quel_est_votre_status_?","t"=> "Combien_de_temps_avez_vous_travailé_en_France_?","Formation"=> "Sélectionner_une_formation_"];
         $lead = new Leads;
         $arrLead = [];
         parse_str(utf8_encode($body), $arrLead);
@@ -97,8 +98,10 @@ class APILeadsController extends AbstractController
         foreach($arrLead as $propretyName => $value)
         {
             $loger->info(  $propretyName  . "--------------------------------------------------". $value);
-            if(in_array($propretyName, $field)){
-                $data[$propretyName] = $value;
+	   
+	    $index = array_search($propretyName, $tmp);
+	    if($index !== false ){
+                $data[$index] = $value;
             }
         }
         $data["commentaire"] = "";
