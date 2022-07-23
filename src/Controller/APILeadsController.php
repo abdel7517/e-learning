@@ -86,22 +86,19 @@ class APILeadsController extends AbstractController
     {
         header("Access-Control-Allow-Origin: *");
         $body = $request->getContent();
-        $lead_data =  json_decode($body, true);
         $em = $this->getDoctrine()->getManager();
         $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(['id' => $landing_id]);
         $field = $landing->getData(); 
         $data = [];
-	$lead = new Leads;
-	$arrLead = [];
-	parse_str(utf8_encode($body), $arrLead);
+        $lead = new Leads;
+        $arrLead = [];
+        parse_str(utf8_encode($body), $arrLead);
         $loger->info(  mb_convert_encoding($body, "UTF-8") . "--------------------------------------------------==eeeeeencode==". count($arrLead));
-        foreach($arrLead as $propretyName => $value){
-        $loger->info(  $propretyName  . "--------------------------------------------------". $value);
-            if(array_key_exists($propretyName, $field)){
+        foreach($arrLead as $propretyName => $value)
+        {
+            $loger->info(  $propretyName  . "--------------------------------------------------". $value);
+            if(in_array($propretyName, $field)){
                 $data[$propretyName] = $value;
-            }else{
-        $loger->info(  "--------------------------------------------------");
-                //return new Response("Error: ".$propretyName." is not in the landing");
             }
         }
         $data["commentaire"] = "";
