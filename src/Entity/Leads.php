@@ -37,6 +37,11 @@ class Leads
      */
     private $added;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $metaData = [];
+
 
    
 
@@ -89,6 +94,18 @@ class Leads
     public function setAdded(\DateTime $added): self
     {
         $this->added = $added;
+
+        return $this;
+    }
+
+    public function getMetaData(): ?array
+    {
+        return $this->metaData;
+    }
+
+    public function setMetaData(?array $metaData): self
+    {
+        $this->metaData = $metaData;
 
         return $this;
     }

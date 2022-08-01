@@ -89,6 +89,7 @@ class APILeadsController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(['id' => $landing_id]);
         $data = [];
+        $metaData = [];
         $tmp = ["nom" =>  "Nom", "tel"=> "Téléphone", "mail"=> "E-mail","prenom"=> "Prénom","formation"=> "Sélectionner_une_formation_", "date"=> "Date"];
         $lead = new Leads;
         $arrLead = [];
@@ -101,10 +102,13 @@ class APILeadsController extends AbstractController
 	    $index = array_search($propretyName, $tmp);
 	    if($index !== false ){
                 $data[$index] = $value;
+            }else{
+                $metaData[$propretyName] = $value;
             }
         }
         $data["commentaire"] = "";
         $lead->setData($data);
+        $lead->setMetaData($metaData);
         $lead->setLandingId($landing_id);
         $lead->setStatus("new");
         $lead->setAdded(new \DateTime());
