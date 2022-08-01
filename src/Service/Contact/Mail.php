@@ -173,4 +173,25 @@ class Mail extends AbstractController
         ;
         $this->mailer->send($message);
     }
+
+    public function sendConfirmation(string $mail){
+       
+        // $contact = $form->getData();
+        $contact = ['mail' => $mail];
+        // On crée le message
+        $message = (new \Swift_Message('Confirmation'))
+            // On attribue l'expéditeur
+            ->setFrom("contact@abyformation.fr")
+            // On attribue le destinataire
+            ->setTo($mail)
+            // On crée le texte avec la vue
+            ->setBody(
+                $this->renderView(
+                    'contact/confirmation.html.twig', compact('contact')
+                ),
+                'text/html'
+            )
+        ;
+        $this->mailer->send($message);
+    }
 }
