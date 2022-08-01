@@ -89,8 +89,12 @@ class APILeadsController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(['id' => $landing_id]);
         $data = [];
+<<<<<<< Updated upstream
         $metaData = [];
         $tmp = ["nom" =>  "Nom", "tel"=> "Téléphone", "mail"=> "E-mail","prenom"=> "Prénom","formation"=> "Sélectionner_une_formation_", "date"=> "Date"];
+=======
+        $tmp = ["nom" =>  "Nom", "tel"=> "Téléphone", "mail"=> "E-mail","formation"=> "Sélectionner_une_formation_", "date"=> "Date"];
+>>>>>>> Stashed changes
         $lead = new Leads;
         $arrLead = [];
         parse_str(utf8_encode($body), $arrLead);
