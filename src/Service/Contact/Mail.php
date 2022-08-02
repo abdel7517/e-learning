@@ -181,7 +181,7 @@ class Mail extends AbstractController
         // On crée le message
         $message = (new \Swift_Message('Confirmation'))
             // On attribue l'expéditeur
-            ->setFrom("contact@abyformation.fr")
+            ->setFrom("contact@abyformation.fr", "Aby Formation")
             // On attribue le destinataire
             ->setTo($mail)
             // On crée le texte avec la vue
