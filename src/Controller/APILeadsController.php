@@ -97,16 +97,16 @@ class APILeadsController extends AbstractController
          $loger->info(  mb_convert_encoding($body, "UTF-8") . "---------------i-----------------------------------==eeeeeencode==". count($arrLead));
         foreach($tmp as $propretyName => $value)
         { 
-            $loger->info(   $propretyName . "--------------------------------------------------". $value);
-	   if(isset($arrLead[$value]))
-	   {
-	     $data[$propretyName] = $arrLead[$value]; 
-             unset($tmp[ $propretyName ]);
-	   }
+        $loger->info(   $propretyName . "--------------------------------------------------". $value);
+        if(isset($arrLead[$value]))
+        {
+                $data[$propretyName] = $arrLead[$value]; 
+                unset($arrLead[ $propretyName ]);
         }
-	$data["date"] = (new \DateTime())->format('Y-m-d H:i');
-	$data["commentaire"] = "";
-        $lead->setData($data);
+        }
+        $data["date"] = (new \DateTime())->format('Y-m-d H:i');
+        $data["commentaire"] = "";
+        $lead->setData($arrLead);
         $lead->setMetaData($tmp);
         $lead->setLandingId($landing_id);
         $lead->setStatus("new");
