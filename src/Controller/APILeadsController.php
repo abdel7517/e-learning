@@ -90,11 +90,11 @@ class APILeadsController extends AbstractController
         $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(['id' => $landing_id]);
         $data = [];
         $metaData = [];
-        $tmp = ["nom" =>  "Nom", "tel"=> "Téléphone", "mail"=> "E-mail","formation"=> "Sélectionner_une_formation_", "date"=> "Date"];
+        $tmp = ["nom" =>  "name", "prenom"=>"field_20b1403","tel"=> "message", "mail"=> "email","formation"=> "field_cefbe14", "date"=> "Date", "status"=> "field_bc36403", "dure_de_travail"=> "field_eaec174"];
         $lead = new Leads;
         $arrLead = [];
-        parse_str(utf8_encode($body), $arrLead);
-        $loger->info(  mb_convert_encoding($body, "UTF-8") . "--------------------------------------------------==eeeeeencode==". count($arrLead));
+        // parse_str(utf8_encode($body), $arrLead);
+        // $loger->info(  mb_convert_encoding($body, "UTF-8") . "--------------------------------------------------==eeeeeencode==". count($arrLead));
         foreach($arrLead as $propretyName => $value)
         {
             $loger->info(  $propretyName  . "--------------------------------------------------". $value);
@@ -214,9 +214,11 @@ class APILeadsController extends AbstractController
     }
     /**
      * @Route("/api/get/leads/{type}/{date}/{page}/{limit}", name="api_leads_get")
+     * method="GET"
      */
     public function getLeads($type, $date = null, $page = null, $limit = null)
     {
+        header("Access-Control-Allow-Origin: *");
         $data = [];
         // $date = $date ? date('d-m-Y', strtotime($date["Date"])) : date('d-m-Y');
         $leads = $this->getDoctrine()->getRepository(Leads::class)->findBy(["landing_id" => 1, "status" => $type], ["added" => "DESC"],$limit);
