@@ -92,7 +92,7 @@ class APILeadsController extends AbstractController
         $metaData = [];
         $tmp = ["nom" =>  "name", "prenom"=>"field_20b1403","tel"=> "message", "mail"=> "email","formation"=> "field_cefbe14", "date"=> "Date", "status"=> "field_bc36403", "dure_de_travail"=> "field_eaec174"];
         $lead = new Leads;
-        $arrLead = [];
+        $arrLead = json_decode($body, true);
         // parse_str(utf8_encode($body), $arrLead);
         // $loger->info(  mb_convert_encoding($body, "UTF-8") . "--------------------------------------------------==eeeeeencode==". count($arrLead));
         foreach($arrLead as $propretyName => $value)
