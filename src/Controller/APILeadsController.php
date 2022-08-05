@@ -90,25 +90,24 @@ class APILeadsController extends AbstractController
         $landing = $this->getDoctrine()->getRepository(Landing::class)->findOneBy(['id' => $landing_id]);
         $data = [];
         $metaData = [];
-        $tmp = ["nom" =>  "name", "prenom"=>"field_20b1403","tel"=> "message", "mail"=> "email","formation"=> "field_cefbe14", "date"=> "Date", "status"=> "field_bc36403", "dure_de_travail"=> "field_eaec174"];
+	$tmp = ["Nom" => "name","Mail"=> "email","Formation"=> "field_cefbe14", "Tel"=> "message","Date"=> "Date"];
         $lead = new Leads;
-        $arrLead = json_decode($body, true);
-        // parse_str(utf8_encode($body), $arrLead);
-        // $loger->info(  mb_convert_encoding($body, "UTF-8") . "--------------------------------------------------==eeeeeencode==". count($arrLead));
-        foreach($arrLead as $propretyName => $value)
-        {
-            $loger->info(  $propretyName  . "--------------------------------------------------". $value);
-	   
-	    $index = array_search($propretyName, $tmp);
-	    if($index !== false ){
-                $data[$index] = $value;
-            }else{
-                $metaData[$propretyName] = $value;
-            }
+        //$arrLead = json_decode($body, true);
+         parse_str(utf8_encode($body), $arrLead);
+         $loger->info(  mb_convert_encoding($body, "UTF-8") . "---------------i-----------------------------------==eeeeeencode==". count($arrLead));
+        foreach($tmp as $propretyName => $value)
+        { 
+            $loger->info(   $propretyName . "--------------------------------------------------". $value);
+	   if(isset($arrLead[$value]))
+	   {
+	     $data[$propretyName] = $arrLead[$value]; 
+             unset($tmp[ $propretyName ]);
+	   }
         }
-        $data["commentaire"] = "";
+	$data["date"] = (new \DateTime())->format('Y-m-d H:i');
+	$data["commentaire"] = "";
         $lead->setData($data);
-        $lead->setMetaData($metaData);
+        $lead->setMetaData($tmp);
         $lead->setLandingId($landing_id);
         $lead->setStatus("new");
         $lead->setAdded(new \DateTime());
